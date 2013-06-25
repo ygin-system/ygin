@@ -1,0 +1,85 @@
+/*.cProductCategoryList {list-style:none; padding:0}
+.cProductCategoryList .item {padding:2px 0}
+.cProductCategoryList ul {padding:0 0 0 20px}
+.cProductCategoryList ul .item {font-size:14px; padding:5px 0}
+
+.cCatModule { -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px;
+    background-color: #f8f8f8;
+    border: 1px solid #aaa;
+    float: right;
+    padding: 6px;}
+
+.cCatModule .cProductCategoryList li {fint-size:12px}
+
+.cProductList {float:left; margin-right: 10px}
+.cProductList .firstTh {border-border:5px 0 0 5px; -moz-border-border:5px 0 0 5px}
+.cProductList .lastTh {border-border:0 5px 5px 0; -moz-border-border:0 5px 5px 0}
+.cProductList th {background:#e8e8e8; padding:10px; border-right:1px solid #fff; text-align:left; color:#333; font-weight:normal}
+.cProductList td {vertical-align:middle; padding:10px}
+.cProductList .code, .cProductList .img, .cProductList .count, .cProductList .buy {text-align:center}
+.cProductList .name {width:200px;}
+.cProductList .img img {border:1px solid #ccc}
+.cProductList .tradePrice {text-align:right}
+.cProductList .tradePrice img {margin:0 0 0 3px}
+.cProductList .count input, .cProductList .buy input {width:75px; text-align:center}
+.cProductList .even td {background:#f6f6f6}
+
+.mProductCategoryList {list-style:none; padding:0; margin:10px 0 0 0}
+.mProductCategoryList ul {padding:0; width:auto; margin:3px 0 0 0}
+.mProductCategoryList .item {border-bottom:1px dashed #ccc; font-size:12px}
+.mProductCategoryList .item .item {border:0; background:url(/gfx/arrow.png) no-repeat 15px 10px; padding:0 0 0 20px}
+.mProductCategoryList a:link, .mProductCategoryList a:visited {display:block; padding:10px 10px 10px 15px; text-decoration:none; background:#eee}
+.mProductCategoryList b {display:block; padding:10px 10px 10px 15px; font-weight:normal; color:#c00}
+.mProductCategoryList .item .item a:link, .mProductCategoryList .item .item a:visited {padding:5px 10px; color:#000; border-right:0}
+.mProductCategoryList .item .item a:hover {text-decoration:underline; color:#b90e10}
+.mProductCategoryList .item .item b {padding:5px 10px}
+*/
+.b-cart {}
+.b-cart .title {margin-bottom:10px}
+.b-cart .hdr {background:#fff}
+.b-cart .hdr .caption {padding:13px; margin:0; border-bottom:1px dashed #ccc;}
+.b-cart .hdr .alert {margin-bottom:0}
+.b-cart .tovarBlank {display:none}
+.b-cart .tovarTable {}
+.b-cart .tovarTable .price{ padding-left:15px; font-size:12px; color:#333;  width: 130px; padding-bottom:7px;}
+.b-cart .tovarTable .price div{float:left;}
+.b-cart .tovarTable .price img{float:left; margin-left:8px;}
+.b-cart .tovarTable .kolvo{width:60px; padding-bottom:7px;}
+.b-cart .tovarTable input {width:30px; text-align:right; padding-right:3px; font-size:18px; font-weight:bold;}
+.b-cart .tovarList {list-style:none; padding:0; background:#fff; margin:0}
+.b-cart .tovarList .item {border-bottom:1px dashed #ccc; clear:both; overflow:hidden}
+.b-cart .tovarList .itemInvisible {display: none}
+.b-cart .tovarList .name {font-size:12px; padding:10px; vertical-align:middle}
+.b-cart .tovarList .close {margin: 10px;}
+.b-cart .tovarList .price {text-align: right; color:#c00; margin-top:5px}
+.b-cart .tovarList .price .val {font-size: 18px;}
+.b-cart .tovarList .price img {margin:0 0 0 3px; vertical-align:baseline;}
+.b-cart .tovarList .kolvo {font-size:12px; text-align:right; white-space:nowrap; float:right; padding-right:10px; margin-left: 10px;}
+.b-cart .tovarList .kolvo input {width:35px; text-align:center}
+.b-cart .itogo {clear:both}
+.b-cart .itogo div {font-weight:bold;}
+.b-cart .itogo span {font-weight:bold; font-size:18px}
+.b-cart .btns {display:block}
+.b-cart .btns input {}
+.b-cart .btns .offer {}
+.b-cart .btns .clear {}
+.b-cart .noPrice {display:none;}
+/*
+.cOfferForm {background:#eee; -moz-border-radius:10px; border-radius:10px; padding:10px; margin-bottom:30px;}
+.cOfferForm h2 {margin:15px 0 5px 10px}
+.cOfferForm .contactInfo th {width:250px; border-bottom:1px dashed #ddd}
+.cOfferForm .contactInfo .text, .cOfferForm .contactInfo textarea {width:500px}
+.cOfferForm table {background:#fff; width: 100%;}
+.cOfferForm table td, .cOfferForm table th {padding:10px; text-align:left}
+.cOfferForm .tovarList th {background:#eee}
+.cOfferForm table td {border-bottom:1px dashed #ddd; vertical-align:middle}
+.cOfferForm .price {text-align:right; white-space:nowrap}
+.cOfferForm .kolvo {text-align:center}
+.cOfferForm .kolvo input {width:40px; text-align:center}
+.cOfferForm .itogo {padding:10px 0; background:#eee; text-align:right}
+.cOfferForm .itogo td {text-align:right; border-bottom:0; padding-bottom:0; font-weight:bold}
+.cOfferForm .itogo .courierLink {white-space:nowrap}
+.cOfferForm .price div {display:inline}
+.cOfferForm .sum {font-size:18px; white-space:nowrap}
+.cOfferForm .cena {text-align:right}
+*/

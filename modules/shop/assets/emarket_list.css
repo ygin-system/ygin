@@ -1,0 +1,45 @@
+.b-emarket_list .element_item {display: inline-block; float: left; margin-bottom:50px; height:265px}
+.b-emarket_list .preview_picture {overflow: hidden; width: 100px; margin-bottom:10px; height:115px}
+.b-emarket_list .elem {overflow: hidden;}
+.b-emarket_list .property {
+    color: #454545;
+    float: left;
+    font-size: 10px;
+    line-height: 1.35;
+    margin: 0 0 5px;
+    width: 100%;
+    height:42px;
+    overflow:hidden;
+}
+.b-emarket_list .descr {
+    float: left;
+    width: 100%;
+}
+.b-emarket_list .price_m {
+    float: left;
+    width: 100%;
+}
+.b-emarket_list .catalog-price {
+    float: left;
+    font-size: 20px;
+    margin: 0 0 0;
+    width: auto;
+}
+
+/* Фотография сбоку */
+.b-emarket_list__picaside .element_item {height:205px; overflow:hidden}
+.b-emarket_list__picaside .preview_picture {float: right; margin-left: 5px;}
+.b-emarket_list__picaside .elem {float: left; width: 135px;}
+
+/* Ширина товара - 2 ячейки */
+.b-emarket_list__picaside__2 h3 {max-height:55px; overflow:hidden}
+.b-emarket_list__picaside__2 .elem {width:105px}
+.b-emarket_list__picaside__2 .preview_picture {width:60px}
+
+/* Ширина товара - 3 ячейки */
+.b-emarket_list__picaside__3 .elem {width:165px}
+.b-emarket_list__picaside__3 .preview_picture {width:100px}
+
+/* Ширина товара - 4 ячейки */
+.b-emarket_list__picaside__4 .elem {width:235px}
+.b-emarket_list__picaside__4 .preview_picture {width:130px}

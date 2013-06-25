@@ -1,0 +1,534 @@
+/* SVN FILE: $Id: styles.css 17 2010-12-21 19:09:15Z Chris $*/
+/**
+* Default styles for RBAM
+*
+* @copyright	Copyright &copy; 2010 PBM Web Development - All Rights Reserved
+* @package		RBAM
+* @since			V1.0.0
+* @version		$Revision: 17 $
+* @license		BSD License (see documentation)
+*/
+#rbam {
+	margin: 1.5em 20px;
+	overflow: hidden;
+	position: relative;
+}
+#rbam a {
+	color: inherit;
+	text-decoration: none;
+}
+#rbam-menu {
+	list-style: none;
+	overflow: hidden;
+	padding: 0;
+}
+#rbam-menu li {
+	float: left;
+	border: 1px solid #53788d;
+	border-left: none;
+}
+#rbam-menu li.first {
+	border-left: 1px solid #53788d;
+}
+#rbam-menu li a {
+  background-color: #d3dfee;
+  color: #667;
+	font-weight: bold;
+	display: block;
+	padding: 3px 6px;
+	text-decoration: none;
+}
+#rbam-menu li.active>a,
+#rbam-menu li.active>a:hover {
+  background-color: #53788d;
+  color: #dae9f2;
+}
+#rbam-menu li a:hover {
+  background-color: #aec4e0;
+  color: #000;
+}
+#rbam-menu ul {
+	display: none;
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	z-index: 1000;
+}
+#rbam-menu ul li {
+	border-left: 1px solid #53788d;
+	border-top: none;
+	float: none;
+}
+#rbam-menu ul li.first {
+	border-top: 1px solid #53788d;
+}
+/*#rbam-menu li:hover ul {
+	display: block;
+}*/
+#rbam h2 img {
+	position: relative;
+	top: 10px;
+	padding-right: 10px;
+}
+#rbam #left-column {
+	float: left;
+	width: 40%;
+}
+#rbam #right-column {
+	margin-left: 45%;
+}
+#rbam #left-column img {
+	display: block;
+	margin: 0 auto;
+}
+#rbam .select h2 {
+	padding-top: 16px;
+}
+#rbam .select li {
+	font-weight: bold;
+	padding-top: 1.5em;
+}
+#rbam form {
+	background: #d3dfee;
+	border: 1px solid #ccc;
+	margin-top: 2.8em;
+	padding: 0.75em 5px;
+}
+#rbam label,
+#rbam-dialog-form label {
+	display: block;
+	font-weight: bold;
+}
+#rbam label.required:after {
+    content: url(required.png);
+}
+#rbam form .error,
+#rbam-dialog-form .error,
+#rbam form input[type="text"].error, #rbam form textarea.error,
+#rbam-dialog-form input[type="text"].error, #rbam-dialog-form textarea.error {
+	background: #f3d7d8;
+	color: #b5363b;
+}
+#rbam form .error.summary,
+#rbam-dialog-form .error.summary {
+	background-image: none;
+	border: 1px solid #db898c;
+	font-weight: bold;
+	padding: 0.75em 10px;
+}
+#rbam form .error.summary ul,
+#rbam-dialog-form .error.summary ul {
+	list-style: disc inside;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	padding-left: 10px;
+}
+#rbam form input[type="text"], #rbam form textarea,
+#rbam-dialog-form input[type="text"], #rbam-dialog-form textarea {
+	background: #f0f0f0;
+	border: 1px dotted #ccc;
+	color: #333;
+	height: auto;
+	margin: 0.5em 0;
+	padding: 0.375em 5px;
+	width: 80%;
+}
+#rbam form textarea, #rbam-dialog-form textarea {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	min-height: 4.5em;
+}
+#rbam form input[type="text"]:focus, #rbam form textarea:focus,
+#rbam-dialog-form input[type="text"]:focus, #rbam-dialog-form textarea:focus {
+	background: #ecfbd4;
+	color: #333;
+}
+#rbam form input[readonly="readonly"],
+#rbam form input[readonly="readonly"]:focus {
+	background: #ddd;
+	color: #777;
+}
+#rbam form .row, #rbam-dialog-form .row {
+	min-height: 48px;
+  position:relative;
+}
+/**
+* Hint CSS uses http://nicolasgallagher.com/multiple-backgrounds-and-borders-with-css2/
+* Containing element must be positioned.
+* Pop-up icon in :before psuedo element
+*/
+#rbam form .row .hint,
+#rbam-dialog-form .row .hint {
+	background-color: #f0f0ff;
+	background-image: none;
+	border: 1px dotted #53788d;
+	color: #333;
+	cursor: help;
+	padding: 0.375em 10px;
+	position: absolute;
+	top: -99999px; /* keep out of the way until needed */
+	right: -200px;
+  width: 200px;
+  z-index: 1000; /* make sure hints are on top */
+	-moz-box-shadow: #333 5px 5px 10px 0;
+	-webkit-box-shadow: #333 5px 5px 10px 0;
+	-o-box-shadow: #333 5px 5px 10px 0;
+	box-shadow: #333 5px 5px 10px 0;
+}
+/* visible when .row is hovered over */
+#rbam form .row:hover .hint:before,
+#rbam-dialog-form .row:hover .hint:before {
+	content: url(../images/help.png);
+	position: absolute;
+	top: 99999px; /* put into the page when container hovered over */
+	left: -30px;
+	z-index: -1;
+}
+#rbam form .row:hover .hint:hover,
+#rbam form .row:hover .hint:hover.hint:before,
+#rbam-dialog-form .row:hover .hint:hover,
+#rbam-dialog-form .row:hover .hint:hover.hint:before {
+	top:0; /* bring the hint onto the page when :before is hovered over and remove :before offset */
+}
+#rbam .row.buttons input, #rbam a.button {
+	background: #4a9dc6;
+	color: white;
+	cursor: pointer;
+	padding: 0.187em 0.5em;
+	border: 2px solid;
+	border-color: #a6cfe3 #316883 #316883 #a6cfe3;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+#rbam a.button {
+	display: inline-block;
+	margin: 3em 0.375em 1.5em;
+	text-align: center;
+	text-decoration: none;
+	width: 4em;
+}
+#rbam .row.buttons input:hover, #rbam a.button:hover {
+	background: #bce774;
+	color: #4d6921;
+	border-color: #d5eab2 #7c994d #7c994d #d5eab2;
+}
+.ui-dialog.rbam-dialog {
+	-moz-box-shadow: #333 10px 10px 15px 0;
+	-webkit-box-shadow: #333 10px 10px 15px 0;
+	-o-box-shadow: #333 10px 10px 15px 0;
+	box-shadow: #333 10px 10px 15px 0;
+}
+/* make hints visible in jui dialogs */
+.ui-dialog.rbam-dialog,
+#rbam-dialog-form.ui-dialog-content {
+	overflow: visible;
+}
+#rbam ul.alphaPager a:link, #rbam ul.alphaPager a:visited,
+#rbam ul.yiiPager a:link, #rbam ul.yiiPager a:visited {
+	background: white;
+	border: 1px solid #53788d;
+	color: #53788d;
+}
+#rbam ul.alphaPager .page a,
+#rbam ul.yiiPager .page a {
+	font-weight: normal;
+}
+#rbam ul.alphaPager a:active,
+#rbam ul.yiiPager a:active {
+	background: #945665;
+	border: 1px solid #945665;
+	color: white;
+}
+#rbam ul.alphaPager a:hover,
+#rbam ul.yiiPager a:hover {
+	background: #6f9255;
+	border: 1px solid #6f9255;
+	color: white;
+}
+#rbam ul.alphaPager .selected a,
+#rbam ul.yiiPager .selected a {
+	background: #53788d;
+	color: white;
+}
+#rbam ul.alphaPager .hidden a,
+#rbam ul.yiiPager .hidden a {
+	background: #ddd;
+	border:solid 1px #888;
+	color:#888;
+	cursor: default;
+}
+#rbam .yiiTab ul.tabs {
+	border-bottom: 2px solid #53788d;
+}
+#rbam .yiiTab ul.tabs a {
+	background: #d3dfee;
+	color: #667;
+	border: none;
+	margin: 0;
+}
+#rbam .yiiTab ul.tabs a:hover {
+	background: #aec4e0;
+}
+#rbam .yiiTab ul.tabs a.active {
+	background: #53788d;
+	border: none;
+  color: #dae9f2;
+}
+#rbam .view,
+#rbam .yiiTab div.view {
+	background: #d3dfee;
+	border: none;
+	padding: 0;
+}
+#rbam .grid-view {
+	margin-top: 0;
+	position: relative;
+}
+#rbam .view .grid-view .summary {
+	top: -1.75em;
+	right: 0;
+	position: absolute;
+}
+#rbam .grid-view .summary {
+	margin-right: 1%;
+}
+#rbam .grid-view table.items {
+	border: none;
+}
+#rbam .grid-view table.items thead th {
+	background-color: #4d9ac6;
+  background-image: none;
+	border-top: none;
+}
+#rbam .grid-view table.items thead th:first-child {
+	border-left: none;
+}
+#rbam .grid-view table.items thead th:last-child {
+	border-right: none;
+}
+#rbam .grid-view table.items tr.direct td {
+	color: #000;
+	font-weight: bold;
+}
+#rbam .grid-view table.items td {
+	color: #333;
+	padding: 0.187em 0.75em;
+}
+#rbam .grid-view table.items td.boolean.true {
+	cursor: help;
+}
+#rbam .grid-view table.items td.boolean.true div {
+	margin: 0 auto;
+}
+#rbam .grid-view table.items td.button-column {
+	padding: 4px;
+}
+#rbam .grid-view table.items td.button-column a {
+	padding: 0 4px;
+}
+#rbam .grid-view table.items td.viewable {
+	border-right: none;
+}
+#rbam .grid-view table.items td.view-button {
+	border-left: none;
+	padding-left: 0;
+	text-align: right;
+	width: 22px;
+}
+#rbam .grid-view table.items td.number {
+	text-align: right;
+}
+#rbam .grid-view table.items td div[title] {
+	cursor: help;
+}
+#rbam .grid-view .alphapager,
+#rbam .grid-view .pager {
+	margin: 0;
+	margin-right: 1%;
+	padding: 0.375em 0;
+	text-align: right;
+}
+#rbam div#item-assignments {
+	border-top: 2px solid #53788d;
+	clear: both;
+	margin-top: 3em;
+	padding-top: 0.75em;
+}
+#rbam .portlet,
+#rbam .portlet-decoration,
+#rbam .portlet-content {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+#rbam .portlet {
+	margin-bottom: 3em;
+}
+#rbam .portlet .alphapager,
+#rbam .portlet .alphapager a {
+	font-size: 80%;
+}
+#rbam .portlet ul.alphaPager a:link,
+#rbam .portlet ul.alphaPager a:visited {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+#rbam .portlet-title {
+  background-color: #53788d;
+  color: #dae9f2;
+	font-weight: bold;
+	font-size: 1.2em;
+	padding: 0.375em 0 0.375em 0.75em;
+	overflow: hidden;
+}
+#rbam .portlet-title p {
+	font-size: 0.667em;
+	font-style: italic;
+	font-weight: normal;
+	float: right;
+	margin-right: 1%;
+	margin-top: 0.5em;
+	text-align: right;
+	width: 80%;
+}
+#rbam .portlet-content {
+	background: #edf1f2;
+	padding: 0;
+	padding-top: 0.75em;
+}
+#rbam .ui-draggable {
+	cursor: move;
+}
+#rbam .ui-draggable-dragging {
+	background: #f5c87b;
+	font-weight: bold;
+	z-index: 1000;
+}
+#rbam .ui-droppable-active .portlet-content {
+	background: #fefed7;
+}
+#rbam .ui-droppable-active .portlet-title {
+	background-color: #939859;
+}
+#rbam .ui-droppable-hover .portlet-content {
+	background: #ecfbd4;
+}
+#rbam .ui-droppable-hover .portlet-title {
+	background-color: #6f9255;
+}
+#rbam #right-column .button-column {
+	max-width: 24px;
+}
+#rbam .jstree {
+	background: transparent;
+	margin: 1.5em 0;
+}
+#rbam .rbam-working {
+	background:url(working.gif) no-repeat;
+	width: 24px;
+	height: 24px;;
+}
+.rbam-dialog {
+	font-size: 80%;
+}
+.rbam-dialog form {
+	border: none;
+	padding: 0;
+}
+.rbam-dialog form input[readonly="readonly"],
+.rbam-dialog form input[readonly="readonly"]:focus {
+	background: transparent;
+	border: none;
+}
+.rbam-dialog .ui-state-error {
+	font-weight: bold;
+	margin-top: 0.75em;
+}
+.rbam-dialog img {
+	margin: 0 4px 0 2px;
+	position: relative;
+	top: 4px;
+}
+.rbam-dialog p {
+	padding-left: 27px;
+}
+.rbam-dialog pre {
+	background: #d3dfee;
+	border: 2px solid #89a9d2;
+	font-family: monospace;
+	font-size: 120%;
+	margin: 10px 27px;
+	padding: 5px;
+}
+.rbam-dialog ul {
+	margin: 0.75em 27px;
+	list-style: disc;
+	list-style-position: inside;
+}
+#rbam .application, #rbam .jstree {
+	border: 1px solid #ccc;
+	padding: 0.375em 0.75em;
+}
+#rbam .application .row {
+	margin-bottom: 0.75em;
+}
+#rbam td.parents,
+#rbam td.children {
+	cursor: pointer;
+}
+#rbam .grid-view table.items tr.parents>td,
+#rbam .grid-view table.items tr.children>td {
+	padding: 0;
+	padding-left: 10px;
+}
+#rbam .grid-view table.items tr.children>td {
+	padding-bottom: 5px;
+}
+#rbam .grid-view table.items tr.parents>td {
+	padding-top: 5px;
+}
+#rbam .grid-view table.items tr.showing-parents,
+#rbam .grid-view table.items tr.parents {
+	background: #eff37a;
+}
+#rbam .grid-view table.items tr.showing-children,
+#rbam .grid-view table.items tr.children {
+	background: #c66fdd;
+}
+#rbam .grid-view table.items tr.showing-parents.showing-children {
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, colour-stop(0%, #e7e53d), colour-stop(100%, #c66fdd));
+	background-image: -moz-linear-gradient(top, #eff37a 10%, #c66fdd 90%);
+	background-image: linear-gradient(top, #eff37a 10%, #c66fdd 90%);
+}
+
+#rbam .grid-view .grid-view table.items th,
+#rbam .grid-view .grid-view table.items td {
+	font-size: 95%;
+}
+#rbam .grid-view .grid-view .grid-view table.items th,
+#rbam .grid-view .grid-view .grid-view table.items td {
+	font-size: 100%;
+}
+#rbam .help {
+	background: url(../images/help.png) no-repeat;
+	display: block;
+	height: 24px;
+	width: 24px;
+	overflow: hidden;
+	text-indent: 24px;
+	position: absolute;
+	right: 1%;
+	top: 0;
+}
+#rbam noscript div {
+	background: #f3d7d8;
+	border: 2px solid #db898c;
+	color: #815152;
+	font-size: 150%;
+	padding: 10px;
+	text-align: center;
+}

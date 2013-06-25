@@ -1,0 +1,19 @@
+.b-emarket-product {padding-top:15px;border-top:1px solid #f2f2f2;}
+.b-emarket-product .details {float:left; width:318px; padding-right: 15px;}
+.b-emarket-product .image {width:300px; height:300px; border:1px solid #cfcfcf; display:block; text-align:left;}
+.b-emarket-product .info-bar{padding-top:20px;font-family:arial,sans-serif;color:#000; overflow: hidden;clear:both}
+.b-emarket-product .info-bar p{margin:0;padding:0;line-height:1.41em;}
+.b-emarket-product .info-bar .title {margin:0;padding:0 0 4px 0;color:#7f7f7f;}
+.b-emarket-product .info-bar .item {margin-bottom:5px;padding-bottom:7px;border-bottom:1px solid #e5e5e5;}
+.b-emarket-product .description {float:left; width:430px;}
+.b-emarket-product .text {overflow: hidden; border-bottom:1px solid #e5e5e5;line-height: 18px; text-align: justify;padding-bottom: 5px;}
+.b-emarket-product .slider {margin-left:218px; margin-bottom:30px; width:102px; height:18px; line-height: 16px; text-align: center; display:none}
+.b-emarket-product .price-bar {margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #e5e5e5;}
+.b-emarket-product .price-bar .price{font-size:18px; color:#000;}
+.b-emarket-product .price-bar .price span{font-size:12px;color:#999;}
+.b-emarket-product .price-bar .price{float:left;}
+.b-emarket-product .price-bar .buttons{float:right;}
+
+.b-emarket-product a.mp-more-description-btn,.b-emarket-product a.mp-more-description-btn-close{background:0 none;font-size:11px;color:#7f7f7f;text-decoration:none;}
+.b-emarket-product div.btn-action-link-white a {background-image:url('images/btn_white.gif');color:#de1a37;}
+.b-emarket-product div.btn-action-link-white a span {background-image:url('images/btn_white.gif');color:#de1a37;}

@@ -1,0 +1,13 @@
+.b-offer-form legend {margin-bottom:0;}
+.b-offer-form table {background:#fff; margin-bottom:0}
+.b-offer-form table td, .b-offer-form table th {text-align:left}
+.b-offer-form .tovarList th {background:#eee}
+.b-offer-form table td {vertical-align:middle}
+.b-offer-form .price {text-align:right; white-space:nowrap}
+.b-offer-form .kolvo {text-align:center}
+.b-offer-form .kolvo input {width:40px; text-align:center}
+.b-offer-form .itogo {padding:10px 0; background:#eee; text-align:right}
+.b-offer-form .itogo td {text-align:right; border-bottom:0; padding-bottom:0; font-weight:bold}
+.b-offer-form .price div {display:inline}
+.b-offer-form .sum {font-size:18px; white-space:nowrap}
+.b-offer-form .cena {text-align:right}

@@ -1,0 +1,91 @@
+		.inner {
+			padding-top:10px; 
+			padding-left:10px; 
+		}
+		
+		#pickerfield {
+			padding: 2px 4px;
+			font-size:16px;
+		}
+		
+		#sliderContainer h4 {
+			font-weight:normal;
+			font-size:12px;
+			margin-top:4px !important;
+		}
+		.ui-datepicker-buttonpane.ui-widget-content {
+			display:none;
+		}
+		
+		.ui-datepicker {
+			border:0 !important;
+		}
+		
+		
+		#timepicker {
+			border:0 !important;
+		}
+		
+		#pickerplug {
+			border:1px solid #bbb;
+			padding-left:0px !important;
+			position:relative;
+			background:white;
+		}
+		
+		#tpSelectedTime {
+			margin-top:5px;
+			padding-left:25px !important;
+			border-bottom:0 !important;
+			padding-top:12px !important;
+			padding-bottom:0 !important;
+		}
+		
+		.ui-datepicker-close {
+			position:absolute;
+			z-index:100;
+			top:0px;
+			right:0px;
+			border:0 !important;
+			background:none !important;
+			font-size:17px;
+			color:red !important;
+		}
+
+
+#pickerplug {
+    display: none;
+    left: 300px;
+    overflow: hidden;
+    position: absolute;
+    top: 200px;
+    z-index: 500;
+}
+#pickerplug li {
+    display: block;
+    float: left;
+}
+#timepicker {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AAAAAA;
+}
+#timepicker ul {
+    overflow: hidden;
+    padding: 5px;
+}
+#timepicker ul li {
+    display: block;
+    float: left;
+    position: relative;
+    width: 50px;
+}
+#timepicker ul li h4 {
+    background: none repeat scroll 0 0 transparent;
+    color: #000000;
+    text-align: center;
+    width: 100%;
+}
+#timepicker ul li .slider {
+    left: 10px;
+    position: relative;
+}

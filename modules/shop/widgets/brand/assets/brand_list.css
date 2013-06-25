@@ -1,0 +1,17 @@
+.b-emarket-brand-widget {padding: 8px 0; position: relative; border:1px solid #eee}
+.b-emarket-brand-widget ul {list-style: none;}
+.b-emarket-brand-widget .cnt {margin:0 0 0 5px; color:#000; font-size: 14px;}
+.b-emarket-brand-widget li {font-size:18px}
+.b-emarket-brand-widget .nav-list  li  a {padding:10px 15px}
+.b-emarket-brand-widget .nav-list .nav-list  li  a {padding:8px 15px}
+.b-emarket-brand-widget .nav-list .nav-list .nav-list  li  a {padding:6px 15px}
+.b-emarket-brand-widget .active .cnt {color:#ddd;}
+.b-emarket-brand-widget .active .nav .cnt {color:#000}
+.b-emarket-brand-widget li li {font-size:16px;}
+.b-emarket-brand-widget .nav .nav .active .cnt {font-size: 13px;}
+.b-emarket-brand-widget .nav .nav .active .nav .cnt {color:#000}
+.b-emarket-brand-widget .nav-list .nav-list > .active > a {background:none; color:#000}
+.b-emarket-brand-widget li li li {font-size:14px;}
+.b-emarket-brand-widget .nav .nav .nav .active .cnt {font-size: 12px;}
+.b-emarket-brand-widget .nav .nav .nav .active .nav .cnt {color:#000}
+.b-emarket-brand-widget .nav-list .nav-list .nav-list > .active > a {background:none; font-weight:bold; color:#000}

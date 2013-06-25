@@ -1,0 +1,7 @@
+.b-faq .ask-form legend {margin-bottom:0}
+
+.b-faq .item {margin-bottom:30px}
+.b-faq .item .name {font-size:16px; margin-top:10px}
+.b-faq .item .ask {margin-top:10px; overflow:hidden}
+.b-faq .item .ans {margin-top:10px; overflow:hidden; padding:5px 10px 18px 10px; background:#F5F5F5; border-radius:4px}
+.b-faq .item .expend {margin-top:5px}

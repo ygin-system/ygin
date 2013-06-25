@@ -1,0 +1,7 @@
+.b-review .ask-form legend {margin-bottom:0}
+
+.b-review .item {margin-bottom:30px}
+.b-review .item .name {font-size:16px; margin-top:10px}
+.b-review .item .ask {margin-top:10px; overflow:hidden}
+.b-review .item .ans {margin-top:10px; overflow:hidden; padding:5px 10px 18px 10px; background:#F5F5F5; border-radius:4px}
+.b-review .item .expend {margin-top:5px}

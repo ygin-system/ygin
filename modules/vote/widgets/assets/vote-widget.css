@@ -1,0 +1,9 @@
+.b-vote-widget {margin-bottom:20px}
+.b-vote-widget h4 {line-height:100%}
+.b-vote-widget .answer-list {list-style:none; padding:0; margin:10px 0}
+.b-vote-widget .answer-list .answer {padding:4px 0}
+
+.b-vote-widget .result-list {width:100%}
+.b-vote-widget .result-list th {text-align:left}
+.b-vote-widget .result-list .progress {margin-right:10px}
+.b-vote-widget .result-list .percent {white-space:nowrap; vertical-align:top}

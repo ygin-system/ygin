@@ -1,0 +1,78 @@
+/* Comments */
+.mCommentTag {border-top:1px solid #DDD; margin:40px 0 10px 0; padding:20px 0 0}
+.mCommentTag a:link, .mCommentTag a:visited, .mCommentTag a:hover {border-bottom:1px dashed; text-decoration:none}
+
+.mCommentArea .blankFormLink {display:none; margin: 0 0 20px 0;}
+.mCommentArea .view:link, .mCommentArea .view:visited  {text-decoration:none; border-bottom:1px dashed}
+.mCommentArea .view:hover {text-decoration:none; border-bottom:none}
+.mCommentArea textarea {width:600px}
+.mCommentArea .error {color:red; font-style:italic}
+
+.mCommentList {margin-bottom:40px}
+.mCommentList .item {padding:8px 10px; margin:0}
+.mCommentList .name {font:bold 12px "Trebuchet MS", Arial, Helvetica, sans-serif; margin:0 10px 2px 0; display:inline}
+.mCommentList .registered {color:red}
+.mCommentList .title {font-weight:bold}
+.mCommentList .date {font:9px Tahoma, Arial, Verdana, sans-serif; color:#999; margin:0 0 5px 0; display:inline}
+.mCommentList .number {display:inline; margin-right:8px}
+.mCommentList .hvost {background:url('themes/business/gfx/rpl.png') no-repeat 0 0; display:block; float:right; height:11px; margin:-19px 15px 0 0; width:9px}
+.mCommentList .txt {margin:0 0 2px 0; line-height:130%}
+.mCommentList .tools {float:right; font:10px Tahoma, Arial, Verdana; padding:12px 0 5px 0}
+.mCommentList .tools a, .mCommentList .tools a:link, .mCommentList .tools a:visited {text-decoration:none; border-bottom:1px dashed; color:#333}
+.mCommentList .tools a:hover {border-bottom:0}
+.mCommentList ul {list-style:none; padding:0; margin:0}
+.mCommentList ul ul {padding:0 0 0 30px}
+.mCommentList .body {margin:15px 0 0 0}
+.mCommentArea form .user {font-size:16px; line-height:150%}
+
+.mCommentFormBody {border:1px solid #ccc; background:#eee; margin:0 10px 20px 10px; 
+-webkit-border-bottom-right-radius: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+-moz-border-radius-bottomleft: 5px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;}
+.mCommentFormBody td {padding: 5px 5px 5px 10px; font:normal 12px Tahoma, Arial, Verdana; vertical-align:top}
+.mCommentFormBody input, .mCommentFormBody textarea {border:1px solid #000; padding:5px; margin:0}
+.mCommentFormBody a {font-weight:normal}
+.mCommentFormBody img {margin-bottom:-3px}
+.mCommentFormBody table {border:0; border-collapse:collapse; width:100%; margin:0 auto}
+.mCommentFormBody button {font-size:20px; padding:3px}
+.mCommentList li.unWatch{background:#eee; padding:10px 0; border:1px solid #ccc}
+.formTable label{float:left}
+.formTable .text{font: 12px Tahoma,Arial,Verdana;}
+
+/*blogs*/
+.mCommentList .userPhoto{float:left; width:82px; margin-right:10px; text-align:right}
+.mCommentList .userPhoto img{max-height:82px; overflow:hidden;}
+.mCommentList .author table {width:100%}
+.mCommentList .item{overflow:hidden}
+
+.mCommentList, #addCommentDialog-commentsUID{display:none}
+.commentauthor a, .commentauthor a:visited, .commentauthor a:link, .commentauthor a:visited{ border-bottom: 1px solid;}
+
+.commentmobile{color:#888; font-size:11px}
+
+
+/* Comments FROM page.css */
+
+.commenttop {border-top:1px solid #ddd; padding:10px 0 0 0; color:#900; font-family:Times New Roman,times,serif; font-size:18px; margin-bottom:10px;}
+.commenttop a:link, .commenttop a:visited, .commentheader a:link, .commentheader a:visited, .commentView:link, .commentView:visited  {text-decoration:none; border-bottom:1px dashed}
+.commenttop a:hover, .commentheader a:hover, .commentView:hover {text-decoration:none; border-bottom:none}
+.commentbody {background:#f9f9f9; border:1px solid #900; padding:10px; margin:10px 0px 10px 0px; min-width:310px}
+.repl {float:left; margin:-21px 0 0 15px; background:url('repl.gif') no-repeat top left; display:block; width:11px; height:11px}
+.commentheader {padding:10px 0 5px 0; min-width:310px}
+#writecomment {border-top:1px solid #ddd; padding:10px 0 0 0; color:#900; font-family:Times New Roman,times,serif; font-size:18px; margin:20px 0 10px 0}
+.writecomment{font-size:12px}
+.commentauthor a, .commentauthor a:visited, .commentauthor a:link, .commentauthor a:visited{ border-bottom: 1px solid;}
+.commentauthor a:hover{border-bottom:none}
+
+.formCloser {background-image:url('cross.gif'); background-repeat:no-repeat; background-position:0 0; height:12px; width:12px; font-size:0; line-height:0; display:none; float:right}
+.formCloser:hover {background-position:0 -12px}
+.cCommentList .formCloser {display:block}
+#cCommentArea {display:none}
+#cCommentTag {border-top:1px solid #DDDDDD; color:#990000; font:18px Times New Roman,times,serif; font-size:18px; margin-bottom:10px; padding:10px 0 0}
+#cCommentTag a:link, #cCommentTag a:visited, #cCommentTag a:hover {border-bottom:1px dashed; text-decoration:none}
+.cCommentList ul {list-style:none; padding:0}
+.cCommentList ul ul {padding:0 0 0 20px}
+#commentpolicy li {font:normal 10px Verdana, Arial, Helvetica, sans-serif}

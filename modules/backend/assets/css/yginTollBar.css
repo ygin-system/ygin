@@ -1,0 +1,32 @@
+.yginToolBar {
+  background:url(../gfx/siteToolBar.png) repeat-x 0 -18px !important;
+  height:18px !important;
+  overflow:hidden;
+  font:10px/18px freesans, Tahoma, Verdana, Arial, sans !important;
+  width:100% !important;
+  color:#fff !important;
+  position:fixed;
+  z-index:999999999;
+  top:0;
+  left:0 !important;
+  // position:absolute;
+  top: expression(
+    document.getElementsByTagName( 'body' )[0].scrollTop + "px"
+  );
+}
+
+.yginToolBarBack {height:18px !important; overflow:hidden !important}
+.yginLeftBar {position:absolute !important; left:50px !important; top:0 !important}
+.yginRightBar {position:absolute !important; right:0 !important; top:0 !important}
+.yginLogo {
+  background:url(../gfx/siteToolBar.png) repeat-x 0 0 !important;
+  height:18px !important;
+  width:50px !important;
+  overflow:hidden !important;
+  position:absolute !important;
+  left:0 !important;
+  top:0 !important;
+}
+.yginToolBar a:link, .yginToolBar a:visited {text-decoration:none !important; color:#fff !important}
+.yginToolBar a:hover {text-decoration:underline !important}
+.yginTab {padding:0 5px !important}

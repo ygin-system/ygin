@@ -1,0 +1,17 @@
+.b-emarket-category-widget {padding: 8px 0; position: relative; border:1px solid #eee}
+.b-emarket-category-widget ul {list-style: none;}
+.b-emarket-category-widget .cnt {margin:0 0 0 5px; color:#000; font-size: 14px;}
+.b-emarket-category-widget li {font-size:18px}
+.b-emarket-category-widget .nav-list  li  a {padding:10px 15px}
+.b-emarket-category-widget .nav-list .nav-list  li  a {padding:8px 15px}
+.b-emarket-category-widget .nav-list .nav-list .nav-list  li  a {padding:6px 15px}
+.b-emarket-category-widget .active .cnt {color:#ddd;}
+.b-emarket-category-widget .active .nav .cnt {color:#000}
+.b-emarket-category-widget li li {font-size:16px;}
+.b-emarket-category-widget .nav .nav .active .cnt {font-size: 13px;}
+.b-emarket-category-widget .nav .nav .active .nav .cnt {color:#000}
+.b-emarket-category-widget .nav-list .nav-list > .active > a {background:none; color:#000}
+.b-emarket-category-widget li li li {font-size:14px;}
+.b-emarket-category-widget .nav .nav .nav .active .cnt {font-size: 12px;}
+.b-emarket-category-widget .nav .nav .nav .active .nav .cnt {color:#000}
+.b-emarket-category-widget .nav-list .nav-list .nav-list > .active > a {background:none; font-weight:bold; color:#000}
