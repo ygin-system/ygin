@@ -128,7 +128,7 @@ if (typeof(parent.TinyMceLinksArray) != "undefined" && parent.TinyMceLinksArray.
   parent.TinyMceLinksArray = Array();  // кэширование ссылок
   parent.TinyMceLinksNameArray = Array();
 
-  $.ajax({'type':'POST','dataType':'json','success':function(data){var l = data.arr.length; for (var i = 0; i < l; i ++) { addSelectOption('siteRazdelId', data.arr[i], data.links[i]); parent.TinyMceLinksArray[i] = data.arr[i]; parent.TinyMceLinksNameArray[i] = data.links[i]; }},'url':'/admin/engine/ajax-link/','cache':false});
+  $.ajax({'type':'POST','dataType':'json','success':function(data){var l = data.arr.length; for (var i = 0; i < l; i ++) { addSelectOption('siteRazdelId', data.arr[i], data.links[i]); parent.TinyMceLinksArray[i] = data.arr[i]; parent.TinyMceLinksNameArray[i] = data.links[i]; }},'url':'/admin/backend/engine/ajaxLink/','cache':false});
 }
 
 }
