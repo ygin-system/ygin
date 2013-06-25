@@ -35,6 +35,12 @@ class MenuWidget extends CMenu implements IParametersConfig {
         'label' => 'Кодировать ли подпись (исполняемое выражение)',
         'required' => true,
       ),
+      'drawImage' => array(
+        'type' => DataType::EVAL_EXPRESSION,
+        'default' => 'false',
+        'label' => 'Выводить ли иконки у разделов меню)',
+        'required' => true,
+      ),
       'submenuHtmlOptions' => array(
         'type' => DataType::EVAL_EXPRESSION,
         'default' => 'array()',
