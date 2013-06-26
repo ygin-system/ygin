@@ -116,7 +116,10 @@ class ETinyMceYgin extends ETinyMce {
 
       'valid_elements' => $validElement,
     );
-    $this->setContentCSS('/themes/business/css/content.css'); // TODO
+    $theme = Yii::app()->theme;
+    if ($theme != null && file_exists($theme->basePath.'/css/content.css')) {
+      $this->setContentCSS($theme->baseUrl.'/css/content.css');
+    }
   }
 
   public function init() {

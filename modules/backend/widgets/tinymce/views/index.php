@@ -6,6 +6,12 @@
  * @var $tiny ETinyMceYgin
  */
 
+$contentCss = '';
+$theme = Yii::app()->getFrontendTheme();
+if ($theme != null && file_exists($theme->basePath.'/css/content.css')) {
+  $contentCss = $theme->baseUrl.'/css/content.css';
+}
+
 $tiny = $this->widget('ygin.ext.tinymce.ETinyMceYgin', CMap::mergeArray(array(
   'model' => $model,
   'attribute' => $attributeName,
@@ -20,6 +26,7 @@ $tiny = $this->widget('ygin.ext.tinymce.ETinyMceYgin', CMap::mergeArray(array(
     'ygin_advlink_show_block_files' => true,
     'setup' => 'js:function(ed) {ed.onPostProcess.add(function(ed, o) {o.content = cleanCode(o.content, true, false, true, true, true, true, true, true, true);});}',
   ),
+  'contentCss' => $contentCss,
 ), $this->options));
 
 $assetsDir = $tiny->assetsPath;

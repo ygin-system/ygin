@@ -21,12 +21,32 @@ class BackendApplication extends BaseApplication {
 
   private $_baseUrl = null;
 
+  private $_frontendConfig = null;
+
   public function generateFrontedUrl() {
     $this->_baseUrl = $this->urlManager->baseUrl;
     $this->urlManager->baseUrl = '';
   }
   public function generateBackendUrl() {
     $this->urlManager->baseUrl = $this->_baseUrl;
+  }
+
+  public function getFrontendConfig() {
+    if ($this->_frontendConfig === null) {
+      $this->_frontendConfig = require(Yii::getPathOfAlias('ygin.config.mainConfig').'.php');
+    }
+    return $this->_frontendConfig;
+  }
+
+  /**
+   * @return CTheme|mixed
+   */
+  public function getFrontendTheme() {
+    $theme = HArray::val($this->getFrontendConfig(), 'theme');
+    if ($theme != null) {
+      return $this->themeManager->getTheme($theme);
+    }
+    return $theme;
   }
 
   public function addMessage($message, $type=self::MESSAGE_TYPE_INFO, $sticked=false, $time=5) {
