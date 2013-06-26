@@ -2,10 +2,10 @@
 Yii::import('xupload.models.XUploadForm');
 class FileUploadForm extends XUploadForm {
   /**
-   * запрещенные типы файлов
+   * запрещенные части расширений (например расширение .php входит в .php3, поэтому php3 можно не добавлять)
    * @var array
    */
-  private static $deniedExtensions = array('php', 'php3', 'php4', 'php5', 'phps');
+  private static $deniedExtensions = array('php', 'htm', 'phtml', 'htaccess', 'inc');
   public $objectId, $instanceId, $parameterId, $tmpId;
   private $_instanceModel = null;
   public function rules() {
@@ -30,9 +30,13 @@ class FileUploadForm extends XUploadForm {
       $this->addError('instanceId', 'Не указан instanceId.');
     }
     $file = CUploadedFile::getInstance($this, 'file');
-    if ($file && in_array(mb_strtolower($file->extensionName), self::$deniedExtensions)) {
-      $this->addError('file', 'Файл имеет запрещенное расширение.');
-      return false;
+    if ($file) {
+      foreach(self::$deniedExtensions AS $ext) {
+        if (strpos($file->getName(), '.'.$ext) !== false) {
+          $this->addError('file', 'Файл имеет запрещенное расширение.');
+          return false;
+        }
+      }
     }
     $objectParameter = $this->getObjectParameter();
     //если есть ограничение по типу файлов, то нужно добавить в валидатор
