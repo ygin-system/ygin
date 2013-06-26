@@ -13,6 +13,7 @@ class FileUploadForm extends XUploadForm {
       array('objectId, parameterId', 'required'),
       array('instanceId', 'numerical', 'integerOnly' => true),
       array('tmpId', 'length', 'min' => 32, 'max' => 32),
+      array('tmpId', 'match', 'pattern' => '~[a-z\d]+~', 'message'=>'tmp содержит недопустимые символы'),
       array('parameterId, objectId', 'length', 'max' => 255),
     ));
   }

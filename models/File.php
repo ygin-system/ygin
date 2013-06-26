@@ -71,7 +71,8 @@ class File extends DaActiveRecord {
       array('file_path', 'required'),
       array('id_file_type, count, id_instance, id_property, create_date, id_parent_file, status_process', 'numerical', 'integerOnly' => true),
       array('id_parameter, id_object, file_path', 'length', 'max' => 255),
-      array('id_tmp', 'length', 'max' => 32),
+      array('id_tmp', 'length', 'min' => 32, 'max' => 32),
+      array('id_tmp', 'match', 'pattern' => '~[a-z\d]+~', 'message'=>'tmp содержит недопустимые символы'),
     );
   }
 
