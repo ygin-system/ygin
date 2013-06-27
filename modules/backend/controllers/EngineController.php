@@ -38,7 +38,7 @@ class EngineController extends DaBackendController {
       ),
     ));
 
-    $elementParameter->sql_parameter = 't.id_object='.$object->id_object;
+    $elementParameter->sql_parameter = 't.id_object='.Yii::app()->db->quoteValue($object->id_object);
     $elementParameter->widget = null;
 
     $model = $elementObject->getModel();
