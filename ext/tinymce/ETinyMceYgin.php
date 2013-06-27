@@ -14,6 +14,50 @@ class ETinyMceYgin extends ETinyMce {
     $this->_advancedStyles = CMap::mergeArray($this->_advancedStyles, $advancedStyles);
   }
 
+  private function addButtonToPosition($buttons, $newButton, $after, $before) {
+    if ($after == null && $before == null) {
+      $buttons[] = $newButton;
+      return;
+    }
+    $result = array();
+    foreach($buttons AS $button) {
+      if ($button == $after) {
+        $result[] = $button;
+        $result[] = $newButton;
+      } else if ($button == $before) {
+        $result[] = $newButton;
+        $result[] = $button;
+      } else {
+        $result[] = $button;
+      }
+    }
+    if (!in_array($newButton, $result)) $result[] = $newButton;
+    return $result;
+  }
+
+  public function setAddButton($config) {
+    foreach($config AS $item) {
+      $button = $item['button'];
+      if (in_array($button, $this->firstRowOfButtons) ||
+          in_array($button, $this->secondRowOfButtons) ||
+          in_array($button, $this->thirdRowOfButtons) ||
+          in_array($button, $this->fourthRowOfButtons)
+      ) continue;
+
+      $after = (isset($item['after']) ? $item['after'] : null);
+      $before = (isset($item['before']) ? $item['before'] : null);
+      if ($item['row'] == 1) {
+        $this->firstRowOfButtons = $this->addButtonToPosition($this->firstRowOfButtons, $button, $after, $before);
+      } else if ($item['row'] == 2) {
+        $this->secondRowOfButtons = $this->addButtonToPosition($this->secondRowOfButtons, $button, $after, $before);
+      } else if ($item['row'] == 3) {
+        $this->thirdRowOfButtons = $this->addButtonToPosition($this->thirdRowOfButtons, $button, $after, $before);
+      } else if ($item['row'] == 4) {
+        $this->fourthRowOfButtons = $this->addButtonToPosition($this->fourthRowOfButtons, $button, $after, $before);
+      }
+    }
+  }
+
   public function getAssetsPath() {
     return Yii::app()->getAssetManager()->publish(dirname(__FILE__).DIRECTORY_SEPARATOR.'assets');
   }

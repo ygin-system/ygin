@@ -4,9 +4,6 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title></title>
 <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-<script type="text/javascript" src="/engine/js/jquery.js"></script>
-<script type="text/javascript" src="/engine/admin/TinyMCE/functions.js"></script>
-<link href="css/advimage.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .cbUl {padding:0;list-style-type: none}
 .cbUl li {padding:0; margin:0 0 5px 0}
@@ -15,16 +12,16 @@
 <script type="text/javascript">
 function ygin_cleanCode() {
   var ed = tinyMCEPopup.editor;
-
-  content = cleanCode(ed.getContent(), $('#chWidthHeight').is(":checked"), 
-							                         $('#chPaddingMargin').is(":checked"), 
-							                         $('#chTextStyle').is(":checked"), 
-							                         $('#chBg').is(":checked"), 
-							                         $('#chBorder').is(":checked"), 
-							                         $('#chWordAttr').is(":checked"), 
-							                         $('#chU').is(":checked"), 
-							                         $('#chNBSP').is(":checked"), 
-							                         $('#chComments').is(":checked"));
+  $ = parent.$;
+  content = parent.cleanCode(ed.getContent(), $('#chWidthHeight').is(":checked"), 
+                                       $('#chPaddingMargin').is(":checked"), 
+                                       $('#chTextStyle').is(":checked"), 
+                                       $('#chBg').is(":checked"), 
+                                       $('#chBorder').is(":checked"), 
+                                       $('#chWordAttr').is(":checked"), 
+                                       $('#chU').is(":checked"), 
+                                       $('#chNBSP').is(":checked"), 
+                                       $('#chComments').is(":checked"));
 
   ed.setContent(content);
   tinyMCEPopup.close();

@@ -20,6 +20,9 @@ $tiny = $this->widget('ygin.ext.tinymce.ETinyMceYgin', CMap::mergeArray(array(
     'Таблица в тексте без границ' => 'cTable',
     'Таблица в тексте с границами' => 'cTableB',
   ),
+  'addButton' => array(
+    array('row'=>3, 'button'=>'ygin_clean', 'before'=>'code'),
+  ),
   'addOption' => array(
     'skin' => 'bootstrap',
     'ygin_advlink_show_block_menu' => true,
