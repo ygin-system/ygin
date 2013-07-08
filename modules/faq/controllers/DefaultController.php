@@ -6,14 +6,15 @@ class DefaultController extends Controller {
 
   public function actionIndex() {
     $model = BaseActiveRecord::newModel('Question');
+    $modelClass = get_class($model);
 
     if (isset($_POST['ajax'])) {
       echo CActiveForm::validate($model);
       Yii::app()->end();
     }
 
-    if (isset($_POST['Question'])) {
-      $model->attributes = $_POST['Question'];
+    if (isset($_POST[$modelClass])) {
+      $model->attributes = $_POST[$modelClass];
       $model->visible = $this->module->moderate ? BaseActiveRecord::FALSE_VALUE : BaseActiveRecord::TRUE_VALUE;
       $model->onAfterSave = array($this, 'sendMessage');
       if ($model->save()) {
