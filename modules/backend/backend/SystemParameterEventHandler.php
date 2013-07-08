@@ -24,7 +24,7 @@ class SystemParameterEventHandler extends BackendEventHandler {
    */
   public function onProcessPermissionWhere(PermissionWhereEvent $event) {
     if (!Yii::app()->user->checkAccess(DaWebUser::ROLE_DEV)) {
-      $event->where = HText::addCondition($event->where, 'id_system_parameter >= 500');
+      $event->where = HText::addCondition($event->where, 'id_group_system_parameter = 2');
     }
   }
 
