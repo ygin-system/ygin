@@ -17,8 +17,6 @@ class Question extends DaActiveRecord {
   const CATEGORY_GENERAL = 1;
   const CATEGORY_PERSONAL = 2;
   const ID_OBJECT = 512;
-  const ID_EVENT_TYPE = 502;
-  const ID_EVENT_SUBSCRIBER = 104;
 
   protected $idObject = self::ID_OBJECT;
 

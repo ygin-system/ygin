@@ -5,14 +5,16 @@
       $send = $model->send;
       $email = $model->email;
       $answer = $model->answer;
+      $idEventTypeAnswer = Yii::app()->getModule('faq')->idEventTypeAnswer;
+      $idEventSubscriberAnswer = Yii::app()->getModule('faq')->idEventSubscriberAnswer;
 
-      if ($send == 1 && $model->validate()) {
+      if ($send == 1 && $model->validate() && $idEventTypeAnswer != null && $idEventSubscriberAnswer != null) {
         Yii::app()->notifier->addNewEvent(
-          Question::ID_EVENT_TYPE,
+          $idEventTypeAnswer,
           $event->sender->renderPartial('ygin.modules.faq.views.answer',array(
             'model' => $model,
           ), true),
-          Question::ID_EVENT_SUBSCRIBER,
+          $idEventSubscriberAnswer,
           array($email),
           $model->primaryKey
         );
