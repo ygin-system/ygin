@@ -93,13 +93,12 @@ class ObjectUrlRule extends CBaseUrlRule {
       // пока тут определяем текущий объект и представление
       if ($idView != null) {
         $objectView = DaObjectView::model()->with('columns:onlyVisible')->findByPk($idView);
-        if ($objectView == null)
-          return false;
+        if ($objectView == null) throw new CHttpException(404);
         Yii::app()->backend->objectView = $objectView;
         Yii::app()->backend->object = DaObject::getById($objectView->id_object);
       } else {
         $object = DaObject::getById($idObject);
-        if ($object == null) return false;
+        if ($object == null) throw new CHttpException(404);
 
         Yii::app()->backend->object = $object;
         if ($object->object_type == DaObject::OBJECT_TYPE_CONTROLLER) {
