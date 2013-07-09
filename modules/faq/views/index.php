@@ -53,15 +53,15 @@ $form = $this->beginWidget('CActiveForm', array(
             <?php echo $form->error($model, 'email'); ?>
         </div>
     </div>
+    <?php if (Yii::app()->getModule('faq')->useCategories == true): ?>
     <div class="control-group">
         <?php echo $form->labelEx($model, 'category', array('class' => 'control-label')); ?>
         <div class="controls">
-            <!-- +not-encode-mail -->
             <?php echo $form->dropDownList($model, 'category', $model->categoriesList(), array('class' => 'input-xlarge')); ?>
-            <!-- -not-encode-mail -->
             <?php echo $form->error($model, 'category'); ?>
         </div>
     </div>
+    <?php endif; ?>
     <div class="control-group">
         <?php echo $form->labelEx($model, 'question', array('class' => 'control-label')); ?>
         <div class="controls">
