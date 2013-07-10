@@ -7,7 +7,7 @@
  */
 $idInstance = $model->getIdInstance();
 
-$modules = SiteModule::model()->resetScope()->findAll();
+$modules = $this->modules;
 if (count($modules) == 0) return;
 
 $collection = new DaActiveRecordCollection($modules);
