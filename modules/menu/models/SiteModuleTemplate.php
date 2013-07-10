@@ -47,7 +47,7 @@ class SiteModuleTemplate extends DaActiveRecord {
    */
   public function relations() {
     return array(
-      'modulePlaces' => array(self::HAS_MANY, 'SiteModulePlace', 'id_module_template'),
+      'modulePlaces' => array(self::HAS_MANY, 'SiteModulePlace', 'id_module_template', 'order' => 'modulePlaces.sequence'),
     );
   }
 
