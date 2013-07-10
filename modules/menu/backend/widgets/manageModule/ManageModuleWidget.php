@@ -1,6 +1,14 @@
 <?php
 
 class ManageModuleWidget extends VisualElementWidget {
+
+  protected $modules = array();
+
+  public function init() {
+    parent::init();
+    $this->modules = SiteModule::model()->resetScope()->findAll();
+  }
+
   public function onPostForm(PostFormEvent $event) {
     $this->model->attachEventHandler('onAfterSave', array($this, 'processModel'));
   }
@@ -13,7 +21,7 @@ class ManageModuleWidget extends VisualElementWidget {
     SiteModulePlace::model()->resetScope()->deleteAllByAttributes(array('id_module_template' => $idInstance));
 
     // Получаем все модули
-    $modules = SiteModule::model()->resetScope()->findAll();
+    $modules = $this->modules;
     foreach($modules AS $m) {
       $idModule = $m->getIdInstance();
       $placePos    = HU::post("mod_".$idModule."_plc");
