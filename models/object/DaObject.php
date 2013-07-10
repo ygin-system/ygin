@@ -72,9 +72,9 @@ class DaObject extends DaActiveRecord {
    */
   public function rules() {
     return array(
-      array('id_object', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД объекта должен содержать дефис'),
+      array('parent_object, id_object', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД объекта должен содержать дефис'),
       array('name, id_object', 'required'),
-      array('order_type, object_type, parent_object, sequence, use_domain_isolation', 'numerical', 'integerOnly'=>true),
+      array('order_type, object_type, sequence, use_domain_isolation', 'numerical', 'integerOnly'=>true),
       array('id_field_caption, id_field_order, id_object, name, table_name, folder_name, yii_model', 'length', 'max'=>255),
     );
   }
