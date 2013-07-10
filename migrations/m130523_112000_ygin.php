@@ -8,6 +8,7 @@ class m130523_112000_ygin extends CDbMigration {
     );
     foreach($files AS $file)
       @HFile::replaceData('ngin.', 'ygin.', $file);
+    @HFile::replaceData('/../ngin/assets/', '/../ygin/assets/', Yii::getPathOfAlias('webroot').'/themes/business/views/layouts/main.php');
 
     Yii::app()->attachEventHandler('onEndRequest', array($this, 'renameNgin'));
 

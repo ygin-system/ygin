@@ -90,6 +90,10 @@ class MainMenuWidget extends CMenu {
       );
     }
     //print_r($this->items);exit;
+    Yii::app()->clientScript->registerScript('menu.run', '
+      $(".b-menu-side-main .accordion-heading.active .accordion-toggle").removeClass("btn-inverse").addClass("btn-primary");
+      if ($(".b-menu-side-main .in").length == 0) $(".b-menu-side-main .accordion-heading:eq(0) .accordion-toggle").click();
+    ', CClientScript::POS_LOAD);
   }
   
   public function run() {
@@ -99,7 +103,7 @@ class MainMenuWidget extends CMenu {
       if (count($this->items) == 0) continue;
       echo '<div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
+            <a class="accordion-toggle btn btn-inverse" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
           </div>
           <div id="smm-'.$item['id_object'].'" class="collapse accordion-body">';
       parent::run();
@@ -108,7 +112,6 @@ class MainMenuWidget extends CMenu {
         </div>
 ';
     }
-    
   }
   
 }

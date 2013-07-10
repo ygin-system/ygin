@@ -9,6 +9,7 @@ function adminDrawInit(){
   //aDatePickerBind();//Обработка событий для поля с датой и временем
   //aCacheOptionsBind();//Обработка опций кэширования
   //daHintBind(); // Заменяем все стандартные хинты браузера на красивые
+  $('#rbam').daRBAMSexy();
 }
 
 
@@ -258,7 +259,6 @@ jQuery.fn.daSubData = function( options ) {
       .mouseout(function(){menuTimer('#'+$(this).attr('id'))});
   });
 }
-
 
 
 /**
@@ -536,3 +536,14 @@ jQuery.fn.daDeleteRecord = function( options ) {
 }
 
 
+/* Внедряем элементы бутстрапа в RBAM */ 
+jQuery.fn.daRBAMSexy = function() {
+  return this.each(function(){
+    $('#rbam .button, #rbam .buttons input,  #rbam :button, #rbam :submit')
+      .removeClass('button')
+      .addClass('btn')
+      .parents('.buttons')
+      .removeClass('buttons');
+    $('#rbam form').addClass('well');
+  });
+}

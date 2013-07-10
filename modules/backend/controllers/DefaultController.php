@@ -192,7 +192,11 @@ class DefaultController extends DaObjectController {
     $gridColumns = array();
     $pk = $model->getInstanceKeyName();
     // колонка с ид объекта
-    $gridColumns[] = array('name'=>$pk, 'header'=>'id', 'htmlOptions'=>array('class'=>'col-id'));
+    $gridColumns[] = array(
+      'name'=>$pk,
+      'header'=>'id',
+      'htmlOptions'=>array('class'=>'col-id')
+    );
     // колонка сортировки
     if ($seqKey != null) {
       $isSortAjax = ($sort->defaultOrder == $sort->getOrderBy());

@@ -17,8 +17,8 @@ $cs->registerScript('list-file-upload#'.$this->id, '
   <div class="fileupload-buttonbar" style="overflow:hidden;">
   	<div class="span5">
   		<!-- The fileinput-button span is used to style the file input field as button -->
-  		<span class="btn btn-success fileinput-button">
-              <i class="icon-plus icon-white"></i>
+  		<span class="btn fileinput-button">
+              <i class="icon-plus"></i>
               <span><?php echo $this->t('1#Add files|0#Choose file', $this->multiple); ?></span>
   			<?php
               if ($this -> hasModel()) :

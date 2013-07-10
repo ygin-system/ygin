@@ -51,6 +51,7 @@
 .navbar .brand {background:url(../gfx/ygin_icon.png) no-repeat 0 10px;float:left; color:#fff; padding:8px 5px 12px 20px; margin-left:20px; font-family:'Russo One', "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif; font-weight:700}
 .navbar .brand span {font-style:normal; font-weight:normal; font-family:Arial, Geneva, sans-serif}
 .navbar .version {float:left; padding:2px 0 0 0; font-size:10px; cursor:default;}
+.navbar .pull-right {margin-right:10px}
 
 /* Bar */
 .subnav .btn-group {margin:4px 0 0 4px}
@@ -80,7 +81,7 @@
 .b-instance-list .base {}
 .b-instance-list .alt {background-color:#F9F9F9}
 .b-instance-list .col-void {border-right:none !important}
-.b-instance-list .col-id {width:1%; text-align:center; padding:0 5px; font-size:10px}
+.b-instance-list .col-id {width:1%; max-width:50px; text-align:right; padding:0 5px; font-size:10px; overflow:hidden;}
 .b-instance-list .col-num {width:1%; text-align:center; padding:0 5px}
 .b-instance-list .col-string {padding:7px}
 .b-instance-list .col-ref {width:1%; text-align:center; padding:5px}
@@ -138,14 +139,19 @@
 
 .b-instance-edit-form .field-edit {background:#fff url("../gfx/input-bg.gif") repeat-x 0 0; outline:0}
 .b-instance-edit-form .field-textarea {width:98%; background:url(../gfx/textareabg.gif) repeat-x 0 0; padding:5px; outline:0}
+/* Устаревшая загрузка файлов
 .b-instance-edit-form .field-file-uploaded {vertical-align:top}
 .b-instance-edit-form .field-file-uploaded a {margin-left:20px}
 .b-instance-edit-form .field-file-uploaded .remove {cursor:pointer; vertical-align:top}
+*/
 .b-instance-edit-form .additional-property-container {border:1px solid #ddd; padding:10px}
 .b-instance-edit-form .additional-property-list {display:none; margin-top:20px}
 .b-instance-edit-form .field-php-script {border-left:1px solid #ddd}
 
 /* File list upload form */
+.b-instance-edit-form .field-file-list-upload .progress {margin-bottom:0}
+.b-instance-edit-form .field-file-list-upload .progress-extended {margin-bottom:10px}
+/* Устаревшая загрузка файлов
 .b-instance-edit-form .field-file-list-upload .file-list {color:black; list-style:none; padding:0 !important; margin:0 !important; overflow:hidden; width:100%}
 .b-instance-edit-form .field-file-list-upload .file-list li {float:left; margin:0; padding:0 0 10px 0; position:relative; width:160px}
 .b-instance-edit-form .field-file-list-upload .file-list a {background-image:url(../gfx/fileIcons.png); background-repeat:no-repeat; display:block; padding:3px 0 3px 20px; width:100px; overflow:hidden; white-space:nowrap; margin:0}
@@ -164,8 +170,9 @@
 .b-instance-edit-form .field-file-list-upload .file-list .avi {background-position:-20px -224px}
 .b-instance-edit-form .field-file-list-upload .file-list .mpg {background-position:-20px -224px}
 .b-instance-edit-form .field-file-list-upload .file-list .pdf {background-position:-81px -160px}
-.b-instance-edit-form .field-file-list-upload .file-list b {display:none; width:12px; height:12px; /*background:url(../gfx/misc.png) no-repeat 0 -199px;*/ position:absolute; top:4px; left:125px; cursor:pointer; font-size:0; line-height:0}
+.b-instance-edit-form .field-file-list-upload .file-list b {display:none; width:12px; height:12px; background:url(../gfx/misc.png) no-repeat 0 -199px; position:absolute; top:4px; left:125px; cursor:pointer; font-size:0; line-height:0}
 .b-instance-edit-form .field-file-list-upload .file-list b.ani {background:url(../../../../assets/gfx/loading_s.gif) no-repeat 0 0; width:16px; height:16px}
+*/
 /*.b-instance-edit-form .field-file-list-upload .input-file {width:40px}  TODO: Проверить, надо ли это */
 .uploadAnimation {background:url(../../../../assets/gfx/loading_s.gif) no-repeat 0 0; display:none; padding:0 10px; font-size:16px}
 
@@ -183,61 +190,11 @@ br.label-message {display:block; line-height: 0; float:left}
 /* Menu */
 .b-menu-side-main {margin-top:20px}
 .b-menu-side-main .accordion-group {margin-bottom:10px}
-.b-menu-side-main .accordion-toggle {
-  text-decoration:none;
-  background-color: #fbfbfb;
-  background-image: -moz-linear-gradient(top, #f5f5f5, #eee);
-  background-image: -ms-linear-gradient(top, #f5f5f5, #eee);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), to(#eee));
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #eee);
-  background-image: -o-linear-gradient(top, #f5f5f5, #eee);
-  background-image: linear-gradient(top, #f5f5f5, #eee);
-  background-repeat: repeat-x;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
-  color:#000;
-}
-.b-menu-side-main .accordion-toggle:focus {
-  outline:none;
-}
-.b-menu-side-main .accordion-toggle:hover {
-  text-decoration:none;
-  background-color: #fbfbfb;
-  background-image: -moz-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(top, #fff, #f5f5f5);
-  background-image: -o-linear-gradient(top, #fff, #f5f5f5);
-  background-image: linear-gradient(top, #fff, #f5f5f5);
-  background-repeat: repeat-x;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
-}
-.b-menu-side-main .active .accordion-toggle {
-  background-color: #0055CC;
-  background-image: -moz-linear-gradient(top, #0088CC, #0055CC);
-  background-image: -ms-linear-gradient(top, #0088CC, #0055CC);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088CC), to(#0055CC));
-  background-image: -webkit-linear-gradient(top, #0088CC, #0055CC);
-  background-image: -o-linear-gradient(top, #0088CC, #0055CC);
-  background-image: linear-gradient(top, #0088CC, #0055CC);
-  background-repeat: repeat-x;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#0088CC', endColorstr='#0055CC', GradientType=0);
-  border-radius: 4px 4px 0 0;
-  color:#fff;
-  text-shadow:0 -1px 0 rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-.b-menu-side-main .active .accordion-toggle:hover{
-  background-position:0 -15px;
-  -webkit-transition:background-position .1s linear;
-  -moz-transition:background-position .1s linear;
-  -ms-transition:background-position .1s linear;
-  -o-transition:background-position .1s linear;
-  transition:background-position .1s linear;
-}
+.b-menu-side-main .accordion-toggle {text-align: left}
+.b-menu-side-main .accordion-toggle:focus {outline:none;}
 .b-menu-side-main .accordion-inner a:link, .b-menu-side-main .accordion-inner a:visited {color:#000}
 .b-menu-side-main .accordion-inner .active a:link, .b-menu-side-main .accordion-inner .active a:visited {color:#fff}
+
 
 /* Actions */
 .action-del-loc a, .action-del-loc-no i, .action-view i, .action-view-no i, .action-edit a, .action-edit-no i, .action-delete a, .action-delete-no i, .action-folder a, .action-folder-full a, .action-sub-data i, .action-sub-data-no i {background-image:url(../gfx/actions.png); background-repeat:no-repeat}
@@ -254,10 +211,11 @@ br.label-message {display:block; line-height: 0; float:left}
 .action-view i {background-position:left -256px}
 .action-view-no i {background-position:left -288px}
 .action-sub-data i {background-position:left -320px}
+.action-sub-data td, .action-sub-data th {line-height:120%}
 .action-sub-data-no i {background-position:left -352px}
 .action-del-loc-no i, .action-view i, .action-view-no i, .action-edit-no i, .action-delete-no i, .action-delete a, .action-edit a, .action-folder a, .action-folder-full a, .action-sub-data i, .action-sub-data-no i, .action-del-loc a {display:block; width:32px; height:32px; margin:0 auto}
 .action-del-loc-no i, .action-view i, .action-view-no i, .action-edit-no i, .action-delete-no i, .action-delete a, .action-edit a, .action-sub-data i, .action-sub-data-no i, .action-del-loc a {font-size:0; line-height:0;}
-.action-sub-data div {position:relative}
+.action-sub-data .popover-container {position:relative}
 .action-sub-data ul {position:absolute; background:#fff; border:1px solid #f66; right:38px; top:2px; margin:0; padding:5px; text-align:left; list-style:none; display:none; z-index:100}
 .action-sub-data li {white-space:nowrap; margin:0; padding:0; font-size:10px; font-family:Verdana, Arial, Helvetica, sans-serif; line-height:150%}
 
@@ -274,12 +232,14 @@ br.label-message {display:block; line-height: 0; float:left}
 
 
 /* RBam - раздача прав */
-#rbam .row {margin-left:0}
-#rbam form {background:none; border:0}
+#rbam form {background:auto; border:0}
 #rbam #left-column {width:33% !important}
 #rbam #right-column {margin-left:35% !important}
 #rbam-menu {margin:0}
 .alphaPager .hidden {visibility:visible;}
+#rbam .view .grid-view .summary {position:relative !important; top:0 !important}
+#rbam .view, #rbam .yiiTab div.view {background:#f6f6f6 !important}
+#rbam form .row, #rbam-dialog-form .row {min-height:0 !important; margin-left:0 !important}
 
 /* SiteModuleList */
 .b-site-module-list td {vertical-align:top}
@@ -312,3 +272,6 @@ br.label-message {display:block; line-height: 0; float:left}
 .b-widget-place ul {list-style:none; padding:0; margin:0; min-height:20px}
 .b-widget-place .label {cursor:move; display:block; margin:5px 0}
 .b-widget-place .highlight {background:#FFEF8F; height:20px}
+
+
+.tooltip .tooltip-inner {text-align:left; line-height:150%}
