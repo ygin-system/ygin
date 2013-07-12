@@ -4,14 +4,11 @@ class MenuEventHandler extends BackendEventHandler {
 
   public function onParameterAvailable(ParameterAvailableEvent $event) {
     parent::onParameterAvailable($event);
+    return;
     if ($event->status == ViewController::ENTITY_STATUS_NOT_VISIBLE) return;
 
     $param = $event->objectParameter;
     $name = $param->getFieldName();
-
-    if ($name == 'handler' && $param->id_parameter_type != DataType::ABSTRACTIVE) {
-      $event->status = ViewController::ENTITY_STATUS_NOT_VISIBLE;
-    }
 
     /**
      * @var $instance Menu
