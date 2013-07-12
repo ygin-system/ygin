@@ -318,23 +318,7 @@ abstract class DaActiveRecord extends BaseActiveRecord {
         $f->delete();
     }
 
-    // обрабатываем пхп-скрипты экземпляра
-    $scriptsField = $this->getObjectInstance()->getFieldByType(DataType::PHP_SCRIPT, true);
-    foreach($scriptsField AS $field) {
-      $idPhpScript = $this->$field;
-      if ($idPhpScript == null) continue;
-      $phpScript = PhpScriptInstance::model()->findByAttributes(array('id_php_script'=>$idPhpScript) );
-      if ($phpScript != null) {
-        // Перед удалением проверяем, используется ли данный скрипт в др. экземплярах данного объекта:
-        $count = $this->count($field.'=:val', array(':val'=>$idPhpScript));
-        if ($count == 1) {
-          $phpScript->delete();
-        }
-      }
-    }
-
     //$cur->updateObjectInstanceInfo(3);
-
     return parent::beforeDelete();
   }
   protected function afterSave() {

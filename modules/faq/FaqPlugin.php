@@ -1,11 +1,11 @@
 <?php
 
 class FaqPlugin extends PluginAbstract {
-  
+
   public static function createPlugin(array $config) {
     return new FaqPlugin();
   }
-  
+
   public function getName() {
     return 'Вопрос-ответ';
   }
@@ -18,7 +18,7 @@ class FaqPlugin extends PluginAbstract {
   public function getShortDescription() {
     return 'Позволяет организовать обмен вопросов-ответов с пользователями сайта.';
   }
-  
+
   public function getParametersValueFromConfig($config, $data) {
     if (isset($config['modules']['ygin.faq'])) {
       $params = $config['modules']['ygin.faq'];
@@ -56,11 +56,32 @@ class FaqPlugin extends PluginAbstract {
             'default' => false,
             'label' => 'Отправлять ответы на e-mail',
             'description' => null,
-            'required' => false,    
+            'required' => false,
+        ),
+        'useCategories' => array(
+            'type' => DataType::BOOLEAN,
+            'default' => false,
+            'label' => 'Использовать категории',
+            'description' => null,
+            'required' => false,
+        ),
+        'idEventTypeAnswer' => array(
+            'type' => DataType::INT,
+            'default' => null,
+            'label' => 'ИД типа события для ответа',
+            'description' => null,
+            'required' => false,
+        ),
+        'idEventSubscriberAnswer' => array(
+            'type' => DataType::INT,
+            'default' => null,
+            'label' => 'ИД подписчика для ответа',
+            'description' => null,
+            'required' => false,
         ),
     );
   }
-  
+
   public function install(Plugin $plugin) {
     $plugin->setData(array(
         'id_object' => 512,
@@ -82,7 +103,7 @@ class FaqPlugin extends PluginAbstract {
       $eventType = $this->prepareEventType('Вопрос-ответ » Новый вопрос');
       $eventType->save();
       $data['id_event_type'] = $eventType->id_event_type;
-      
+
       // создаем раздел меню
       $menu = $this->prepareMenu(
               'Вопрос-ответ',
@@ -93,35 +114,35 @@ class FaqPlugin extends PluginAbstract {
       );
       $menu->save();
       $data['id_menu'] = $menu->id;
-      
+
       $this->createPermission($data['id_object'], 'Просмотр списка данных объекта Вопрос-ответ');
-      
+
       $this->updateMenu = true;
     }
     $plugin->setData($data);
     $plugin->setConfig($this->getConfigByParamsValue($plugin->getParamsValue(), $data));
   }
-  
+
   public function deactivate(Plugin $plugin) {
     $data = $plugin->getData();
     if ($data === null || !isset($data['id_menu'])) {
       throw new ErrorException('Плагин установлен неверно.');
     }
-    
+
     $data = $this->deleteMenu($data['id_menu'], $data, 'id_menu_module_template');
-    
+
     // Удаляем: все отправленные и неотправленные события по типу события + подписчиков + тип события
     $eventType = NotifierEventType::model()->findByPk($data['id_event_type']);
     if ($eventType != null) {
       $eventType->delete();
     }
-    
+
     Yii::app()->authManager->removeAuthItemObject('list', $data['id_object']);
     $this->updateMenu = true;
-    
+
     unset($data['id_menu'], $data['id_event_type']);
-    
+
     $plugin->setData($data);
   }
-  
+
 }

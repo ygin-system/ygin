@@ -90,10 +90,20 @@ class RelationsColumn extends CGridColumn {
       }
     }
     $this->prepareData = $availableObjects;
+    // TODO: Поменять скрипт, когда будет применяться PopOver
     if (!$this->single) {
       Yii::app()->clientScript->registerScript('admin.subData.init', '$(".action-sub-data").daSubData();
 $(document).on("afterGridUpdate", function(e) {  $(".action-sub-data").daSubData(); });
 ', CClientScript::POS_READY);
+      /*
+        Yii::app()->clientScript->registerScript('admin.subData.init', '
+        $("[rel=\'popover-sub-data\']").popover({
+          placement: "left",
+          trigger:   "hover",
+          template:  "<div class=\'popover\'><div class=\'arrow\'></div><div class=\'popover-inner\'><div class=\'popover-content\'></div></div></div>"
+        });', CClientScript::POS_READY);
+        
+       */
     }
   }
 
@@ -102,8 +112,12 @@ $(document).on("afterGridUpdate", function(e) {  $(".action-sub-data").daSubData
     if ($c == 0) return;
     $idInstance = $data->getIdInstance();
     if (!$this->single) {
-      echo '<div><i rel="popm'.$idInstance.'" title="Зависимые данные"></i>
-  <ul id="popm'.$idInstance.'">
+      /* TODO: взять этот тег i, когда будет PopOver
+       * <i data-content="данные" rel="popover-sub-data"></i> 
+       */
+      echo '<div class="popover-container">
+              <i rel="popm'.$idInstance.'"  title="Зависимые данные"></i>
+              <ul id="popm'.$idInstance.'">
 ';
     }
     foreach($this->prepareData AS $idObject => $params) {

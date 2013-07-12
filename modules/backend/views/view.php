@@ -96,7 +96,7 @@ echo $form->errorSummary($model,
         $isAdditionalParamExists = true;
         if ($isBaseParamExists) {
           echo '<div class="additional-property-container">
-                    <a class="btn" onclick="$(this).next().slideToggle(); return false;"><i class="icon-chevron-down"></i> Дополнительные свойства</a>
+                    <a class="btn" onclick="$(this).next().slideToggle(); return false;"><i class="icon-chevron-down"></i> Дополнительные характеристики</a>
                     <div class="additional-property-list">'."\n";
         }
       }
@@ -159,6 +159,7 @@ echo $form->errorSummary($model,
           </a>
           <ul class="dropdown-menu">
             <li><a id="saveAndNewButton" class="btn-save" title="Ctrl+Alt+Enter" data-action="5" href="#"><i class="icon-ok"></i> Сохранить и добавить еще <i class="icon-plus"></i></a></li>
+<!--             <li><a id="saveAsNew" class="btn-save" data-action="6" href="#"><i class="icon-ok"></i> Сохранить как новое <i class="icon-file"></i></a></li>  -->
           </ul>
         </div>
         &nbsp;&nbsp;

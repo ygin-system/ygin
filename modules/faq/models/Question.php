@@ -11,9 +11,11 @@
  * @property string $question
  * @property string $answer
  * @property integer $visible
+ * @property integer $category
  */
 class Question extends DaActiveRecord {
-
+  const CATEGORY_GENERAL = 1;
+  const CATEGORY_PERSONAL = 2;
   const ID_OBJECT = 512;
 
   protected $idObject = self::ID_OBJECT;
@@ -26,7 +28,7 @@ class Question extends DaActiveRecord {
     $this->ask_date = time();
     $this->ip = HU::getUserIp();
   }
-  
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -50,11 +52,12 @@ class Question extends DaActiveRecord {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array_merge(array(
-  		array('name, question', 'required'),
+  		array('name, question, email', 'required'),
   		array('email', 'email'),
   		array('visible', 'numerical', 'integerOnly' => true),
   		array('name, email', 'length', 'max' => 255),
   		array('ask_date', 'length', 'max' => 10),
+      array('category', 'in', 'range' => array_keys(self::categoriesList()), 'allowEmpty' => false),
   		array('answer', 'safe'),
 		), Yii::app()->user->isGuest
 		     ?  array(
@@ -64,7 +67,7 @@ class Question extends DaActiveRecord {
 		    : array()
 		);
 	}
-	
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -88,7 +91,29 @@ class Question extends DaActiveRecord {
             'answer' => 'Ответ',
             'visible' => 'Visible',
             'verifyCode' => 'Код проверки',
+            'category' => 'Категория',
 		);
 	}
 
+   public static function categoriesList() {
+		return array(
+			self::CATEGORY_GENERAL => 'Общие',
+			self::CATEGORY_PERSONAL => 'Личные',
+		);
+	}
+
+   public function getBackendEventHandler() {
+    return array(
+      'class' => 'faq.backend.FaqEventHandler'
+    );
+  }
+
+  public function beforeValidate() {
+    if ($this->send == 1 && $this->answer == null) {
+      $this->addError('answer', 'Чтобы отправить ответ заполните его.');
+
+      return false;
+    }
+    return true;
+  }
 }

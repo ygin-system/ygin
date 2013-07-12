@@ -5,8 +5,8 @@
   <meta http-equiv="pragma" content="no-cache">
   <meta name="copyright" content="&copy; ygin">
 <?php
-  Yii::app()->clientScript->registerMetaTag('CMS, модули, редактирование контента, голосование, администрирование', 'keywords');
-  Yii::app()->clientScript->registerMetaTag('CMS ygin', 'description');
+  Yii::app()->clientScript->registerMetaTag('CMF, модули, редактирование контента, голосование, администрирование', 'keywords');
+  Yii::app()->clientScript->registerMetaTag('CMF ygin', 'description');
   Yii::app()->clientScript->registerLinkTag('icon', "image/x-icon", '/favicon.ico');
 
   // Подключаемые ява-скрипты и стили искать в файле /ygin/config/packages.php

@@ -18,7 +18,6 @@ class DataType {
 
   const FILES = 15;
   const HIDDEN = 17;
-  const PHP_SCRIPT = 18;
 
   const RADIO = 19;
   const EVAL_EXPRESSION = 20;
@@ -37,7 +36,6 @@ class DataType {
     DataType::SEQUENCE    => 'INT(8)',
     DataType::TEXTAREA    => 'LONGTEXT',
     DataType::HIDDEN      => 'VARCHAR(255)',
-    DataType::PHP_SCRIPT  => 'INT(8)',
 
     DataType::FILES       => null,
     DataType::ABSTRACTIVE => null,

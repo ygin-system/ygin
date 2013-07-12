@@ -48,8 +48,8 @@ $cs->registerScript('single-file-upload#'.$this->id, '
   <div class="fileupload-buttonbar">
   	<div class="span5">
   		<!-- The fileinput-button span is used to style the file input field as button -->
-  		<span class="btn btn-success fileinput-button field-file <?php echo ($this->objectParameter->not_null?'b-field-notnull':'');?>">
-              <i class="icon-plus icon-white"></i>
+  		<span class="btn fileinput-button field-file <?php echo ($this->objectParameter->not_null?'b-field-notnull':'');?>">
+              <i class="icon-plus"></i>
               <span><?php echo $this->t('1#Add files|0#Choose file', $this->multiple); ?></span>
   			<?php
               if ($this -> hasModel()) :
@@ -76,7 +76,6 @@ $cs->registerScript('single-file-upload#'.$this->id, '
   </div>
   <!-- The loading indicator is shown during image processing -->
   <div class="fileupload-loading"></div>
-  <br>
   <!-- The table listing the files available for upload/download -->
   <table class="table table-striped">
   	<tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>

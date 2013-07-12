@@ -1,7 +1,7 @@
 <?php
 Yii::import('xupload.models.XUploadForm');
 $id = 'list-file-upload-'.$this->id;
-?><div class="list-file-upload-row" id="<?php echo $id; ?>"><?php
+?><div class="field-file-list-upload" id="<?php echo $id; ?>"><?php
 $this->widget('fileUpload.fileUploadWidget.FileUploadWidget', array(
   'id' => $id,
   'multiple' => true,

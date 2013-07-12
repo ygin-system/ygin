@@ -138,12 +138,26 @@ class ObjectParameter extends DaActiveRecord {
     );
   }
 
+  /**
+   * @return DaObject возвращает объект свойтва
+   */
+  public function getObject() {
+    return DaObject::getById($this->id_object);
+  }
+
   protected function beforeSave() {
     if (!$this->isNewRecord) {
       $idObject = $this->id_object;
       $notChangeObject = array(20, 21);
       if (!in_array($idObject, $notChangeObject)) {
         $this->sqlChange($this);
+      }
+    } else {
+      // если создается свойство типа Первичный ключ или Родительский ключ, и поле такого типа уже есть, то кидаем исключение.
+      $type = $this->getType();
+      if (in_array($type, array(DataType::PRIMARY_KEY, DataType::ID_PARENT))) {
+        $object = $this->getObject();
+        if ($object->getFieldByType($type) !== null) throw new CException('Свойство такого типа уже существует.');
       }
     }
     return parent::beforeSave();
