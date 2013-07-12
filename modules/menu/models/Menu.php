@@ -11,7 +11,6 @@
  * @property integer $visible
  * @property integer $id_parent
  * @property integer $sequence
- * @property integer $handler
  * @property string $note
  * @property string $alias
  * @property string $title_teg
@@ -63,7 +62,7 @@ class Menu extends DaActiveRecord implements ISearchable {
   {
     return array(
       array('name, id_module_template', 'required'),
-      array('visible, id_parent, sequence, handler, go_to_type, id_module_template, external_link_type', 'numerical', 'integerOnly'=>true),
+      array('visible, id_parent, sequence, go_to_type, id_module_template, external_link_type', 'numerical', 'integerOnly'=>true),
       array('name, caption, title_teg, meta_description, meta_keywords, external_link', 'length', 'max'=>255),
       array('note', 'length', 'max'=>200),
       array('alias', 'length', 'max'=>100),
@@ -112,7 +111,6 @@ class Menu extends DaActiveRecord implements ISearchable {
       'visible' => 'Visible',
       'id_parent' => 'Родитель',
       'sequence' => 'Sequence',
-      'handler' => 'Handler',
       'note' => 'Note',
       'alias' => 'Alias',
       'title_teg' => 'Title Teg',
