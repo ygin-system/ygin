@@ -100,11 +100,13 @@
   if (Yii::app()->backend->userMenuWidget != null) {
     // TODO раскидать по расширениям
     $userMenuWidget = $this->createWidget(Yii::app()->backend->userMenuWidget, array('htmlOptions' => array('class' => 'dropdown-menu')) );
-    $userMenuWidget->items[] = array(
-      'label' => '<i class="icon-edit"></i> Профиль',
-      'active' => false,
-      'url' => '/admin/page/24/'.Yii::app()->user->id.'/view/6/',  // TODO верно формировать ссылку и проверять есть ли доступ к редактированию профиля
-    );
+    if (Yii::app()->user->model != null && Yii::app()->authManager->checkObjectInstance(DaDbAuthManager::OPERATION_EDIT, Yii::app()->user->id, User::ID_OBJECT, Yii::app()->user->id, false)) {
+      $userMenuWidget->items[] = array(
+        'label' => '<i class="icon-edit"></i> Профиль',
+        'active' => false,
+        'url' => '/admin/page/24/'.Yii::app()->user->id.'/view/6/',  // TODO верно формировать ссылку
+      );
+    }
 
     Yii::app()->backend->raiseEvent(BackendModule::EVENT_ON_BEFORE_USER_MENU, new CEvent($userMenuWidget));
 
