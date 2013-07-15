@@ -98,7 +98,7 @@ class ObjectUrlRule extends CBaseUrlRule {
         Yii::app()->backend->object = DaObject::getById($objectView->id_object);
       } else {
         $object = DaObject::getById($idObject);
-        if ($object == null) throw new CHttpException(404);
+        if ($object == null || $object->table_name == null) throw new CHttpException(404);
 
         Yii::app()->backend->object = $object;
         if ($object->object_type == DaObject::OBJECT_TYPE_CONTROLLER) {
