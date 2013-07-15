@@ -147,7 +147,10 @@ class MenuWidget extends CMenu implements IParametersConfig {
     
     $menuItems = $root->getChild();
     foreach ($menuItems as $menuItem) {
-      
+      /**
+       * @var $menuItem Menu
+       */
+
       if (!$menuItem->isVisible) {
         continue;
       }
@@ -171,6 +174,7 @@ class MenuWidget extends CMenu implements IParametersConfig {
       if ($this->drawImage && $menuItem->image != null) {
         $itemOptions['style'] = 'background:url('.$menuItem->imageFile->getUrlPath().')';
       }
+      if ($menuItem->external_link_type == 1) $linkOptions['target'] = '_blank';
       $preparedItem = array(
         'active' => $this->isMenuItemActive($menuItem),
         'label' => $labelTemlate ? strtr($labelTemlate, array('{label}' => $menuItem->name)) : $menuItem->name,
