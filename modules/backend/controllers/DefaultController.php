@@ -30,12 +30,15 @@ class DefaultController extends DaObjectController {
   }
 
   private function main() {
+    /**
+     * @var $model DaActiveRecord
+     * @var $object DaObject
+     */
     $object = Yii::app()->backend->object;
     $view = Yii::app()->backend->objectView;
     $model = $object->getModel();
     $idObject = $object->id_object;
     $idView = $view->id_object_view;
-    $parameters = $object->parameters;
 
     if ($this->_groupInstance != null) {
       $linkObject = Yii::app()->createUrl(BackendModule::ROUTE_INSTANCE_LIST, array(
@@ -104,6 +107,9 @@ class DefaultController extends DaObjectController {
         }
       }
     }
+
+    // вновь восстанавливаем чистую модель, т.к. конструкции типа $model->findByPk затирают resetScope
+    $model = $object->getModel();
 
     // кнопка создать
     if (Yii::app()->authManager->canCreateInstance($idObject, Yii::app()->user->id)) {
