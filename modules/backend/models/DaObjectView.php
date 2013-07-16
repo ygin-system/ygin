@@ -63,7 +63,8 @@ class DaObjectView extends DaActiveRecord {
    */
   public function rules() {
     return array(
-      array('id_object, name', 'required'),
+      array('id_object_view', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('id_object_view, id_object, name', 'required'),
       array('order_no, visible, count_data', 'numerical', 'integerOnly'=>true),
       array('id_object_view, id_object, name, sql_select, sql_from, sql_where, sql_order_by, icon_class', 'length', 'max'=>255),
     );

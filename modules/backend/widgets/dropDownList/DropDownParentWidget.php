@@ -55,7 +55,7 @@ class DropDownParentWidget extends DropDownListWidget {
     if ($where != null) $cr->addCondition($where);
     $cr->limit = $this->maxData;
     $cr->order = $object->getOrderBy();
-    $data = $this->model->findAll($cr);
+    $data = $this->model->resetScope()->findAll($cr);
 
     $attributeName = $this->attributeName;
 
