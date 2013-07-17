@@ -33,7 +33,8 @@ class Reference extends DaActiveRecord {
    */
   public function rules() {
     return array(
-      array('name', 'required'),
+      array('id_reference', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('name, id_reference', 'required'),
       array('name, id_reference', 'length', 'max'=>100),
     );
   }

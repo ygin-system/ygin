@@ -45,7 +45,8 @@ class ReferenceElement extends DaActiveRecord {
    */
   public function rules() {
     return array(
-      array('value', 'required'),
+      array('id_reference_element_instance', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('value, id_reference_element_instance', 'required'),
       array('id_reference_element', 'numerical', 'integerOnly'=>true),
       array('id_reference_element_instance, id_reference, value', 'length', 'max'=>255),
       array('image_element', 'length', 'max'=>150),
