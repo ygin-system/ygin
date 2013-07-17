@@ -5,7 +5,6 @@
  * The followings are the available columns in table 'da_php_script_type':
  * @property integer $id_php_script_type
  * @property string $file_path
- * @property string $class_name
  * @property string $description
  * @property integer $id_php_script_interface
  * @property integer $active
@@ -74,9 +73,9 @@ class PhpScript extends DaActiveRecord {
    */
   public function rules() {
     return array(
-      array('file_path, class_name, id_php_script_interface', 'required'),
+      array('file_path, id_php_script_interface', 'required'),
       array('id_php_script_interface', 'numerical', 'integerOnly'=>true),
-      array('id_php_script_type, file_path, class_name, description', 'length', 'max'=>255),
+      array('id_php_script_type, file_path, description', 'length', 'max'=>255),
     );
   }
 
@@ -113,7 +112,6 @@ class PhpScript extends DaActiveRecord {
     return array(
       'id_php_script_type' => 'Id Php Script Type',
       'file_path' => 'File Path',
-      'class_name' => 'Class Name',
       'description' => 'Description',
       'id_php_script_interface' => 'Id Php Script Interface',
     );
