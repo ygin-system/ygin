@@ -42,10 +42,10 @@ class NotifierEventType extends DaActiveRecord {
   public function rules() {
     return array(
       array('name', 'required'),
-      array('id_object, last_time, interval_value, id_mail_account', 'numerical', 'integerOnly'=>true),
-      array('sql_condition, condition_done', 'length', 'max'=>255),
+      array('last_time, interval_value, id_mail_account', 'numerical', 'integerOnly'=>true),
+      array('id_object, sql_condition, condition_done', 'length', 'max'=>255),
       array('name', 'length', 'max'=>100),
-            array('id_event_type', 'unsafe'),
+      array('id_event_type', 'unsafe'),
     );
   }
 
@@ -55,8 +55,8 @@ class NotifierEventType extends DaActiveRecord {
   public function relations() {
     return array(
       'mailAccount' => array(self::BELONGS_TO, 'NotifierMailAccount', 'id_mail_account', 'joinType' => 'INNER JOIN'),
-          'subscribers' => array(self::HAS_MANY, 'NotifierEventSubscriber', 'id_event_type'),
-          'events' => array(self::HAS_MANY, 'NotifierEvent', 'id_event_type'),
+      'subscribers' => array(self::HAS_MANY, 'NotifierEventSubscriber', 'id_event_type'),
+      'events' => array(self::HAS_MANY, 'NotifierEvent', 'id_event_type'),
     );
   }
 

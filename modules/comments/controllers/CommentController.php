@@ -225,13 +225,15 @@ class CommentController extends Controller {
     }
     $sql = "SELECT id_instance as id, count(id_comment) as count
             FROM pr_comment
-            WHERE id_object = ".$idObject."
+            WHERE id_object = :idObject
               AND id_instance in (" . implode(',', $idInstances) . ")
               AND moderation = ".CommentYii::STATUS_APPROVED."
             GROUP BY 1";
     $query = Yii::app()->db->createCommand($sql);
     if ($query) {
-      $res = $query->queryAll();
+      $res = $query->queryAll(true, array(
+        ':idObject' => $idObject,
+      ));
       foreach($res as $row) {
         if (!isset($data[$row['id']])) {
           $data[$row['id']] = $row['count'];
