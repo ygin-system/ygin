@@ -29,7 +29,11 @@ class BannerPlaceEventHandler extends BackendEventHandler {
     $idObject = intval(HU::get(self::URL_PARAM_OBJECT));
     $idInstance = intval(HU::get(self::URL_PARAM_INSTANCE));
     $where = $event->where;
-    if ($idObject && $idInstance) $where = HText::addCondition($where, 'id_object = '.$idObject.' AND id_instance = '.$idInstance);
+    if ($idObject && $idInstance) {
+      $where = HText::addCondition($where, 'id_object = :id_object_banner AND id_instance = :id_instance_banner');
+      $event->params[':id_object_banner'] = $idObject;
+      $event->params[':id_instance_banner'] = $idInstance;
+    }
     $event->where = $where;
   }
 

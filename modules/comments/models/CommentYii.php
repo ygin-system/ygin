@@ -102,8 +102,8 @@ class CommentYii extends DaActiveRecord {
   public function rules() {
     $rules = array(
       array('comment_text, id_object, id_instance', 'required'),
-      array('comment_date, id_object, id_instance, moderation, id_user', 'numerical', 'integerOnly' => true),
-      array('comment_name', 'length', 'max' => 125),
+      array('comment_date, id_instance, moderation, id_user', 'numerical', 'integerOnly' => true),
+      array('id_object, comment_name', 'length', 'max' => 125),
       array('id_comment, id_parent, comment_theme', 'safe'),
     );
     $config = Yii::app()->getModule('comments')->getModelConfig();
