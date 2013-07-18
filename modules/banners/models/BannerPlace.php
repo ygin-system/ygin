@@ -62,8 +62,8 @@ class BannerPlace extends DaActiveRecord {
   public function rules() {
     return array(
         array('title, showing', 'required'),
-        array('id_object, id_instance, showing, sequence, id_parent', 'numerical', 'integerOnly' => true),
-        array('title', 'length', 'max' => 255),
+        array('id_instance, showing, sequence, id_parent', 'numerical', 'integerOnly' => true),
+        array('id_object, title', 'length', 'max' => 255),
         array('id_banner_place', 'unsafe'),
     );
   }

@@ -10,9 +10,9 @@
         $add .= " AND (".$where.")";
       }
   //    $sql = "SELECT id_instance, view_count FROM da_stat_view WHERE last_date_process=(SELECT MAX(last_date_process) FROM da_stat_view WHERE id_object = ".$idObject.$add.") id_object = ".$idObject.$add;
-      $sql = "SELECT id_instance, view_count FROM da_stat_view WHERE id_object = ".$idObject.$add." ORDER BY last_date_process LIMIT 1";
+      $sql = "SELECT id_instance, view_count FROM da_stat_view WHERE id_object = :id_object".$add." ORDER BY last_date_process LIMIT 1";
 
-      $data = Yii::app()->db->createCommand($sql)->queryAll();
+      $data = Yii::app()->db->createCommand($sql)->queryAll(true, array(':id_object' => $idObject));
       $result = array();
       foreach($data AS $row) {
         $result[$row['id_instance']] = $row['view_count'];
@@ -27,8 +27,8 @@
       }      
       $collection = new DaActiveRecordCollection($instances);
       $array = $collection->getKeys();
-      $sql = "SELECT id_instance, COUNT(view_count) AS c FROM da_stat_view WHERE id_object = ".$idObject." AND id_instance IN (".implode(", ", $array).')'.$add.' GROUP BY id_instance;';
-      $data = Yii::app()->db->createCommand($sql)->queryAll();
+      $sql = "SELECT id_instance, COUNT(view_count) AS c FROM da_stat_view WHERE id_object = :id_object AND id_instance IN (".implode(", ", $array).')'.$add.' GROUP BY id_instance;';
+      $data = Yii::app()->db->createCommand($sql)->queryAll(true, array(':id_object' => $idObject));
       $result = array();
       foreach($data AS $row) {
         $result[$row['id_instance']] = $row['c'];
@@ -38,11 +38,13 @@
     
     public static function getCountView($idObject, $idInstance, $type=null) {
       $add = "";
+      $params = array(':id_object' => $idObject, ':id_instance' => $idInstance);
       if ($type != null) {
-        $add = " AND view_type=".$type;
+        $add = ' AND view_type=:view_type';
+        $params[':view_type'] = $type;
       }
-      $sql = "SELECT SUM(view_count) AS view_count FROM da_stat_view WHERE id_object = ".$idObject." AND id_instance = ".$idInstance.$add;
-      $result = Yii::app()->db->createCommand($sql)->queryScalar();
+      $sql = "SELECT SUM(view_count) AS view_count FROM da_stat_view WHERE id_object = :id_object AND id_instance = :id_instance".$add;
+      $result = Yii::app()->db->createCommand($sql)->queryScalar($params);
       if ($result == null) $result = 0;
       return $result;
     }
@@ -83,9 +85,9 @@
         $c = count($arrayOfViewDate);
         if (!$saveHistory) {
           $sql2 = "SELECT view_count, last_date_process AS date FROM da_stat_view
-                        WHERE id_object = $idObject AND id_instance = $idInstance
-                        AND view_type = $type".($where != "" ? " AND ($where)" : "")." ORDER BY last_date_process DESC LIMIT 1";
-          $row = Yii::app()->db->createCommand($sql2)->queryRow();
+                        WHERE id_object = :id_object AND id_instance = :id_instance
+                        AND view_type = :type".($where != "" ? " AND ($where)" : "")." ORDER BY last_date_process DESC LIMIT 1";
+          $row = Yii::app()->db->createCommand($sql2)->queryRow(true, array(':id_object' => $idObject, ':id_instance' => $idInstance, ':type' => $type));
           if (is_array($row) && count($row) > 0) {
             $result = $row['view_count'];
             $dateQuery = $row['date'];

@@ -11,23 +11,23 @@
  * @property integer $type_visit
  */
 class VisitSite extends CActiveRecord {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return VisitSite the static model class
-	 */
-	public static function model($className=__CLASS__) {
-		return parent::model($className);
-	}
-	
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName() {
-		return 'da_visit_site';
-	}
-	
-	public static function check($idObject, $idInstance, $type, $ip, $expired, $countRepeats=1) {
+  /**
+   * Returns the static model of the specified AR class.
+   * @param string $className active record class name.
+   * @return VisitSite the static model class
+   */
+  public static function model($className=__CLASS__) {
+    return parent::model($className);
+  }
+  
+  /**
+   * @return string the associated database table name
+   */
+  public function tableName() {
+    return 'da_visit_site';
+  }
+  
+  public static function check($idObject, $idInstance, $type, $ip, $expired, $countRepeats=1) {
     $validIp = true;
     if ($expired > 0) {
       $expired = time() - $expired;
@@ -46,7 +46,7 @@ class VisitSite extends CActiveRecord {
     return $validIp;
   }
   public static function saveCurrentVisit($idObject, $idInstance, $type=1) {
-  	$vs = new VisitSite();
+    $vs = new VisitSite();
     $vs->id_object = $idObject;
     $vs->id_instance = $idInstance;
     $vs->type_visit = $type;
@@ -55,22 +55,23 @@ class VisitSite extends CActiveRecord {
     $vs->save();
   }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules() {
-		return array(
-			array('ip, id_instance, id_object, date, type_visit', 'required'),
-			array('ip, id_instance, id_object, date, type_visit', 'numerical', 'integerOnly'=>true),
-		);
-	}
+  /**
+   * @return array validation rules for model attributes.
+   */
+  public function rules() {
+    return array(
+      array('ip, id_instance, id_object, date, type_visit', 'required'),
+      array('ip, id_instance, date, type_visit', 'numerical', 'integerOnly'=>true),
+      array('id_object', 'length', 'max' => 255),
+    );
+  }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations() {
-		return array();
-	}
+  /**
+   * @return array relational rules.
+   */
+  public function relations() {
+    return array();
+  }
 
 
 }

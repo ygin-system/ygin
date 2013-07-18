@@ -439,6 +439,7 @@ $(document).on("beforeGridUpdate", function(e) {  $(".pagination .b-ajax-process
     if ($where != '') {
       $criteria->addCondition($where);
     }
+    $criteria->params = array_merge($criteria->params, $event->params);
 
     return $dataProvider;
   }
