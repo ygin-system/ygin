@@ -148,7 +148,7 @@ class ECommentsBaseWidget extends CJuiWidget {
    * @return EComments comment
    */
   protected function createNewComment() {
-    $comment = new CommentYii();
+    $comment = BaseActiveRecord::newModel('CommentYii');
     $comment->id_object = $this->model->getIdObject();
     $comment->id_instance = $this->model->getIdInstance();
     return $comment;
