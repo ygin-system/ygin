@@ -24,7 +24,7 @@ if (HU::get('mode') == '2') {
       }
       $fileResultStr .= $file->getFilePath()."</p>";
     }
-    $countPreview = $file->getCountAllInstance('id_parent_file IS NOT NULL');
+    $countPreview = File::model()->count('id_parent_file IS NOT NULL');
   }
 } else if (HU::get("mode") == "1") {
   //Очищаем Yii'шный кеш

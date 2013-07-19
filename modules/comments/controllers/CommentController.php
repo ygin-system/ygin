@@ -85,10 +85,11 @@ class CommentController extends Controller {
    * Manages all models.
    */
   public function actionAdmin() {
-    $model=new CommentYii('search');
+    $model= BaseActiveRecord::newModel('CommentYii', 'search');
     $model->unsetAttributes();  // clear any default values
-    if(isset($_GET['CommentYii'])) {
-      $model->attributes=$_GET['Comment'];
+    $className = get_class($model);
+    if(isset($_GET[$className])) {
+      $model->attributes=$_GET[$className];
     }
     $this->render('admin',array(
       'model'=>$model,
@@ -96,9 +97,10 @@ class CommentController extends Controller {
   }
       
   public function actionPostComment() {
-    if(isset($_POST['CommentYii']) && Yii::app()->request->isAjaxRequest) {
-      $comment = new CommentYii();
-      $comment->attributes = $_POST['CommentYii'];
+    $comment = BaseActiveRecord::newModel('CommentYii');
+    $className = get_class($comment);
+    if(isset($_POST[$className]) && Yii::app()->request->isAjaxRequest) {
+      $comment->attributes = $_POST[$className];
       $comment->comment_date = time();
       $comment->moderation = $comment->config['premoderate']
                              ? BaseActiveRecord::FALSE_VALUE
@@ -168,7 +170,7 @@ class CommentController extends Controller {
    */
   public function loadModel($id)
   {
-    $model=CommentYii::model()->findByPk($id);
+    $model = BaseActiveRecord::model('CommentYii')->findByPk($id);
     if($model===null)
       throw new CHttpException(404,'The requested page does not exist.');
     return $model;
@@ -254,7 +256,7 @@ class CommentController extends Controller {
   public function actionSetStatusDeleteComment() {
     $result = array();
     $idComment = (int) Yii::app()->request->getPost('idComment');
-    $comment = CommentYii::model()->findByPk($idComment);
+    $comment = BaseActiveRecord::model('CommentYii')->findByPk($idComment);
 
     /*if ($comment != null &&
         Yii::app()->user->checkAccess('deleteComment', array('comment' => $comment))) {
@@ -271,7 +273,7 @@ class CommentController extends Controller {
   public function actionSetStatusApproveComment() {
     $result = array();
     $idComment = (int) Yii::app()->request->getPost('idComment');
-    $comment = CommentYii::model()->findByPk($idComment);
+    $comment = BaseActiveRecord::model('CommentYii')->findByPk($idComment);
   
     if ($comment != null &&
         Yii::app()->user->checkAccess('approveComment', array('comment' => $comment))) {

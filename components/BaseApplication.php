@@ -20,8 +20,8 @@ abstract class BaseApplication extends CWebApplication {
   
   private $_params = null;
 
-  public $version = '0.93.5-1';
-  public $versionDate = '18.07.2013';
+  public $version = '0.93.5-2';
+  public $versionDate = '19.07.2013';
 
   public function __construct($config = null) {
     parent::__construct($config);
