@@ -52,10 +52,10 @@ class SystemParameter extends DaActiveRecord {
   /**
    * @return array validation rules for model attributes.
    */
-  public function rules()
-  {
+  public function rules() {
     return array(
-      array('name', 'required'),
+      array('id_system_parameter', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('name, id_system_parameter', 'required'),
       array('id_group_system_parameter, id_parameter_type', 'numerical', 'integerOnly'=>true),
       array('name', 'length', 'max'=>60),
       array('id_system_parameter, value, note', 'length', 'max'=>255),

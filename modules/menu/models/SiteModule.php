@@ -74,7 +74,6 @@ class SiteModule extends DaActiveRecord {
       'places' => array(self::HAS_MANY, 'SiteModulePlace', 'id_module'),
       'phpScriptInstance' => array(self::HAS_ONE, 'PhpScriptInstance', array('id_php_script' => 'id_php_script'), ),
       'files' => array(self::HAS_MANY, 'File', 'id_instance', 'condition' => 'id_object = :obj', 'params' => array(':obj' => self::ID_OBJECT)),
-//      'phpScript' => array(self::HAS_ONE, 'PhpScript', array('id_php_script_type' => 'id_php_script_type'), 'select' => array('file_path', 'class_name'), 'through' => 'phpScriptInstance'),
     );
   }
 
