@@ -1,7 +1,8 @@
 <?php
 Yii::import('xupload.models.XUploadForm');
 $id = 'single-file-upload-'.$this->id;
-?><div class="single-file-upload-row" id="<?php echo $id; ?>"><?php
+$this->registerCssFile('singleFileUpload.css');
+?><div class="b-single-file-upload-row" id="<?php echo $id; ?>"><?php
 $this->widget('fileUpload.fileUploadWidget.FileUploadWidget', array(
   'id' => $id,
   'multiple' => false,
