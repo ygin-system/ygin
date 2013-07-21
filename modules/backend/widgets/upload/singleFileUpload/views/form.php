@@ -15,6 +15,9 @@ $cs->registerScript('single-file-upload-exist-model#'.$this->id, '
 $cs->registerScript('single-file-upload#'.$this->id, '
   $("#'.$this->id.'")
     .on("fileuploadfailed", function(e, data) {
+      if (data.jqXHR.statusText == "abort") {
+        return;
+      }
       var msg = data.jqXHR.responseText;
       $.daSticker({text: msg, type: "error"});
     })
