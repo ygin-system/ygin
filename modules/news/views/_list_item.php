@@ -6,6 +6,6 @@
       <?php echo CHtml::link(CHtml::image($preview->getUrlPath(), $model->title), $model->getUrl(), array('title' => $model->title)); ?>
     </div>
   <?php endif; ?>
-  <div class="text"><?php echo $model->short; ?></div>
+  <div class="text"><?php echo nl2br($model->short); ?></div>
   <div class="more"><?php echo CHtml::link('Полный текст', $model->getUrl()); ?> »</div>
 </div>
