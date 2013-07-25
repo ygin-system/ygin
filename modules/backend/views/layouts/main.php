@@ -176,7 +176,7 @@
 <?php // Footer ?>
   <hr>
   <footer class="container-fluid">
-    <p>© 2013, <a href="http://www.ygin.ru" class="ygin-copy">ygin</a></p>
+    <p>© 2013, <a target="_blank" href="http://www.ygin.ru" class="ygin-copy">ygin</a></p>
   </footer>
 </body>
 </html>
