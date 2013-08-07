@@ -23,7 +23,7 @@ class PhotosBehavior extends CActiveRecordBehavior {
     $this->getOwner()->getMetaData()->addRelation(
       'countPhoto',
       array(CActiveRecord::STAT, 'PhotogalleryPhoto', 'id_photogallery_instance',
-        'condition' => 'countPhoto.id_photogallery_object = :PHOTOGALLERY_OBJECT_ID',
+        'condition' => 'id_photogallery_object = :PHOTOGALLERY_OBJECT_ID',
         'params' => array(':PHOTOGALLERY_OBJECT_ID' => $this->idObject),
     ));
     $this->getOwner()->attachBehaviors(array(
