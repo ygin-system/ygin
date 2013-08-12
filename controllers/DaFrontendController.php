@@ -2,7 +2,12 @@
   class DaFrontendController extends DaWebController {
 
     protected $urlAlias = null;
-    
+
+    public function init() {
+      parent::init();
+      $this->favicon = '/favicon.ico';
+    }
+
     public function processOutput($output) {
       $output = parent::processOutput($output);
       if (true || $this->_encodeEmail) {  // TODO
@@ -74,8 +79,10 @@
   		Yii::app()->clientScript->registerMetaTag(Yii::app()->request->hostInfo, 'msapplication-starturl');
   		
   		Yii::app()->clientScript->registerLinkTag('home', null, Yii::app()->request->hostInfo);
-  		Yii::app()->clientScript->registerLinkTag('icon', "image/x-icon", '/favicon.ico');
-  		Yii::app()->clientScript->registerLinkTag('shortcut icon', "image/x-icon", '/favicon.ico');
+  		if ($this->favicon != null) {
+        Yii::app()->clientScript->registerLinkTag('icon', "image/x-icon", $this->favicon);
+        Yii::app()->clientScript->registerLinkTag('shortcut icon', "image/x-icon", $this->favicon);
+      }
   		
   		/* TODO
   		// текущая локализация

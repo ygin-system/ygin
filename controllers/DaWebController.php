@@ -9,6 +9,7 @@ class DaWebController extends CController {
   private $_keywords = null;
   private $_description = null;
 
+  public $favicon = null;
   public $addDomainCaptionToTitle = true;
   public $titleSeparator = '<';
 
