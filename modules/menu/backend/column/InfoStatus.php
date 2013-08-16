@@ -12,9 +12,9 @@ class InfoStatus extends BaseColumn {
   }
   protected function renderDataCellContent($row, $data) {
     $text = "";
-    Yii::app()->generateFrontedUrl();
+    Yii::app()->urlManager->frontendMode = true;
     $link = $data->getUrl();
-    Yii::app()->generateBackendUrl();
+    Yii::app()->urlManager->frontendMode = false;
     if ($link != null) {
       $text .= '<td><a class="btn btn-mini" href="'.$link.'" target="_blank" title="открыть страницу на сайте"><i class="icon-hand-up"></i></a></td>';
     }
