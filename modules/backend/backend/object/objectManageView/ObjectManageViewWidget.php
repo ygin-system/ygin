@@ -20,27 +20,25 @@ class ObjectManageViewWidget extends VisualElementWidget {
     if (HU::post("create_rep") == 1) {
       //Создать представление с введённым именем
       $name = trim(HU::post("create_rep_name"));
-      if ($name == "") $name = $model->getName();
-
-      $view = new DaObjectView();
-      $id = $idObject.'-view-main';
-      while (DaObjectView::model()->exists('id_object_view=:id', array(':id'=>$id))) {
-        $id = $idObject.'-view-view'.rand(1, 100);
+      $view = null;
+      if ($name != "") {
+        $view = new DaObjectView();
+        $id = $idObject.'-view-main';
+        while (DaObjectView::model()->exists('id_object_view=:id', array(':id'=>$id))) {
+          $id = $idObject.'-view-view'.rand(1, 100);
+        }
+        $view->id_object_view = $id;
+        $view->name = $name;
+        $view->id_object = $idObject;
+        $parent = $model->getFieldByType(DataType::ID_PARENT);
+        if ($parent != null) {
+          $view->id_parent = $parent;
+        }
+        //Сортировка
+        $view->sql_order_by = $model->getOrderBy();
+        $view->save();
+        $idView = $view->getIdInstance();
       }
-      $view->id_object_view = $id;
-      $view->name = $name;
-      $view->id_object = $idObject;
-
-      $parent = $model->getFieldByType(DataType::ID_PARENT);
-      if ($parent != null) {
-        $view->id_parent = $parent;
-      }
-
-      //Сортировка
-      $view->sql_order_by = $model->getOrderBy();
-      $view->save();
-
-      $idView = $view->getIdInstance();
     }
 
     $columnsForm = HU::post('column');
