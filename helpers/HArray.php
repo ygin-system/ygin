@@ -14,7 +14,7 @@ class HArray {
    * @return mixed
    */
   public static function val($array, $key, $default = null) {
-    if (array_key_exists($key, $array)) {
+    if (isset($array[$key]) || array_key_exists($key, $array)) {
       return $array[$key];
     }
     return $default;

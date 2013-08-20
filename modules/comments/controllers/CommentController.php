@@ -103,8 +103,8 @@ class CommentController extends Controller {
       $comment->attributes = $_POST[$className];
       $comment->comment_date = time();
       $comment->moderation = $comment->config['premoderate']
-                             ? BaseActiveRecord::FALSE_VALUE
-                             : BaseActiveRecord::TRUE_VALUE;
+                             ? CommentYii::STATUS_PENDING
+                             : CommentYii::STATUS_APPROVED;
       $comment->id_parent = $comment->id_parent == 0 ? null : $comment->id_parent;
       Yii::app()->getModule('comments')
         ->getEventHandlers('onNewComment')
