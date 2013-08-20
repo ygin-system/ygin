@@ -42,12 +42,10 @@ class CommentEventHandler extends BackendEventHandler {
   public function onProcessPermissionWhere(PermissionWhereEvent $event) {
     $where = $event->where;
     if ($idObject = intval(HU::get(self::URL_PARAM_OBJECT))) {
-      $where = HText::addCondition($where, 'id_object = :id_object_comment');
-      $event->params[':id_object_comment'] = $idObject;
+      $where = HText::addCondition($where, 'id_object = '.Yii::app()->db->quoteValue($idObject));
     }
     if ($idInstance = intval(HU::get(self::URL_PARAM_INSTANCE))) {
-      $where = HText::addCondition($where, 'id_instance = :id_instance_comment');
-      $event->params[':id_instance_comment'] = $idInstance;
+      $where = HText::addCondition($where, 'id_instance = '.Yii::app()->db->quoteValue($idInstance));
     }
     $event->where = $where;
   }
