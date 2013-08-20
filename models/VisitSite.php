@@ -38,7 +38,7 @@ class VisitSite extends CActiveRecord {
       $criteria = new CDbCriteria();
       $criteria->addCondition('date>:date');
       $criteria->params = array(':date' => $expired);
-      $criteria->addColumnCondition(array('type_visit' => $type, 'ip' => $ip, 'id_object' => $idObject));
+      $criteria->addColumnCondition(array('type_visit' => $type, 'ip' => $digitalIp, 'id_object' => $idObject));
       if ($idInstance != null) $criteria->addColumnCondition(array('id_instance' => $idInstance));
       $count = self::model()->count($criteria);
       if ($count < $countRepeats) $validIp = true; else $validIp = false;
