@@ -151,14 +151,19 @@ class DaDbAuthManager extends CDbAuthManager {
       return false;
     }
     if ($checkEventWhere) {
+      $criteria = new CDbCriteria();
       $event = new PermissionWhereEvent(Yii::app()->controller, $idObject, null);
+      $event->criteria = $criteria;
       Yii::app()->controller->raiseEvent(DefaultController::EVENT_ON_PROCESS_PERMISSION_WHERE, $event);
       $where = $event->where;
-      if ($where != null) {
+      if ($where != null || $criteria->condition != null) {
         $object = DaObject::getById($idObject);
         $field = $object->getFieldByType(DataType::PRIMARY_KEY);
         $where = HText::addCondition($where, $field.'=:id');
-        return $object->getModel()->exists($where, array(':id' => $idInstance));
+        $criteria->addCondition($where);
+        $criteria->params = array_merge($criteria->params, $event->params);
+        $criteria->params[':id'] = $idInstance;
+        return $object->getModel()->exists($criteria);
       }
     }
     return true;
