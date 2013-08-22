@@ -1,6 +1,9 @@
 <?php
+
+Yii::import('ygin.ext.yii-mail.*');
+
 class DaEmailLogRoute extends CEmailLogRoute {
-  
+
   /**
    * Данные для авторизации. Если авторизация не нужна то null
    * @var string

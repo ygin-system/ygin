@@ -19,8 +19,8 @@ $mainConfig = array(
   'theme' => 'ygin',
 
   // preloading 'log' component
-  'preload'=>array('authManager', 'log'),
-  
+  'preload'=>array('authManager', 'log', 'yii2Debug'),
+
   'aliases' => array(
   ),
     
@@ -42,6 +42,12 @@ $mainConfig = array(
   
   // application components
   'components'=>array(
+
+    'yii2Debug' => array(
+      'class' => 'backend.components.Yii2DebugBackend',
+      'allowedIPs' => array('192.168.0.*', '127.0.0.1'),
+      'enabled' => YII_DEBUG,
+    ),
 
     'format'=>array(
       'timeFormat'=>'H:i:s',
@@ -169,7 +175,7 @@ $mainConfig = array(
         'YiiDebugToolbarRoute' => array(  // при отладке вываливаем всю инфу в тулбар
           'class' => 'backend.components.YiiDebugToolbarRouteBackend',
           'ipFilters' => array('192.168.0.*', '127.0.0.1'),
-          'enabled' => YII_DEBUG,
+          'enabled' => false, //YII_DEBUG,
         ),
 
       ),

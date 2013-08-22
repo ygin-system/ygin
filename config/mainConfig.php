@@ -42,10 +42,20 @@ $mainConfig = array(
     'application.helpers.*',
   ),
 
+  'preload' => array(
+    'yii2Debug',
+  ),
+
   'modules'=>$modules,
     
   // application components
   'components'=>array(
+
+    'yii2Debug' => array(
+      'class' => 'ygin.ext.yii2-debug.Yii2Debug',
+      'allowedIPs' => array('192.168.0.*', '127.0.0.1'),
+      'enabled' => YII_DEBUG,
+    ),
 
     'authManager'=>array(
       'class' => 'CDbAuthManager',
@@ -167,7 +177,7 @@ $mainConfig = array(
         'YiiDebugToolbarRoute' => array(  // при отладке вываливаем всю инфу в тулбар
           'class' => 'ygin.ext.yii-debug-toolbar.YiiDebugToolbarRoute',
           'ipFilters' => array('192.168.0.*', '127.0.0.1'),
-          'enabled' => YII_DEBUG,
+          'enabled' => false, //YII_DEBUG,
         ),
       ),
       
