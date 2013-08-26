@@ -21,6 +21,7 @@
  * @property integer $search
  * @property integer $is_additional
  * @property string $hint
+ * @property integer $visible
  */
 class ObjectParameter extends DaActiveRecord {
 
@@ -72,6 +73,9 @@ class ObjectParameter extends DaActiveRecord {
   public function isSearch() {
     return ($this->search == 1);
   }
+  public function isVisible() {
+    return ($this->visible == 1);
+  }
   public function getTypeGroup() {
     return ($this->group_type == 1);
   }
@@ -100,7 +104,7 @@ class ObjectParameter extends DaActiveRecord {
     return array(
       array('id_parameter', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
       array('id_parameter, caption', 'required'),
-      array('id_parameter_type, sequence, not_null, is_unique, group_type, need_locale, search, is_additional', 'numerical', 'integerOnly'=>true),
+      array('id_parameter_type, sequence, not_null, is_unique, group_type, need_locale, search, is_additional, visible', 'numerical', 'integerOnly'=>true),
       array('id_parameter, id_object, widget, caption, field_name, default_value, add_parameter, sql_parameter', 'length', 'max'=>255),
       array('hint', 'safe'),
     );
@@ -185,6 +189,12 @@ class ObjectParameter extends DaActiveRecord {
   protected function afterDelete() {
     $this->sqlChange($this, 'delete');
     return parent::afterDelete();
+  }
+  public function onlyVisible() {
+    $this->getDbCriteria()->mergeWith(array(
+      'condition' => $this->getTableAlias().'.visible=1',
+    ));
+    return $this;
   }
   private function sqlChange(ObjectParameter $instance, $mode=null) {
     $idObject = $instance->id_object;

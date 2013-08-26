@@ -47,17 +47,8 @@ class ViewController extends DaObjectController {
       throw new CHttpException(400, 'Bad Request');
     }
     $readOnlyInstance = false;
-    $instanceOfCopy = null;
 
     if ($id != null) {
-      /*if ($statusProcess == 4) { // копирование экземпляра пока не реализуем
-        if ($handlerClass != null && !$handlerClass->copyInstanceAccess()) {
-          exit;  // bad
-        }
-        $instanceOfCopy = $ob->createInstanceClass();
-        $instanceOfCopy->load($id, false);
-        $id = -1;
-      }*/
       if ($id == -1) {
         if (!Yii::app()->authManager->canCreateInstance($idObject, Yii::app()->user->id)) {
           throw new CHttpException(403, 'Нет прав на создание');
@@ -108,6 +99,7 @@ class ViewController extends DaObjectController {
        * @var $objectParameter ObjectParameter
        */
       // Детальная обработка:
+      if (!$objectParameter->isVisible()) continue;
       $event = new ParameterAvailableEvent($this, $model, $objectParameter);
       $this->raiseEvent(ViewController::EVENT_ON_PARAMETER_AVAILABLE, $event);
       $availableStatus = $event->status;
@@ -150,9 +142,6 @@ class ViewController extends DaObjectController {
       if ($visualElement == null) $visualElement = VisualElementFactory::getVisualElement($model, $objectParameter);
 
       if ($visualElement == null) continue;
-
-      // некоторые абстр. элементы должны будут копировать данные из копии (напр. при работе с файлами)
-      //if ($visualElement instanceof VisualElementAbstract) $visualElement->setInstanceOfCopy($instanceOfCopy);
 
       if (($availableStatus == ViewController::ENTITY_STATUS_READ_ONLY) ||
           ($readOnlyInstance)) {  //Только для чтения

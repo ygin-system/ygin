@@ -4,22 +4,11 @@
  */
 Yii::app()->controller->registerJsFile('ygin_visual_element.js', 'backend.assets.js');
 
-/*
-$copyInstance = false;
-if ($handler != null) {
-$copyInstance = $handler->copyInstanceAccess();
-}
-*/
-
-$copyInstance = null;
-$idFormInstance = $model->getIdInstance();
-if ($idFormInstance == null) $idFormInstance = -1;
-
 $countList = count($visualElementArray);
 if ($countList < 1) return false;
 
 $addCaption = " (создание)";
-if ($idFormInstance != -1) $addCaption = " (ИД=".$idFormInstance.")";
+if ($model->getIdInstance() != null) $addCaption = " (ИД=".$model->getIdInstance().")";
 Yii::app()->controller->caption = Yii::app()->backend->objectView->getName().$addCaption;
 
 $controller = Yii::app()->controller;
@@ -149,7 +138,6 @@ echo $form->errorSummary($model,
       });
 
   ', CClientScript::POS_READY);
-  if ($idFormInstance != null && $copyInstance) Yii::app()->clientScript->registerScript('admin.form.copy.button', '$("#saveAsNewButton");');
 ?>
         <input type="hidden" name="submit_form" value="1" autocomplete="off">
         <div class="btn-group dropup">
@@ -159,12 +147,11 @@ echo $form->errorSummary($model,
           </a>
           <ul class="dropdown-menu">
             <li><a id="saveAndNewButton" class="btn-save" title="Ctrl+Alt+Enter" data-action="5" href="#"><i class="icon-ok"></i> Сохранить и добавить еще <i class="icon-plus"></i></a></li>
-<!--             <li><a id="saveAsNew" class="btn-save" data-action="6" href="#"><i class="icon-ok"></i> Сохранить как новое <i class="icon-file"></i></a></li>  -->
+            <!--<li><a id="saveAsNew" class="btn-save" data-action="6" href="#"><i class="icon-ok"></i> Сохранить как новый <i class="icon-file"></i></a></li>-->
           </ul>
         </div>
         &nbsp;&nbsp;
         <a class="btn btn-success btn-save" id="acceptButton" title="Ctrl+Shift+Enter" data-action="3"><i class="icon-ok icon-white"></i> Применить</a>&nbsp;&nbsp;
-        <?php if ($idFormInstance != null && $copyInstance) { ?><button class="btn" id="saveAsNewButton" data-action="4"><i class="icon-asterisk"></i> Сохранить как новый</button>&nbsp;&nbsp;<?php } ?>
         <a class="btn btn-danger" id="cancelButton" title="Ctrl+Esc" href="<?php echo $backLink ?>"><i class="icon-remove icon-white"></i> Отменить</a>
 <?php } ?>
       <div>

@@ -19,17 +19,7 @@ class BackendApplication extends BaseApplication {
 
   public $isBackend = true;
 
-  private $_baseUrl = null;
-
   private $_frontendConfig = null;
-
-  public function generateFrontedUrl() {
-    $this->_baseUrl = $this->urlManager->baseUrl;
-    $this->urlManager->baseUrl = '';
-  }
-  public function generateBackendUrl() {
-    $this->urlManager->baseUrl = $this->_baseUrl;
-  }
 
   public function getFrontendConfig() {
     if ($this->_frontendConfig === null) {

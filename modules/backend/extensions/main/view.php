@@ -21,7 +21,7 @@ if ($showWelcome) :
   if (count($devNotices) > 0) {
 ?>
     <div class="alert alert-info">
-      <button type="button" onclick="$.cookie(<?php echo $noticeDevCookieName; ?>, 1, {expires:10000, path:'/'});" class="close" data-dismiss="alert">&times;</button>
+      <button type="button" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'});" class="close" data-dismiss="alert">&times;</button>
       <p>Обратите внимание на последние изменения, которые необходимо внести в проектные файлы:</p>
       <?php foreach($devNotices AS $notice) {
         echo CHtml::tag('p', array(), CHtml::tag('b', array(), nl2br($notice)));
