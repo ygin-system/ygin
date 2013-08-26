@@ -108,6 +108,7 @@ class ViewController extends DaObjectController {
        * @var $objectParameter ObjectParameter
        */
       // Детальная обработка:
+      if (!$objectParameter->isVisible()) continue;
       $event = new ParameterAvailableEvent($this, $model, $objectParameter);
       $this->raiseEvent(ViewController::EVENT_ON_PARAMETER_AVAILABLE, $event);
       $availableStatus = $event->status;
