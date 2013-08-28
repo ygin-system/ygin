@@ -135,6 +135,9 @@ class DefaultController extends DaObjectController {
     }
     if (isset($_GET['ParameterSearchForm'])) {
       $searchModel->attributes=$_GET['ParameterSearchForm'];
+    } else if (isset($_GET['ParameterSearchForm[parameter]']) && isset($_GET['ParameterSearchForm[value]'])) {
+      $searchModel->parameter = $_GET['ParameterSearchForm[parameter]'];
+      $searchModel->value = $_GET['ParameterSearchForm[value]'];
     }
     if ($searchModel->getHasVisibleSearchParameters()) {
       $this->searchModel = $searchModel;
@@ -180,18 +183,18 @@ class DefaultController extends DaObjectController {
     $sort = new BackendSort();
     $sort->attributes = $model->attributeNames();
     $sort->model = $model;
-    $sort->params = ObjectUrlRule::getCurrentParams();
+    $sort->params = array_merge(ObjectUrlRule::getCurrentParams(), HU::arrayToQueryArray('ParameterSearchForm', HU::get('ParameterSearchForm', array())) );
+
     $sort->defaultOrder = $oby;
     $dataProvider->sort = $sort;
-
     // $instanceQuery->setFrom($objectRazdel->getFrom()); // TODO ???
 
-    $paginstorConfig = ($withSwitchPages ? array(
+    $paginatorConfig = ($withSwitchPages ? array(
       'pageSize'=>$view->getCountData(), // количество записей на страницу
       'pageVar'=>'go',
-      'params'=>ObjectUrlRule::getCurrentParams(),
+      'params'=>array_merge(ObjectUrlRule::getCurrentParams(), HU::arrayToQueryArray('ParameterSearchForm', HU::get('ParameterSearchForm', array())) ),
     ) : false);
-    $dataProvider->pagination = $paginstorConfig;
+    $dataProvider->pagination = $paginatorConfig;
 
     Yii::import('backend.components.column.*');
 
