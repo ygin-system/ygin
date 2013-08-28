@@ -127,7 +127,8 @@ class DefaultController extends DaObjectController {
     $dataProvider = $this->buildDataProvider($view, $model);
     $criteria = $dataProvider->getCriteria();
 
-    $searchModel = new ParameterSearchForm($object); // поиск TODO отвязаться от параметров и перейти на отдельное понятие Фильтры
+    // поиск
+    $searchModel = new ParameterSearchForm($object);
     foreach($searchModel->getSearchParameters() AS $searchParam) {
       $event = new ParameterAvailableToSearchEvent($this, $searchParam->parameter);
       $this->raiseEvent(DefaultController::EVENT_ON_PARAMETER_AVAILABLE_TO_SEARCH, $event);
@@ -139,17 +140,19 @@ class DefaultController extends DaObjectController {
       $searchModel->parameter = $_GET['ParameterSearchForm[parameter]'];
       $searchModel->value = $_GET['ParameterSearchForm[value]'];
     }
+    $searchActive = false;
     if ($searchModel->getHasVisibleSearchParameters()) {
       $this->searchModel = $searchModel;
       // Условия поиска по параметрам:
       if ($this->searchModel->validate() && $this->searchModel->value != null) {
+        $searchActive = true;
         $searchCriteria = $this->searchModel->getSearchCriteria();
         $criteria->mergeWith($searchCriteria);
       }
     }
 
     // условие по родителю
-    if ($this->getGroupInstance() == null && ($pk=$object->getParameterObjectByField($object->getFieldByType(DataType::ID_PARENT))) != null) {
+    if (!$searchActive && $this->getGroupInstance() == null && ($pk=$object->getParameterObjectByField($object->getFieldByType(DataType::ID_PARENT))) != null) {
       if ($idParent == null) {
         $criteria->addCondition($pk->getFieldName()." IS NULL");
       } else {
@@ -161,15 +164,17 @@ class DefaultController extends DaObjectController {
       $criteria->params[':group_instance'] = $this->getGroupInstance()->getIdInstance();
     }
 
-    $seqKey = $object->getParameterObjectByField($object->getFieldByType(DataType::SEQUENCE));
-    if ($seqKey != null) { // определяем доступа ли сортировка
+    // сортировка путем перемещения строк таблицы
+    $seqKey = null;
+    // если идет поиск, то отключаем сотрировку перетаскиваением
+    if (!$searchActive && ($seqKey = $object->getParameterObjectByField($object->getFieldByType(DataType::SEQUENCE))) != null) {
       $event = new ParameterAvailableEvent($this, $model, $seqKey);
       $event->params = array('mode'=>'seqKey');
       $this->raiseEvent(ViewController::EVENT_ON_PARAMETER_AVAILABLE, $event);
       if ($event->status != ViewController::ENTITY_STATUS_AVAILABLE) $seqKey = null;
     }
-    $withSwitchPages = ($seqKey == null);  // если есть сортировка на странице, то не выводим переключатель страниц
 
+    // сортировка грида
     $oby = $view->getOrderBy();
     if ($oby == null && $object->id_field_order != null) {
       //Если есть порядок сортировки, то добавляем сортировку
@@ -189,6 +194,8 @@ class DefaultController extends DaObjectController {
     $dataProvider->sort = $sort;
     // $instanceQuery->setFrom($objectRazdel->getFrom()); // TODO ???
 
+    // пагинатор
+    $withSwitchPages = ($seqKey == null);  // если есть сортировка на странице, то не выводим переключатель страниц
     $paginatorConfig = ($withSwitchPages ? array(
       'pageSize'=>$view->getCountData(), // количество записей на страницу
       'pageVar'=>'go',
