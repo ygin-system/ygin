@@ -1,5 +1,5 @@
 <?php
-class AlertWidget extends CWidget {
+class AlertWidget extends DaWidget {
   
   const ERROR = 0;
   const WARNING = 1;
@@ -16,7 +16,7 @@ class AlertWidget extends CWidget {
     if ($this->title === null) {
       $this->title = Yii::app()->name;
     }
-    $this->registerScripts();
+    $this->registerJsFile('daAlert-min.js');
   }
   
   public function run() {
@@ -31,15 +31,5 @@ class AlertWidget extends CWidget {
     $cs = Yii::app()->clientScript;
     $cs->registerScript(__CLASS__.(self::$_cnt++), $script, CClientScript::POS_READY);
   }
-  
-  protected function getAssetsDir() {
-    return dirname(__FILE__).DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR;
-  }
-  
-  public function registerScripts() {
-    $cs = Yii::app()->clientScript;
-    $file = CHtml::asset($this->getAssetsDir().'daAlert-min.js');
-    $cs->registerScriptFile($file);
-  }
-  
+
 }
