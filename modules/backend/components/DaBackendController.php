@@ -36,6 +36,8 @@ abstract class DaBackendController extends DaWebController {
           } else if (!$errorPage && !$logoutPage) {
             throw new CHttpException(403, 'Доступ к странице запрещен, попробуйте перелогиниться.');
           }
+        } else {
+          if (Yii::app()->user->returnUrl == '/') Yii::app()->user->returnUrl = Yii::app()->createUrl('');
         }
       } else {
         if ($loginPage) {
