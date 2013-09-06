@@ -2,6 +2,8 @@
 
 class MainPageController extends DaBackendController implements IBackendExtension {
 
+  const EVENT_ON_BEFORE_MAIN_RENDER = 'onBeforeMainRender';
+
   public function actionIndex() {
     $version = '';
     if (Yii::app()->user->checkAccess(DaWebUser::ROLE_DEV)) {
@@ -122,6 +124,8 @@ class MainPageController extends DaBackendController implements IBackendExtensio
       );
     }
 
+    $this->raiseEvent(self::EVENT_ON_BEFORE_MAIN_RENDER, new CEvent($this, array('elements' => &$mainElements)));
+
     $this->render('backend.extensions.main.view', array(
       'version' => $version,
       'showWelcome' => $showWelcome,
@@ -133,7 +137,11 @@ class MainPageController extends DaBackendController implements IBackendExtensio
     ));
 
   }
-  
+
+  public function hasEvent($name) {
+    return true;
+  }
+
   // реализация события класса как компонента
   public function registerEvent($category, $obj) {
     if ($category == BackendModule::CATEGORY_BACKEND_WINDOW) {
