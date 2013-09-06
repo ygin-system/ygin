@@ -32,11 +32,11 @@ if ($showWelcome) :
 ?>
   <div class="plugin-list">
 <?php
-$c = count($mainElements);
 $html = '';
 $block = '';
-for ($i = 0; $i < $c; $i++) {
-  $element = $mainElements[$i];
+$i = -1;
+foreach($mainElements AS $element) {
+  $i++;
   $addButton = (isset($element['link-add']) ? '<a class="btn btn-success" href="'.$element['link-add'].'"><i class="icon-plus icon-white"></i> Добавить</a>' : '');
   $block .= '<div class="span4">
         <div class="caption">
