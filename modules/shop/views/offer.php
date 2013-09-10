@@ -84,7 +84,7 @@ $currencyImage18 = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/a
     <div class="control-group">
       <label class="control-label" for="add_info">Пожелания и прочая контактная информация</label>
       <div class="controls">
-        <?php echo $form->textArea($offer, 'comment', array('class' => 'span6')); ?>
+        <?php echo $form->textArea($offer, 'comment', array('class' => 'span6', 'style' => 'height:100px; width: 385px;')); ?>
         <?php echo $form->error($offer, 'comment'); ?>
       </div>
     </div>
