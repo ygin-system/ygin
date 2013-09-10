@@ -65,7 +65,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="control-group">
         <?php echo $form->labelEx($model, 'question', array('class' => 'control-label')); ?>
         <div class="controls">
-            <?php echo $form->textArea($model, 'question', array('class' => 'input-xxlarge', 'style' => 'height: 70px;')); ?>
+            <?php echo $form->textArea($model, 'question', array('class' => 'input-xlarge', 'style' => 'height: 70px; width: 420px;')); ?>
             <?php echo $form->error($model, 'question'); ?>
         </div>
     </div>
