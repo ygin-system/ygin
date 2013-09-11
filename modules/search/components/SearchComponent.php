@@ -344,7 +344,7 @@ class SearchComponent extends CApplicationComponent {
   }
 
   public static function replaceIndex(DaActiveRecord $instance, $idLang=1) {
-    $data = $instance->getDataFroSearch();
+    $data = $instance->getDataForSearch();
     self::replaceData($instance->getIdObject(), $instance->getIdInstance(), $idLang, $data);
   }
   public static function replaceData($idObject, $idInstance, $idLang, $data) {
