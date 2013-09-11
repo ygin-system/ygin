@@ -298,7 +298,7 @@ abstract class DaActiveRecord extends BaseActiveRecord {
     return $pathToFile;
   }
 
-  public function getDataFroSearch() {
+  public function getDataForSearch() {
     $object = DaObject::getById($this->getIdObject());
     $params = $object->parameters;
     $data = '';
