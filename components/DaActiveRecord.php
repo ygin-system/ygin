@@ -298,7 +298,22 @@ abstract class DaActiveRecord extends BaseActiveRecord {
     return $pathToFile;
   }
 
-  
+  public function getDataFroSearch() {
+    $object = DaObject::getById($this->getIdObject());
+    $params = $object->parameters;
+    $data = '';
+    foreach($params AS $p) {
+      /**
+       * @var $p ObjectParameter
+       */
+      if ($p->isSearch()) {
+        $val = $this->{$p->getFieldName()};
+        if ($val != null) $data .= $val.' ';
+      }
+    }
+    return $data;
+  }
+
   protected function beforeDelete() {
     $idObject = $this->getIdObject();
     //$idInstance = $this->getPrimaryKey();

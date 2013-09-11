@@ -28,7 +28,6 @@ class SearchComponent extends CApplicationComponent {
   private $totalResult = null;
   //private $sqlQuery = null;
   private $queryArray = array();
-  private $enableEmptyQuery = false;
   private $idLocale = Localization::LOCALE_MAIN;
   private $stopList = array();
   private $crossDomainSearch = false;
@@ -41,12 +40,6 @@ class SearchComponent extends CApplicationComponent {
   
   public function setStopList(Array $stopList) {
     $this->stopList = $stopList;
-  }
-  public function enableEmptyQuery() {
-    $this->enableEmptyQuery = true;
-  }
-  public function disableEmptyQuery() {
-    $this->enableEmptyQuery = false;
   }
   public function setHighlightTemplate($template) {
     $this->highlightTemplate = $template;
@@ -125,75 +118,8 @@ class SearchComponent extends CApplicationComponent {
     $sh->save();
   }
   
-  /*private function searchWithEmptyQuery() {
-    // Поиск по индексу не осуществляем. Ищем только по дополнительным условиям.
-
-    $result = array();
-
-    if (is_null($this->page) || !is_numeric($this->page) || $this->page < 1) $this->page = 1;
-    if (is_null($this->count) || !is_numeric($this->count) || $this->count < 1) $this->count = 20;
-    if (is_null($this->lenPreviewText) || !is_numeric($this->lenPreviewText) || $this->lenPreviewText < 1) $this->lenPreviewText = 50;
-    
-    // Поиск осуществляем только по объектам, для которых есть условия.
-    
-    $start = ($this->page - 1) * $this->count;
-    $count = $this->count;
-    $ok = false;
-    $total = 0;
-    $info = "";
-    foreach ($this->conditionSqlList as $k => $v) {
-      $ob = Object::getById($k);
-      $v = str_replace("<<table_alias>>.", "", $v);
-      $where = $v;
-      $order = null;
-      
-      if (isset($this->orderSqlList[$k]) && $this->orderSqlList[$k] != null) {
-        $v = $this->orderSqlList[$k];
-        $v = str_replace("<<table_alias>>.", "", $v);
-        $order = $v;
-      }
-      $inst = new Instance($k);
-      $c = $inst->getCountAllInstance($where);
-      $total = $total + $c;
-      if ($ok) continue; // Перебираем все остальные объекты для подсчитывания общего количества.
-      if ($c < $start) {
-        $start = $start - $c;
-        continue;
-      }
-      $info .= $where." | ";
-      $data = $inst->getIdInstances($where, $order, $count, $start);
-      $c = count($data);
-      $ok = false;
-      if (count($data) < $count) {
-        $count = $count - $c;
-        $start = 1;
-      } else {
-        // Всё, все данные получены. Можем выходить.
-        $ok = true;
-      }
-      
-      for ($i = 0; $i < $c; $i++) {
-        $res = new SearchResult();
-        $res->setIdInstance($data[$i]);
-        $res->setIdLang($this->idLocale);
-        $res->setIdObject($k);
-        $res->setIdParameter($ob->getIdFieldCaption());
-        $inst->load($data[$i]);
-        $res->setValue($inst->getParamById($ob->getIdFieldCaption()));
-        $result[] = $res;
-      }
-    }
-    $this->totalResult = $total;
-    Search::addSearchLog(null, $info, "total=".$total."; page=".$this->page."; count=".$this->count);
-    return $result;
-  }*/
-  
   public function startSearch($query) {
     $this->totalResult = null;
-    
-    /*if ($this->enableEmptyQuery && trim($query) == "") {
-      return $this->searchWithEmptyQuery(); 
-    }*/
     
     $srcQuery = $query;
     // Если будут ошибки, то выпадет исключение.
@@ -294,24 +220,6 @@ class SearchComponent extends CApplicationComponent {
       $criteria->addNotInCondition("id_object", $this->objectNotSearchList);
     }
 
-    // Формируем запрос
-    /*$q = new QuerySql();
-    
-    $selectDomine = '';
-    if ($this->idDomain != null || $this->crossDomainSearch) {
-      $selectDomine = ',doi.id_domain';
-    }
-//    $q->setSelect("a.id_object, a.id_instance, a.id_parameter, a.id_lang, a.value".$selectSortColumn);
-    $q->setSelect("a.id_object, a.id_instance, a.id_lang, a.value".$selectDomine.$selectSortColumn);
-    $q->setFrom($from);
-    $q->setWhere($where);
-//    $q->setGroupBy("a.id_object, a.id_instance, a.id_lang");
-    if ($order != "") $q->setOrderBy($order);
-
-    $q->setRowNum($this->count);
-    $q->setRowStart(($this->page - 1) * $this->count);
-    */
-
     if (is_null($this->lenPreviewText) || !is_numeric($this->lenPreviewText) || $this->lenPreviewText < 1) $this->lenPreviewText = 50;
     
     if ($this->paginator == null) {
@@ -320,45 +228,16 @@ class SearchComponent extends CApplicationComponent {
     }
     $this->paginator->applyLimit($criteria);
     
-    //$this->sqlQuery = "FROM ".$from." WHERE ".$where;
     $this->criteria = $criteria;
     
     if ($this->logQuery) {
       self::addSearchLog($srcQuery, $criteria->condition." (params: ".print_r($criteria->params, true).")", "page=".$this->paginator->getCurrentPage()."; count=".$this->paginator->getPageSize());
     }    
     
-//    $this->sqlQuery = "FROM $from WHERE $where GROUP BY a.id_object, a.id_instance, a.id_lang";
-//echo $q->getSqlQuery();
-
     $result = Search::model()->findAll($criteria);
     foreach ($result AS $r) {
       $r->value = HText::highlightText($r->value, $this->queryArray, $this->highlightTemplate, $this->lenPreviewText);
     }
-    /*while ($row = $q->getNextResultObject()) {
-      $res = new SearchResult();
-      $res->setIdInstance($row->id_instance);
-      $res->setIdLang($row->id_lang);
-      $res->setIdObject($row->id_object);
-      if ($this->idDomain != null || $this->crossDomainSearch) {
-        $res->setIdDomain($row->id_domain);
-      }
-      // Обработка текста
-      // формат: ~~~ property text ~~~idParam~~~
-      
-      
-//      $res->setIdParameter($row->id_parameter);
-      $res->setValue($this->processText($row->value));
-      
-      if (isset($this->objectNameList[$res->getIdObject()])) {
-        $res->setObjectName($this->objectNameList[$res->getIdObject()]);
-      } else {
-//        $ob = Object::getById($res->getIdObject());
-//        $res->setObjectName($ob->getName());
-      }
-      
-      $result[] = $res;
-    }
-    $q->freeResult();*/
     return $result;
   }
   
@@ -465,18 +344,7 @@ class SearchComponent extends CApplicationComponent {
   }
 
   public static function replaceIndex(DaActiveRecord $instance, $idLang=1) {
-    $object = $instance->getObjectInstance();
-    $params = $object->parameters;
-    $data = '';
-    foreach($params AS $p) {
-      /**
-       * @var $p ObjectParameter
-       */
-      if ($p->isSearch()) {
-        $val = $instance->{$p->getFieldName()};
-        if ($val != null) $data .= $val.' ';
-      }
-    }
+    $data = $instance->getDataFroSearch();
     self::replaceData($instance->getIdObject(), $instance->getIdInstance(), $idLang, $data);
   }
   public static function replaceData($idObject, $idInstance, $idLang, $data) {
@@ -510,325 +378,29 @@ class SearchComponent extends CApplicationComponent {
   }
   
   public static function recreateIndex($idLang = 1, $arrayWithBadObject = array()) {
-    //!!! Индексация поисковых данных
+    // Удаляем старые данные
     Yii::app()->db->createCommand('DELETE FROM da_search_data WHERE id_lang=:id_lang')->execute(array(':id_lang' => $idLang));
     
-    //!!!!! По каким свойствам нужно искать
-    $pData = array();
-    $prs = Yii::app()->db->createCommand()
-           ->select('id_object, id_parameter, field_name')
-           ->from('da_object_parameters')
-           ->where('search=1')
-           ->queryAll();
-           
-    $c = count($prs);
-    
-    for ($i = 0; $i < $c; $i ++) {
-      $id_object = $prs[$i]['id_object'];
-      if (!array_key_exists($id_object, $pData)) $pData[$id_object] = array();
-      
-      $pData[$id_object][] = array('id' => $prs[$i]['id_parameter'], 'name' => $prs[$i]['field_name']);
-    }
-    //!!!!!
-    
+    // По каким свойствам нужно искать
     $ids = Yii::app()->db->createCommand()
-             ->selectDistinct('id_object')
-             ->from('da_object_parameters')
-             ->where('search=1')
-             ->queryColumn();
-             
-    if (count($ids)) { // для наследования объектов
-      $command = Yii::app()->db->createCommand()
-              ->selectDistinct('id_object')
-              ->from('da_object');
-      $where = '';
-      foreach($ids AS $i => $id) {
-        if ($i > 0) $where .= ', ';
-        $where .= ':id_'.$i;
-        $command->params[':id_'.$i] = $id;
-      }
-      $command->where = 'object_type=4 AND table_name IN ('.$where.')';
-      $ids2 = $command->queryColumn();
-      $ids = array_merge($ids, $ids2);
-    }
-    
-    $c = count($ids);
-    if (!defined('SEARCH_DATA_PORTION')) define('SEARCH_DATA_PORTION', 1000);
-    for ($i = 0; $i < $c; $i++) {
-      $cur = $ids[$i];
-      
-      $obj = DaObject::getById($cur, false);
+        ->selectDistinct('id_object')
+        ->from('da_object_parameters')
+        ->where('search=1')
+        ->queryColumn();
+
+    $searchDataPortion = Yii::app()->getModule('search')->searchDataPortion;
+    if (intval($searchDataPortion) < 1) $searchDataPortion = 1000;
+    foreach($ids AS $idObject) {
+      $obj = DaObject::getById($idObject);
       $model = $obj->getModel();
-      
-      //echo $cur.' - '.get_class($model).'<br>';
       $startRecord = 0;
       while (true) {
-        $data = $model->findAll(array('limit' => SEARCH_DATA_PORTION, 'offset' => $startRecord));
-        
-        $cData = count($data);
-        
-        if ($cData == 0) break;
-        
-        for ($k = 0; $k < $cData; $k++) {
-          $id_object = $data[$k]->getIdObject();
-          if (array_key_exists($id_object, $pData)) {
-            $pNames = $pData[$id_object];
-            
-            $kf = count($pNames);
-            $val = '';
-            for ($j = 0; $j < $kf; $j ++) {
-              $curName = $pNames[$j]['name'];
-              
-              $v = $data[$k]->$curName;
-              
-              if (!is_null($v) && (trim($v) != "")) {
-                $val .= $v.' ';
-              }
-            }
-          }
-          SearchComponent::replaceData($cur, $data[$k]->getPrimaryKey(), $idLang, $val);
-        }
-        
-        $startRecord += SEARCH_DATA_PORTION;
+        $data = $model->findAll(array('limit' => $searchDataPortion, 'offset' => $startRecord));
+        foreach($data AS $instance)
+          self::replaceIndex($instance, $idLang);
+        if (count($data) == 0 || count($data) < $searchDataPortion) break;
+        $startRecord += $searchDataPortion;
       }
     }
-  }
-  /*
-  static functions
-  */
-  /*
-  private static function processValue(array $data) {
-    $c = count($data);
-    $valueItog = "";
-    for ($i = 0; $i < $c; $i++) {
-      $value = $data[$i][1];
-      
-      // Обработка данных. Вырезаем все тэги.
-      $value = trim($value);
-      // Если данных нет, то запись не добавляем.
-      if (is_null($value) || $value == "") {
-        continue;
-      }
-
-      $value = strip_tags($value);
-      $value = unHtmlEntities($value);
-
-      $value = cutDoubleChars($value, " ");
-      $value = cutDoubleChars($value, "\r");
-      $value = cutDoubleChars($value, "\n");
-      $value = cutDoubleChars($value, "\r\n");
-      $value = cutDoubleChars($value, "\n\r");
-      $value = cutDoubleChars($value, "\t");
-      $value = str_replace(array("«", "»", "\\", "\"", "\'", "-", "+", ">", "<", "*"), array(" "," ", " ", " ", " ", " ", " ", " ", " ", " "), $value);
-
-//      $valueItog .= "~~~ ".$value." ~~~".$data[$i][0];
-      $valueItog .= $value." ";
-    }
-    return $valueItog;
-  }
-  
-  public static function replaceData($idObject, $idInstance, $idLang, array $data) {
-    $valueItog = Search::processValue($data);
-    $query = new QuerySql();
-    $query->setQuery("SELECT count(*) AS cnt FROM da_search_data WHERE id_object = ".$idObject." AND id_instance = ".$idInstance." AND id_lang = ".$idLang);
-    $query->exec();
-    $exists = false;
-    if ($row = $query->getNextResultObject()) {
-      if ($row->cnt == 1) $exists = true;
-    }
-    $query->freeResult();
-    
-    if ($exists) {
-      if ($valueItog == "") {
-        $query->setQuery("DELETE FROM da_search_data WHERE id_object = ".$idObject." AND id_instance = ".$idInstance." AND id_lang = ".$idLang);
-        $query->exec();
-      } else {
-        $query->setQuery("UPDATE da_search_data SET value=".QuerySql::escapeString($valueItog, true)." WHERE id_object=".$idObject." AND id_instance=".$idInstance." AND id_lang=".$idLang);
-        $query->exec();
-      }
-    } else {
-      if ($valueItog == "") {
-      } else {
-        $query->setQuery("INSERT INTO da_search_data (id_object, id_instance, id_lang, value) VALUES ($idObject, $idInstance, $idLang, ".QuerySql::escapeString($valueItog, true).")");
-        $query->exec();
-      }
-    }
-  }
-  
-  public static function addData2Index($idObject, $idInstance, $idLang, array $data) {
-    $valueItog = Search::processValue($data);
-    if ($valueItog != "") {
-      $query = new QuerySql();
-      $query->setQuery("SELECT value FROM da_search_data WHERE id_object = ".$idObject." AND id_instance = ".$idInstance." AND id_lang = ".$idLang);
-      $query->exec();
-      $oldValue = null;
-      $exists = false;
-      if ($row = $query->getNextResultObject()) {
-        $oldValue = $row->value;
-        $exists = true;
-        $valueItog = $oldValue." ".$valueItog;
-      }
-      $query->freeResult();
-      if ($exists) {
-        $query->setQuery("UPDATE da_search_data SET value=".QuerySql::escapeString($valueItog, true)." WHERE id_object=".$idObject." AND id_instance=".$idInstance." AND id_lang=".$idLang);
-        $query->exec();
-      } else {
-        $query->setQuery("INSERT INTO da_search_data (id_object, id_instance, id_lang, value) VALUES ($idObject, $idInstance, $idLang, ".QuerySql::escapeString($valueItog, true).")");
-        $query->exec();
-      }
-    }
-  }  
-  
-  public static function recreateIndex($idLang = 1, $arrayWithBadObject = array()) {
-    global $locale;
-    $locale->setLocale($idLang);
-    $query = new QuerySql();
-    $query->setQuery("DELETE FROM da_search_data WHERE id_lang=".$idLang);
-    $query->exec();
-
-    $query->setQuery("SELECT DISTINCT id_object FROM da_object_parameters WHERE search=1");
-    $query->exec();
-    $id = array();
-    while ($row = $query->getNextResultObject()) {
-      $id[] = $row->id_object;
-    }
-    $query->freeResult();
-    
-    if (count($id) > 0) {
-      $query->setQuery("SELECT DISTINCT id_object FROM da_object WHERE object_type=4 AND table_name IN (".array2QueryString($id, true).")");
-      $query->exec();
-      while ($row = $query->getNextResultObject()) {
-        if (!in_array($row->id_object, $id)) {
-          $id[] = $row->id_object;
-        } 
-      }
-      $query->freeResult();
-    }    
-
-    $c = count($id);
-    defineif("SEARCH_DATA_PORTION", 1000);
-    for ($i = 0; $i < $c; $i++) {
-      $cur = $id[$i];  // id_object
-      if (in_array($cur, $arrayWithBadObject)) continue;
-      $startRecord = 0;
-      while (true) {
-        $instanceQuery = new InstanceQuery(null, null, SEARCH_DATA_PORTION, $startRecord, true, false, true, false, 2);
-        $instanceQuery->setIdDomain(null);
-        $instanceQuery->setUsedObjects(array($cur));
-
-        $tmp = new Instance($cur);
-        $data = $tmp->getDataByInstanceQuery($instanceQuery, false);
-
-        $cData = count($data);
-        if ($cData == 0) break;
-        for ($k = 0; $k < $cData; $k++) {
-          $instance = $data[$k];
-          $countParams = $instance->getCountProps();
-
-          $tempArray = array();
-          for ($l = 0; $l < $countParams; $l++) {
-            $curParam = $instance->getPropOfArrayIndex($l);
-            if ($curParam->getParam()->isSearch()) {
-              $v = $curParam->getValue();
-              if (!is_null($v) && (trim($v) != "")) {
-                $tempArray[] = array($curParam->getParam()->getIdParam(), $v);
-              }
-              if (count($tempArray) > 0) {
-                Search::replaceData($cur, $instance->idInstance, $idLang, $tempArray);
-              }
-            }
-          }
-        }
-        $startRecord += SEARCH_DATA_PORTION;
-      }  // Бесконечный цикл.
-    }
-    // Индексация локализированных данных
-    if ($idLang == 1) {
-      global $daDomain;
-      $idLocales = $daDomain->getDomainLocalizations();
-      $c = count($idLocales);
-      for ($i = 0; $i < $c; $i++) {
-        $idLocale = $idLocales[$i];
-        if ($idLocale == 1) continue;
-        Search::recreateIndex($idLocale, $arrayWithBadObject);
-      }
-    }
-  }*/
-}
-
-/*
-class SearchResult {
-
-  private $idObject = null;
-  private $idInstance = null;
-  private $idParameter = null;
-  private $idLang = null;
-  private $value = null;
-  
-  private $instance = null;
-  private $idDomain = null;
-  
-  public function getInstance() {
-    if ($this->instance == null) {
-      $idObject = $this->getIdObject();
-      //Получаем первичный ключ:
-      $pk = ObjectParam::getPrimaryKey($idObject);
-      $iq = new InstanceQuery("<<MAIN_ALIAS>>.".$pk->fieldName." = ".$this->getIdInstance(), null, null, null, true, false, true, false, 1);
-      $iq->setIdDomain(null);
-      $tmp = Object::createInstanceClassByIdObject($idObject);
-      $data = $tmp->getDataByInstanceQuery($iq);
-      if (count($data) == 1) {
-        $this->instance = $data[0];
-      }
-    }
-    return $this->instance;
-  }
-  
-  public function getTitle() {
-    $inst = $this->getInstance();
-    $result = "";
-    if ($inst != null) {
-      $result = $inst->getInstanceCaption();
-    }
-    return $result;
-  }
-  public function getContent() {
-    return $this->getValue();
-  }
-
-  public function setIdObject($idObject) {
-    $this->idObject = $idObject;
-  }
-  public function setIdInstance($idInstance) {
-    $this->idInstance = $idInstance;
-  }
-  public function setIdParameter($idParameter) {
-    $this->idParameter = $idParameter;
-  }
-  public function setIdLang($idLang) {
-    $this->idLang = $idLang;
-  }
-  public function setValue($value) {
-    $this->value = $value;
-  }
-
-  public function getIdObject() {
-    return $this->idObject;
-  }
-  public function getIdInstance() {
-    return $this->idInstance;
-  }
-  public function getIdDomain() {
-    return $this->idDomain;
-  }
-  public function setIdDomain($idDomain) {
-    $this->idDomain = $idDomain;
-  }
-  public function getIdLang() {
-    return $this->idLang;
-  }
-  private function getValue() {
-    return $this->value;
   }
 }
-*/
