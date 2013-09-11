@@ -16,15 +16,17 @@ class SearchModule extends DaWebModuleAbstract {
 
   public $searchModeEnable = false;
 
+  /**
+   * @var int Количество данных, получаемых за один запрос, при полной переиндексации поискового индекса
+   */
+  public $searchDataPortion = 1000;
+
   public $objectNotSearch = array(
     512, 505, 504, 506,
   );
   public $objectSearchList = array();
 
   public function init() {
-    // this method is called when the module is being created
-    // you may place code here to customize the module or the application
-    // import the module-level models and components
     $this->setImport(array(
         'search.models.Search',
         'search.models.SearchHistory',
