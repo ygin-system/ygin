@@ -128,8 +128,6 @@ $mainConfig = array(
       ),
     ),
     
-    //'db'=> require dirname(__FILE__).DIRECTORY_SEPARATOR.'db.php',
-    
     'errorHandler'=>array(
       'errorAction'=>'static/error',
     ),
