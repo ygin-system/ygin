@@ -30,7 +30,7 @@ abstract class DaBackendController extends DaWebController {
         if (!$loginPage) {
           $errorPage = ($this->getModule() == null && $this->getId() == 'static' && $action->getId() == 'error');
           $logoutPage = ($this->getModule() != null && $this->getModule()->getId() == 'user' && $this->getId() == 'user' && $action->getId() == 'logout');
-          if (Yii::app()->user->isGuest) {
+          if (Yii::app()->user->isGuest && !Yii::app()->request->isAjaxRequest) {
             Yii::app()->user->setReturnUrl(Yii::app()->request->url);
             Yii::app()->user->loginRequired();
           } else if (!$errorPage && !$logoutPage) {
