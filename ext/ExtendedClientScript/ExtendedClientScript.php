@@ -295,7 +295,7 @@ class ExtendedClientScript extends CClientScript
       $notCompress = ''; // mixa
 
       foreach ($urls as $key => $file) {
-        $path = $this->basePath.'/'.$file;
+        $path = str_replace('//', '/', $this->basePath.'/'.$file);
         if (!file_exists($path) && mb_strpos($path, Yii::app()->assetManager->basePath) !== false) { // TODO тестовая версия
           $dir = HFile::getDir($path);
           HFile::removeDirectoryRecursive($dir);

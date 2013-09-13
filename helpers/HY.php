@@ -2,6 +2,6 @@
 /**
  * шорткаты
  */
-class HU extends Y {
+class HY extends Y {
 
 }
