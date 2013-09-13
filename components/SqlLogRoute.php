@@ -26,6 +26,13 @@ class SqlLogRoute extends CFileLogRoute {
    * @var boolean
    */
   public $logOnlyQuery = false;
+  /**
+   * Формат для комментария с датой, разделяющей группы запросов.
+   * Eсли false, то комментарий с датой добавляться не будет.
+   * Работает только когда SqlLogRoute::$logOnlyQuery установлен в true.
+   * @var string|boolean
+   */
+  public $sqlGroupDateFormat = 'd.m.Y H:i:s';
   
   public function init() {
     parent::init();
@@ -51,6 +58,9 @@ class SqlLogRoute extends CFileLogRoute {
     }
     //Чтобы была пустая строка между группами запросов
     if (!empty($result)) {
+      if ($this->logOnlyQuery && $this->sqlGroupDateFormat !== false) {
+        $result[0][0] = '-- ' . date($this->sqlGroupDateFormat) . "\n" . $result[0][0];
+      }
       $result[count($result) - 1][0] .= "\n";
     } else {
       return;
