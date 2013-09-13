@@ -17,9 +17,16 @@ if ($showWelcome) :
     <p style="text-align:right;">Уже всё знаете? <button class="btn btn-mini" onclick="$.cookie('daMainWelcome', 1, {expires:10000, path:'/'}); $(this).parents('.introduction').slideUp()">Закройте это сообщение ×</button></p>
   </div>
 <?php endif; ?>
-<?php
-  if (count($devNotices) > 0) {
-?>
+<?php if (count($alertError) > 0) : ?>
+    <div class="alert alert-error">
+      <p>Обнаружены важные замечания, влияющие на производительность/безопасность сайта:</p>
+    <?php $i =0; foreach($alertError AS $error) {
+      $i++;
+      echo CHtml::tag('p', array(), CHtml::tag('b', array(), nl2br($i.'. '.$error)));
+    }?>
+    </div>
+<?php endif; ?>
+<?php if (count($devNotices) > 0) : ?>
     <div class="alert alert-info">
       <button type="button" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'});" class="close" data-dismiss="alert">&times;</button>
       <p>Обратите внимание на последние изменения, которые необходимо внести в проектные файлы:</p>
@@ -27,9 +34,7 @@ if ($showWelcome) :
         echo CHtml::tag('p', array(), CHtml::tag('b', array(), nl2br($notice)));
       }?>
     </div>
-<?php
-  }
-?>
+<?php endif; ?>
   <div class="plugin-list">
 <?php
 $html = '';

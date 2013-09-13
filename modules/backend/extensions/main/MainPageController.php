@@ -64,6 +64,25 @@ class MainPageController extends DaBackendController implements IBackendExtensio
       }
     }
 
+    // важные сообщения о работе системы
+    $alertError = array();
+    if (YII_DEBUG) {
+      $alertError[] = 'Включен debug-режим. При запуске сайта на production-сервере необходимо его выключить.';
+    }
+    if (Yii::app()->cache instanceof CDummyCache) {
+      $alertError[] = 'Отключено кэширование. При запуске сайта на production-сервере необходимо настроить кэширование.';
+    }
+    /**
+     * @var $logRouter CLogRouter
+     * @var $emailRoute DaEmailLogRoute
+     */
+    $logRouter = Yii::app()->getComponent('log');
+    $routes = $logRouter->getRoutes();
+    $emailRoute = $routes['email_error'];
+    if ($emailRoute->getHost() == null) {
+      $alertError[] = 'Не настроена отправка уведомлений об ошибках на электронную почту.';
+    }
+
     // черновая версия TODO
     $mainElements = array();
     if (Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, 528)) {
@@ -132,6 +151,7 @@ class MainPageController extends DaBackendController implements IBackendExtensio
 
       'noticeDevCookieName' => $noticeDevCookieName,
       'devNotices' => $devNotices,
+      'alertError' => $alertError,
 
       'mainElements' => $mainElements,
     ));
