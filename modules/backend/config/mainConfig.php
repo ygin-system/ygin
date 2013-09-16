@@ -198,4 +198,8 @@ $pluginsConfig = array();
 if (file_exists(dirname(__FILE__).'/../../../../protected/runtime/plugin-compile.dat')) {
   $pluginsConfig = unserialize(file_get_contents(dirname(__FILE__).'/../../../../protected/runtime/plugin-compile.dat'));
 }
+
+// опция, включаяющая дополнительные возможности по управлению полями для разработчиков самой системы ygin
+defined('YGIN_DEVELOP') or define('YGIN_DEVELOP', false);
+
 return CMap::mergeArray($coreConfig, $mainConfig, $projectConfig, $pluginsConfig);

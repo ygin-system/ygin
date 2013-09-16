@@ -2,6 +2,9 @@
 
 class PostFormEvent extends CEvent {
 
+  /**
+   * @var $model DaActiveRecord
+   */
   public $model;
 
   public function __construct($sender, $model) {

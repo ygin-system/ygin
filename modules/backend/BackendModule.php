@@ -37,7 +37,7 @@ class BackendModule extends DaWebModuleAbstract implements IApplicationComponent
   
   private $_initExt = array();
   
-  
+  public $prefixPkName = 'project';
   
   public function init() {
     $this->setImport(array(
