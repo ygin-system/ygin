@@ -67,7 +67,7 @@ class ObjectManageViewWidget extends VisualElementWidget {
         $p = $model->getParameterObjectByIdParameter($col);
         if ($p == null) continue;
         $column = new DaObjectViewColumn();
-        $column->id_object_view_column = $idView.'-'.$p->getFieldName();
+        $column->id_object_view_column = $idView.'-'.str_replace('_', '-', $p->getFieldName());
         $column->id_object_view = $idView;
         $column->id_object = $idObject;
         $column->id_object_parameter = $p->getIdParameter();

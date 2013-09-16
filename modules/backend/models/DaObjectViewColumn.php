@@ -61,6 +61,7 @@ class DaObjectViewColumn extends DaActiveRecord {
   public function rules() {
     return array(
       array('id_object_view_column', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('id_object_view_column', 'unique'),
       array('id_object_view, id_object_view_column, id_object, field_name', 'required'),
       array('order_no, id_data_type, visible', 'numerical', 'integerOnly'=>true),
       array('handler, id_object_view_column, id_object_view, id_object_parameter, id_object, caption, field_name', 'length', 'max'=>255),

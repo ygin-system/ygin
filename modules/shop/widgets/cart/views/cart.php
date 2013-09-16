@@ -8,6 +8,8 @@ if (!$showPrice) {
   $noPriceClass = 'noPrice';
 }
 
+$currencyImage = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/assets/rub18.png');
+
 $cs->registerCoreScript('jquery.ui');
 $cs->registerScriptFile(CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/assets/shop.js'));
 $cs->registerScript(
@@ -36,9 +38,9 @@ $cs->registerScript(
                           <input maxlength=\"4\" value=\"0\"> шт.
                         </div>
                         <div class=\"price ".$noPriceClass."\">
-                          <span class=\"val\">0</span> <img title=\"руб.\" alt=\"руб.\" src=\"/project/plugin/internet_magazin/gfx/rub18.png\">
+                          <span class=\"val\">0</span> <img title=\"руб.\" alt=\"руб.\" src=\"".$currencyImage."\">
                         </div>
-                      </li>",  // TODO engine
+                      </li>",
     'visibleCount' => $this->visibleCount
   )).');',
   CClientScript::POS_READY
@@ -60,7 +62,7 @@ $cs->registerScript(
             <input value="<?php echo $product->countInCart; ?>" maxlength="4"> шт.
           </div>
           <div class="price <?php echo $noPriceClass; ?>">
-            <span class="val">0</span> <img src="/project/plugin/internet_magazin/gfx/rub18.png" alt="руб." title="руб.">
+            <span class="val">0</span> <img src="<?php echo $currencyImage; ?>" alt="руб." title="руб.">
           </div>
         </li>
 <?php endforeach; ?>

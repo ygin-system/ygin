@@ -327,17 +327,8 @@ function CartWidgetProduct(id, count, name, price) {
       'itemInvisible': 'itemInvisible', //класс для невидимого итема
       'totalItemsCount': '.totalItems', //контейнер с общим количеством товара в корзине
       'totalItemsCountValue': '.totalItems span', //контейнер со значением общего количества товара в корзине
-      //шаблон одиночного товара
-      'itemTemplate': '<li data-price-result="" data-kolvo="" data-price="" data-id="" class="item">' +
-                        '<a title="Удалить" href="#" class="close">×</a>' +
-                        '<div class="name"></div>' +
-                        '<div class="kolvo">' +
-                          '<input maxlength="4" value="0"> шт.' +
-                        '</div>' +
-                        '<div class="price">' +
-                          '<span class="val">0</span> <img title="руб." alt="руб." src="/project/plugin/internet_magazin/gfx/rub18.png">' +
-                        '</div>' +
-                      '</li>',
+      //шаблон одиночного товара, определяется в виджете корзины
+      'itemTemplate': '', 
       //шаблон корзины             
       'cartTemplate': '<h3 class="title">Корзина</h3>'+
                       '<div class="hdr">' +

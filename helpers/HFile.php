@@ -13,12 +13,12 @@ class HFile extends CFileHelper {
    * @return string 
    */
   public static function getExtension($fileName, $lower = true) {
-  	$ext = parent::getExtension($fileName);
-  	if ($lower) {
+    $ext = parent::getExtension($fileName);
+    if ($lower) {
       $ext = mb_strtolower($ext);
     }
     return $ext;
-  	
+    
     preg_match_all('~\.([^\.]*)$~u', $fileName, $matches);
     $ext = '';
     if (isset($matches[1][0])) {
@@ -64,7 +64,7 @@ class HFile extends CFileHelper {
   public static function removeDirectoryRecursive($dir, $removeSelf=true, $log=false, $errorEnable=true, $excludeFiles = array()) {
     if ($dir == null) return false; // если кто-то вызовет метод с пустым значением, то метод затерет все данные на диске
     $dir = self::addSlashPath($dir);
-    if (strpos(self::normalizePath($dir), self::normalizePath(Yii::getPathOfAlias('webroot'))) === false) { // и ещё защита, чтоб случано не удалили файлы, которые расположены выше корня сайта
+    if (strpos(self::normalizePath($dir), self::normalizePath(realpath(Yii::getPathOfAlias('webroot')))) === false) { // и ещё защита, чтоб случано не удалили файлы, которые расположены выше корня сайта
       return false;
     }
     if (!($handle = opendir($dir))) {
