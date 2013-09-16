@@ -191,10 +191,18 @@ function getDataByType(parameterType) {
     visible['search'] = false;
     visible['is_additional'] = false;
     visible['not_null'] = false;
-    visible['sql_parameter'] = false;
 
+
+    <?php if (YGIN_DEVELOP): ?>
     type['add_parameter'] = <?php echo DataType::BOOLEAN; ?>;
     caption['add_parameter'] = 'Разрешить редактировать';
+
+    type['sql_parameter'] = <?php echo DataType::VARCHAR; ?>;
+    caption['sql_parameter'] = 'Поле-префикс (для виджета)';
+    <?php else: ?>
+    visible['add_parameter'] = false;
+    visible['sql_parameter'] = false;
+    <?php endif; ?>
 
     //caption['sql_parameter'] = 'Имя последовательности (по умолчанию пусто)';
 
