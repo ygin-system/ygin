@@ -198,7 +198,7 @@ function getDataByType(parameterType) {
     caption['add_parameter'] = 'Разрешить редактировать';
 
     type['sql_parameter'] = <?php echo DataType::VARCHAR; ?>;
-    caption['sql_parameter'] = 'Поле-префикс (для виджета)';
+    caption['sql_parameter'] = 'Настройки (основное поле; поле родитель; префикс)';
     <?php else: ?>
     visible['add_parameter'] = false;
     visible['sql_parameter'] = false;

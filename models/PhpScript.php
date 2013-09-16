@@ -74,6 +74,7 @@ class PhpScript extends DaActiveRecord {
   public function rules() {
     return array(
       array('id_php_script_type', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('id_php_script_type', 'unique'),
       array('file_path, id_php_script_type, id_php_script_interface', 'required'),
       array('id_php_script_interface', 'numerical', 'integerOnly'=>true),
       array('id_php_script_type, file_path, description', 'length', 'max'=>255),
