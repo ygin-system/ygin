@@ -27,7 +27,7 @@
      $this
       .delegate('.delete-comment', 'click', function(){
         
-        var id = $($(this).parents('.comment-widget')[0]).attr("id");
+        var id = $($(this).parents('.b-comment-widget')[0]).attr("id");
         var $dialog = $('#addCommentDialog-'+id);
         if(confirm($.fn.commentsList.settings[id]['deleteConfirmString'])) {
           $.post($(this).attr('href'), {'idComment':$(this).attr('rel')})
@@ -43,7 +43,7 @@
       })
 
       .delegate('.approve-comment', 'click', function(){
-        var id = $($(this).parents('.comment-widget')[0]).attr("id");
+        var id = $($(this).parents('.b-comment-widget')[0]).attr("id");
         if(confirm($.fn.commentsList.settings[id]['approveConfirmString'])) {
           $.post($(this).attr('href'), {'idComment':$(this).attr('rel')})
            .success(function(data) {
@@ -55,13 +55,13 @@
         }
         return false;
       })
-     
+/*
       .delegate('input.error, textarea.error', 'keyup', function(){ 
         $(this).next('.errorMessage').remove();
         $(this).removeClass('error').parents('tr').find('td').eq(0).find('label.error').removeClass('error');
         return false;
       })
-
+*/
       
       //свернуть раскрыть ветку
       .delegate('.minimize', 'click', function(){
@@ -73,29 +73,29 @@
       * @deprecated
       */
       //заголовок комментов
-/*     .delegate('.mCommentTag', 'click', function(){
+/*     .delegate('.b-comment-tag', 'click', function(){
        $('img.gorizontal_loader').show();
-       var idObject = $('.mCommentTag > a').data('object'); 
-       var idInstance = $('.mCommentTag > a').data('instance');
-       var widgetId = $('.mCommentArea').attr('id');
+       var idObject = $('.b-comment-tag > a').data('object'); 
+       var idInstance = $('.b-comment-tag > a').data('instance');
+       var widgetId = $('.b-comment-widget').attr('id');
 
        // отрисовываем дерево комментов
        $.getJSON('/yiicomments/view?idObject=' + idObject + '&idInstance=' + idInstance, function(data) {
          $('img.gorizontal_loader').hide();
-         $('#'+widgetId).html(data["comments"]).find('.mCommentList, #addCommentDialog-'+widgetId).slideDown();
+         $('#'+widgetId).html(data["comments"]).find('.b-comment-list, #addCommentDialog-'+widgetId).slideDown();
          $('#addCommentDialog-'+widgetId).data('widgetID', widgetId);
          if (options.isGuest === false) {
            // Комменты отрисованы(просмотрены), значит делаем обновление непросмотренных комментов
            $.fn.commentsList.updateCountNewComment(idObject, idInstance);
          }
        });
-       $this.undelegate('.mCommentTag','click');
+       $this.undelegate('.b-comment-tag','click');
      })*/
       
       //Ответить
       .delegate('.add-comment', 'click', function(){
       	var idComment = $(this).attr('rel');
-        var id = $($(this).parents('.comment-widget')[0]).attr("id");
+        var id = $($(this).parents('.b-comment-widget')[0]).attr("id");
         $dialog = $("#addCommentDialog-"+id);
         var commentID = $(this).attr('rel');
         if(commentID) {
@@ -134,9 +134,9 @@
   // Инициализация формы в виде всплывающего окна    
   $.fn.commentsList.initDialog = function(id){
     var $dialog = $('#addCommentDialog-'+id);
-    $dialog.find('form').submit(function(){
-    	$.fn.commentsList.postComment($dialog);
-    	return false;
+      $dialog.find('form').submit(function(){
+      $.fn.commentsList.postComment($dialog);
+      return false;
     });
     $dialog.data('widgetID', id);
     $dialog.dialog({
@@ -165,14 +165,15 @@
   }
       
   $.fn.commentsList.postComment = function($dialog){
-    var $form = $("form", $dialog);
-    $('form .loader').show();
+    $(".b-comment-form .submit").button("loading");
+    var $form = $(".b-comment-form", $dialog);
     $.post(
       $form.attr("action"),
       $form.serialize()
-      ).success(function(data){
+    ).success(function(data){
+      $('.b-comment-form .submit').button('reset');
       data = $.parseJSON(data);
-      $dialog.html(data["form"]);
+      $dialog.html(data[".b-comment-form"]);
       if(data["code"] == "success") {
 
         $.fn.commentsList.overdrawCommentList($dialog, data);
@@ -182,10 +183,10 @@
 /*      $('#'+id).html($(data["list"])).find('#'+$dialog.attr('id')).data('widgetID', id);
         var id = $dialog.data('widgetID');
         // После добавления коммента надо обновить количество новых комментов
-        var idSet = $($('.comment-widget')[0]).attr('id');
+        var idSet = $($('.b-comment-widget')[0]).attr('id');
         if ($.fn.commentsList.settings[idSet]['isGuest'] === false) {
-          var idObject = $('.mCommentTag > a').data('object'); 
-          var idInstance = $('.mCommentTag > a').data('instance'); 
+          var idObject = $('.b-comment-tag > a').data('object'); 
+          var idInstance = $('.b-comment-tag > a').data('instance'); 
           $.fn.commentsList.updateCountNewComment(idObject, idInstance);
         } */
       }
@@ -196,7 +197,7 @@
    */
   // Обновляем количество непросмотренных комментариев
 /*  $.fn.commentsList.updateCountNewComment = function(idObject, idInstance) {
-    var id = $($('.comment-widget')[0]).attr('id');
+    var id = $($('.b-comment-widget')[0]).attr('id');
     $.post($.fn.commentsList.settings[id]['updateCommentUrl'], {'idObject' : idObject, 'idInstance' : idInstance});
     
   }*/
@@ -207,21 +208,21 @@
     /**
      * @deprecated
      */
-  	//$("#comment_" + idComment + " > .addComments > .comment-header .commentbody").show();
-  	//$("#comment_" + idComment + " > .addComments .minimize").html("Свернуть");
+  	//$("#comment_" + idComment + " > .item .txt-body").show();
+  	//$("#comment_" + idComment + " > .item .minimize").html("Свернуть");
   }
   
   //Скрытие/раскрытие ветки с комментами
   $.fn.commentsList.showCommentBranch = function (idComment) {
   	var commentBranch = $("#comment-" + idComment);
-  	var currentCommentBody = $("#comment-" + idComment + " > .addComments > .comment-header .commentbody");
+  	var currentCommentBody = $("#comment-" + idComment + " > .item .txt-body");
 
   	if (currentCommentBody.css('display') == "none") {
-  	  var commentBody = commentBranch.find('.commentbody:hidden');
-  	  commentBranch.find(".minimize").html("Свернуть");
+  	  var commentBody = commentBranch.find('.txt-body:hidden');
+  	  commentBranch.find(".minimize i").removeClass().addClass('icon-minus');
   	} else {
-  	  var commentBody = commentBranch.find('.commentbody:visible');
-  	  commentBranch.find(".minimize").html("Развернуть");
+  	  var commentBody = commentBranch.find('.txt-body:visible');
+  	  commentBranch.find(".minimize i").removeClass().addClass('icon-plus');
   	}
   	commentBody.slideToggle();
   }
@@ -233,7 +234,7 @@
       .find('#'+$dialog.attr('id'))
       .data('widgetID', id);
     //после перерисовки комментов форма и лист комментов раскрыты
-    $('#addCommentDialog-'+id +', .mCommentList').show();
+    $('#addCommentDialog-'+id +', .b-comment-list').show();
     var settings = $.fn.commentsList.settings[id];
     if (settings.showPopupForm) {
       $dialog.dialog("close");
@@ -243,7 +244,7 @@
 })(jQuery);
 
 function commentHightlight() {
-  $('.comments-list .addComments').bind("mouseenter", function () {
+  $('.b-comments-list .item').bind("mouseenter", function () {
       $(this).addClass('over');
   }).bind("mouseleave", function () {
       $(this).removeClass('over');
@@ -266,8 +267,8 @@ function initComments(widgetId, idObject, idInstance, isGuest) {
   };
   
   $('#'+widgetId).commentsList(options);
-  if(window.location.hash == "#cCommentTag") {
-    $('.mCommentTag').click();
+  if(window.location.hash == "#comment-open") {
+    $('.b-comment-tag').click();
   }
   
 }*/

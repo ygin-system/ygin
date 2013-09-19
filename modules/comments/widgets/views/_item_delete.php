@@ -1,14 +1,6 @@
-    <div class="comment-header">
-      <div class="author">
-        <table cellpadding="0" cellspacing="0">
-        <tr>
-        <td>
-          <div class="commentbody body">
-             <div class="commenttitle"></div>
-             <div class="comment txt">Комментарий удален</div>
-          </div>
-        </td>
-        </tr>
-        </table>
-      </div>
-    </div>
+<?php /* <a class="pull-left" href="#"><img src="http://dummyimage.com/64x64/eeeeee/000" class="media-object"></a> */ ?>
+<div class="media-body">
+  <div class="txt-body">
+    <div class="txt">Комментарий удален</div>
+  </div>
+</div>

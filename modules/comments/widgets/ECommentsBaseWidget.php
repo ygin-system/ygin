@@ -14,7 +14,7 @@
  */
 Yii::import('zii.widgets.jui.CJuiWidget');
 
-class ECommentsBaseWidget extends CJuiWidget {     
+class ECommentsBaseWidget extends DaWidget {     
   /**
    * @var class for unwatching comments
    */
