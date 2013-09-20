@@ -1,19 +1,22 @@
 <?php 
 /**
  * @var Comment model
+ * @var CActiveForm $form
  */
 $form=$this->beginWidget('CActiveForm', array(
   'action' => Yii::app()->urlManager->createUrl($this->postCommentAction),
-  'enableAjaxValidation' => true,
+  'enableAjaxValidation' => false,
+  'enableClientValidation' => true,
   'htmlOptions' => array(
     'class' => 'b-comment-form form-horizontal',
     'name' => 'commentform',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
+    'validateOnChange' => false,
    //'beforeValidate' => 'js:function(form){  }',
   ),
-)); 
+));
 ?>
   <fieldset>
     <legend>Добавить комментарий</legend>
