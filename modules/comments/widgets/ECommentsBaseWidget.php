@@ -57,57 +57,7 @@ class ECommentsBaseWidget extends DaWidget {
    * @var array
    */
   protected $_config;
-  
-  
-  private $_assetsPath = null;
-  private $_basePath = null;
-  
-  /**
-   * Получает путь, где лежит описание класса
-   * @return string
-   */
-  public function getBasePath() {
-    if ($this->_basePath === null) {
-      $class = new ReflectionClass(get_class($this));
-      $this->_basePath = dirname($class->getFileName());
-    }
-    return $this->_basePath;
-  }
-  
-  private function getThemePath($fileName) {
-    if (($theme=Yii::app()->getTheme()) !== null) {
-      $viewPath = $theme->getViewPath().'/'.get_class($this).'/assets/';
-      if (is_file($viewPath.$fileName)) {
-        return $viewPath;
-      }
-    }
-    return null;
-  }
-  
-  /**
-   * Путь к файлам ресурсов (css, js). В конце присутствует DIRECTORY_SEPARATOR
-   * @return string
-   */
-  public function getAssetsPath() {
-    if ($this->_assetsPath === null) {
-      $this->_assetsPath = $this->getBasePath().DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR;
-    }
-    return $this->_assetsPath;
-  }
-  
-  public function registerCssFile($cssFile, $path=null) {
-    if ($path == null) $path = $this->getThemePath($cssFile);
-    if ($path == null) $path = $this->getAssetsPath();
-    $cs = Yii::app()->clientScript;
-    $cs->registerCssFile(CHtml::asset($path.$cssFile));
-  }
-  public function registerJsFile($jsFile, $path=null) {
-    if ($path == null) $path = $this->getThemePath($jsFile);
-    if ($path == null) $path = $this->getAssetsPath();
-    $cs = Yii::app()->clientScript;
-    $cs->registerScriptFile(CHtml::asset($path.$jsFile));
-  }
-  
+
   /**
    * Initializes the widget.
    */
@@ -129,17 +79,13 @@ class ECommentsBaseWidget extends DaWidget {
    * Registers the JS and CSS Files
    */
   protected function registerScripts() {
-    //$assets = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('comments') . '/assets', false, -1, YII_DEBUG);
-    //$cs = Yii::app()->getClientScript();
-    //$cs->registerScriptFile($assets.'/comments.js', CClientScript::POS_HEAD);
     $this->registerJsFile('comments.js');
     $this->registerCssFile('comment.css');
-    //$cs->registerScriptFile($assets . '/yiicomments.js');
   }
   
-  /*
+  /**
    * Create new comment model and initialize it with owner data
-   * @return EComments comment
+   * @return CommentYii
    */
   protected function createNewComment() {
     $comment = BaseActiveRecord::newModel('CommentYii');

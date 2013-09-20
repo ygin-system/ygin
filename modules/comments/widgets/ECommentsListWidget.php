@@ -45,21 +45,21 @@ class ECommentsListWidget extends ECommentsBaseWidget {
       }
     }
   }
-  
+
   public function getUniqueId() {
     if ($this->_uniqueId === null) {
       $this->_uniqueId = time()*rand(0, 10000);
     }
     return $this->_uniqueId;
   }
-      
+
   public function run() {
     $newComment = $this->createNewComment();
     $comments = $newComment->getCommentsTree();
     $this->render('eCommentsListWidget', array(
       'comments' => $comments,
       'newComment' => $newComment,
-      'count' => $newComment->getCountCommentsByInstance($newComment->id_instance),
+      'count' => $newComment->getCountComments($newComment->id_object, $newComment->id_instance),
     ));
     $options = CJavaScript::encode(array(
       'updateCommentUrl' => $this->updateCommentUrl,

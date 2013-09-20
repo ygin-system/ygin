@@ -83,7 +83,7 @@ class CommentYii extends DaActiveRecord {
 
   /**
    * Returns the static model of the specified AR class.
-   * @return Comments the static model class
+   * @return CommentYii
    */
   public static function model($className = __CLASS__) {
     return parent::model($className);
@@ -159,36 +159,6 @@ class CommentYii extends DaActiveRecord {
     );
   }
 
-  /**
-   * Retrieves a list of models based on the current search/filter conditions.
-   * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-   */
-  public function search() {
-    // Warning: Please modify the following code to remove attributes that
-    // should not be searched.
-    $criteria = new CDbCriteria;
-    $criteria->compare('id_object', $this->id_object);
-    $criteria->compare('id_instance', $this->id_isntance);
-    $criteria->compare('id_comment', $this->id_comment);
-    $criteria->compare('id_parent', $this->id_parent);
-    $criteria->compare('id_user', $this->id_user);
-    $criteria->compare('comment_name', $this->comment_name, true);
-    $criteria->compare('comment_theme', $this->comment_theme, true);
-    $criteria->compare('comment_text', $this->comment_text, true);
-    $criteria->compare('comment_date', $this->comment_date);
-    $relations = $this->relations();
-    //if User model has been configured
-    if (isset($relations['user'])) {
-      $criteria->with = 'user';
-    }
-    return new CActiveDataProvider($this, array(
-      'criteria' => $criteria,
-      'pagination' => array(
-        'pageSize' => 30,
-      ),
-    ));
-  }
-
   /*
    * Return id_object
   * @return integer
@@ -209,24 +179,27 @@ class CommentYii extends DaActiveRecord {
    * Return count comments by instance
    * @return integer
    */
-  public function getCountCommentsByInstance($idInstance) {
+  public function getCountComments($idObject, $idInstance) {
     $criteria = new CDbCriteria();
-    $criteria->condition = 'id_instance = :ID_INSTANCE';
-    $criteria->params = array(':ID_INSTANCE' => $idInstance);
-    $comments = self::model()->findAll($criteria);
-    return count($comments);
+    $criteria->compare('id_object', $this->id_object);
+    $criteria->compare('id_instance', $this->id_instance);
+    $criteria->compare('t.moderation', '<>'.self::STATUS_DELETED);
+    //if premoderation is seted and current user isn't superuser
+    if ($this->config['premoderate'] === true && $this->evaluateExpression($this->config['isSuperuser']) === false) {
+      $criteria->compare('t.moderation', self::STATUS_APPROVED);
+    }
+    return self::model()->count($criteria);
   }
 
   /*
    * Return array with prepared comments for given modelName and id
    * @return Comment array array with comments
    */
-
   public function getCommentsTree() {
     $criteria = new CDbCriteria;
     $criteria->compare('id_object', $this->id_object);
     $criteria->compare('id_instance', $this->id_instance);
-    //$criteria->compare('t.moderation', '<>'.self::STATUS_DELETED);
+    $criteria->compare('t.moderation', '<>'.self::STATUS_DELETED);
     $criteria->order = 't.id_parent, t.comment_date ';
     if ($this->config['orderComments'] === 'ASC' || $this->config['orderComments'] === 'DESC') {
       $criteria->order .= $this->config['orderComments'];
