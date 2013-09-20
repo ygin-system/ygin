@@ -74,23 +74,9 @@ class CommentsModule extends DaWebModuleAbstract {
     // import the module-level models and components
     $this->setImport(array(
       'comments.models.*',
-      'comments.components.*',
     ));
   }
       
-  /*
-   * Display ECommentsWidget for defined model and controller
-   * @param CActiveRecord $model
-   * @param CController $controller
-   */
-  public function outComments($model, $controller) {
-    //if this model is commentable
-    if(($modelConfig = $this->getModelConfig($model)) !== null)
-    {
-        $this->outCommentsList($model, $controller);
-    }
-  }
-  
   /*
    * Returns settings for model. Model can be CActiveRecord instance or string.
    * If there is no model settings, then return null

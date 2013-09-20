@@ -6,17 +6,10 @@
  * @author Dmitry Zasjadko <segoddnja@gmail.com>
  * @link https://github.com/segoddnja/ECommentable
  */
-/**
- * Model, representing comment
- *
- * @version 1.0
- * @package Comments module
- */
 
 /**
  *
- * The followings are the available columns in table '{{comments}}':
- *
+ * The followings are the available columns in table 'pr_comment':
  *
  * @property integer $id_comment
  * @property integer $id_object
@@ -66,13 +59,6 @@ class CommentYii extends DaActiveRecord {
    * Holds comments owner model
    */
   private $_ownerModel = false;
-
-  private $_statuses = array(
-    self::STATUS_APPROVED => 'New',
-    self::STATUS_PENDING => 'Moderated',
-    self::STATUS_DELETED => 'Deleted'
-  );
-
 
   public function init() {
     parent::init();
@@ -312,14 +298,6 @@ class CommentYii extends DaActiveRecord {
   public function setModerated() {
     $this->moderation = self::STATUS_PENDING;
     return $this->update();
-  }
-
-  /**
-   * Generate data with statuses for dropDownList
-   * @return array
-   */
-  public function getStatuses() {
-    return $this->_statuses;
   }
 
   public function getStatus() {
