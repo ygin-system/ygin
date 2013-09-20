@@ -122,7 +122,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $comment->ownerModel,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     
@@ -181,7 +180,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $model,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     return $this->clips['list'];

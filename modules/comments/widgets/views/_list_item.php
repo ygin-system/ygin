@@ -30,7 +30,7 @@
                       }
                       //Удаление коммента разрешено либо владельцу поста либо владельцу этого коммента
                       if (($this->isObjectBlog == true && $this->isOwnerBlog == true) || $comment->isOwnerComment() == true) {
-                        echo '<a href="/comments/comment/setStatusDeleteComment" class="btn btn-mini delete-comment" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Удалить').'"><i class="icon-share-alt"></i></a>';
+                        echo '<a href="/comments/comment/setStatusDeleteComment" class="btn btn-mini delete-comment" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Удалить').'"><i class="icon-remove"></i></a>';
                         /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Удалить'), '/comments/comment/setStatusDeleteComment',
                           array('rel'=>$comment->id_comment, 'class'=>'delete-comment')) . "]";*/
                       }

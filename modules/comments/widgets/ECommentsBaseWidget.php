@@ -12,7 +12,6 @@
  * @version 1.0
  * @package Comments module
  */
-Yii::import('zii.widgets.jui.CJuiWidget');
 
 class ECommentsBaseWidget extends DaWidget {     
   /**
@@ -133,11 +132,6 @@ class ECommentsBaseWidget extends DaWidget {
     //$assets = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('comments') . '/assets', false, -1, YII_DEBUG);
     //$cs = Yii::app()->getClientScript();
     //$cs->registerScriptFile($assets.'/comments.js', CClientScript::POS_HEAD);
-    $assets  = $this->getAssetsPath(); 
-    Yii::app()->clientScript->addDependResource('comment.css', array(
-      $assets.'cross.gif',
-      $assets.'repl.gif',
-    ));
     $this->registerJsFile('comments.js');
     $this->registerCssFile('comment.css');
     //$cs->registerScriptFile($assets . '/yiicomments.js');

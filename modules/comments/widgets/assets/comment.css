@@ -22,8 +22,6 @@
 .b-comment-list .title {font-weight:bold}
 .b-comment-list .date {font:9px Tahoma, Arial, Verdana, sans-serif; color:#999; margin:0 0 5px 0; display:inline-block; float:none}
 .b-comment-list .tools {float:right;}
-.b-comment-list .tools a, .b-comment-list .tools a:link, .b-comment-list .tools a:visited {text-decoration:none; border-bottom:1px dashed}
-.b-comment-list .tools a:hover {border-bottom:0}
 .b-comment-list .author {display:inline-block; font-size:14px}
 .b-comment-list .author a, .b-comment-list .author a:visited, .b-comment-list .author a:link, .b-comment-list .author a:visited {
   border-bottom: 1px solid;
@@ -34,4 +32,6 @@
 .b-comment-list li.unWatch{background:#eee; padding:10px 0; border:1px solid #ccc}
 .b-comment-list .repl {display:none; float:left; margin:-21px 0 0 15px; width:11px; height:11px}
 
+/* Изначальное сворачивание комментариев
 .b-comment-list, #addCommentDialog-commentsUID {display:none}
+*/

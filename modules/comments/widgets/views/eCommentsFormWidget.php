@@ -10,7 +10,7 @@ $form=$this->beginWidget('CActiveForm', array(
     'name' => 'commentform',
   ),
   'clientOptions' => array(
-   'validateOnSubmit' => true,
+    'validateOnSubmit' => true,
    //'beforeValidate' => 'js:function(form){  }',
   ),
 )); 

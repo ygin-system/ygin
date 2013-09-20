@@ -16,11 +16,6 @@ Yii::import('ygin.modules.comments.widgets.ECommentsBaseWidget');
 class ECommentsListWidget extends ECommentsBaseWidget {   
 
   private $_uniqueId = null;
-  
-  /**
-   * @var boolean showPopupForm
-   */
-  public $showPopupForm = false;
 
   /**
    * @var boolean allowSubcommenting
@@ -67,12 +62,6 @@ class ECommentsListWidget extends ECommentsBaseWidget {
       'count' => $newComment->getCountCommentsByInstance($newComment->id_instance),
     ));
     $options = CJavaScript::encode(array(
-      'dialogTitle' => Yii::t('CommentsModule.msg', 'Add comment'),
-      'deleteConfirmString' => Yii::t('CommentsModule.msg', 'Delete this comment?'),
-      'approveConfirmString' => Yii::t('CommentsModule.msg', 'Approve this comment?'),
-      'postButton' => Yii::t('CommentsModule.msg', 'Add comment'),
-      'cancelButton' => Yii::t('CommentsModule.msg', 'Cancel'),
-      'showPopupForm' => $this->showPopupForm,
       'updateCommentUrl' => $this->updateCommentUrl,
       'isGuest' => Yii::app()->user->isGuest,
     ));

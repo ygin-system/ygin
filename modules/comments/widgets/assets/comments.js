@@ -18,11 +18,7 @@
       var id = $this.attr('id');
       $.fn.commentsList.settings[id] = settings;
       //Выбор показа формы
-      if (options.showPopupForm) {
-        $.fn.commentsList.initDialog(id);
-      } else {
-        $.fn.commentsList.initForm(id);
-      }
+      $.fn.commentsList.initForm(id);
       
      $this
       .delegate('.delete-comment', 'click', function(){
@@ -101,9 +97,6 @@
         if(commentID) {
           $('.parent_comment_id', $dialog).val(commentID);
         }
-         if (settings.showPopupForm) {
-           $dialog.dialog("open");
-         }
       	$.fn.commentsList.moveCommentFormToComment(id, idComment);
       	return false;
       });
@@ -111,12 +104,7 @@
   };
       
   $.fn.commentsList.defaults = {
-      dialogTitle: 'Add comment',
-      deleteConfirmString: 'Delete this comment?',
-      approveConfirmString: 'Approve this comment?',
-      postButton: 'Add comment',
-      cancelButton: 'Cancel',
-      showPopupForm: false
+    'deleteConfirmString':'Удалить комментарий?',
   };
       
   $.fn.commentsList.settings = {};
@@ -129,39 +117,6 @@
   		return false;
   	});
       $dialog.data('widgetID', id);
-  }
-  
-  // Инициализация формы в виде всплывающего окна    
-  $.fn.commentsList.initDialog = function(id){
-    var $dialog = $('#addCommentDialog-'+id);
-      $dialog.find('form').submit(function(){
-      $.fn.commentsList.postComment($dialog);
-      return false;
-    });
-    $dialog.data('widgetID', id);
-    $dialog.dialog({
-      'title':$.fn.commentsList.settings[id]['dialogTitle'],
-      'autoOpen':false,
-      'width':'530px',
-      'height':'auto',
-      'resizable':false,
-      'modal':true,
-      'buttons':[
-        {
-          text: $.fn.commentsList.settings[id]['postButton'],
-          click: function(){
-            $.fn.commentsList.postComment($(this));
-          }
-        },
-        {
-          text: $.fn.commentsList.settings[id]['cancelButton'],
-          click: function(){
-            $(this).dialog("close");
-            return false;
-          }
-        }
-      ]
-    });
   }
       
   $.fn.commentsList.postComment = function($dialog){
@@ -236,9 +191,6 @@
     //после перерисовки комментов форма и лист комментов раскрыты
     $('#addCommentDialog-'+id +', .b-comment-list').show();
     var settings = $.fn.commentsList.settings[id];
-    if (settings.showPopupForm) {
-      $dialog.dialog("close");
-    }
   }
   
 })(jQuery);
@@ -261,7 +213,6 @@ function initComments(widgetId, idObject, idInstance, isGuest) {
    'approveConfirmString':'Утвердить комментарий?',
    'postButton':'Добавить комментарий',
    'cancelButton':'Отмена',
-   'showPopupForm':false,
    'updateCommentUrl':'/yiicomments/updateComment',
    'isGuest':isGuest
   };

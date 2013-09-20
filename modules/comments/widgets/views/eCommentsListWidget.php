@@ -8,14 +8,13 @@ if ($this->isObjectBlog === true && DaUser::isGuest() === true && $this->model->
 if ($this->isObjectBlog === true) {
   $this->isOwnerBlog = $this->model->isOwner();
 } */
-  if($this->showPopupForm === false) {
-    if ($this->disableAddComments === false) {
-      echo "<div id=\"addCommentDialog-$this->id\">";
-      $this->widget('comments.widgets.ECommentsFormWidget', array(
-        'model' => $this->model,
-      ));
-      echo "</div>";
-    }
+
+  if ($this->disableAddComments === false) {
+    echo "<div id=\"addCommentDialog-$this->id\">";
+    $this->widget('comments.widgets.ECommentsFormWidget', array(
+      'model' => $this->model,
+    ));
+    echo "</div>";
   }
   $this->render('eCommentsWidgetComments', array('comments' => $comments));
 ?>
