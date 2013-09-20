@@ -30,12 +30,10 @@ class ECommentsListWidget extends ECommentsBaseWidget {
   public $disableAddComments = false;
   
   private $updateCommentUrl = '/comments/comment/updateComment';
-  
-  
+
   /**
    * Initializes the widget.
    */
-
   public function init() {
     parent::init();
     if(count($this->_config) > 0) {

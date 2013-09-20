@@ -35,16 +35,17 @@ class CommentYii extends DaActiveRecord {
   const STATUS_APPROVED = 1; //Утвержден
   const STATUS_PENDING = 2; //Ожидает модерации
   const STATUS_DELETED = 3; // Удален
+
   /*
    * @var captcha code handler
    */
-
   public $verifyCode;
 
   /*
    * @var captcha action
    */
 //    public $captchaAction;
+
   /*
    * flag  of don't watch comment
   */
@@ -169,11 +170,7 @@ class CommentYii extends DaActiveRecord {
     $criteria = new CDbCriteria();
     $criteria->compare('id_object', $this->id_object);
     $criteria->compare('id_instance', $this->id_instance);
-    $criteria->compare('t.moderation', '<>'.self::STATUS_DELETED);
-    //if premoderation is seted and current user isn't superuser
-    if ($this->config['premoderate'] === true && $this->evaluateExpression($this->config['isSuperuser']) === false) {
-      $criteria->compare('t.moderation', self::STATUS_APPROVED);
-    }
+    $criteria->compare('t.moderation', self::STATUS_APPROVED);
     return self::model()->count($criteria);
   }
 
@@ -185,15 +182,12 @@ class CommentYii extends DaActiveRecord {
     $criteria = new CDbCriteria;
     $criteria->compare('id_object', $this->id_object);
     $criteria->compare('id_instance', $this->id_instance);
-    $criteria->compare('t.moderation', '<>'.self::STATUS_DELETED);
+    $criteria->compare('t.moderation', self::STATUS_APPROVED);
     $criteria->order = 't.id_parent, t.comment_date ';
     if ($this->config['orderComments'] === 'ASC' || $this->config['orderComments'] === 'DESC') {
       $criteria->order .= $this->config['orderComments'];
     }
-    //if premoderation is seted and current user isn't superuser
-    if ($this->config['premoderate'] === true && $this->evaluateExpression($this->config['isSuperuser']) === false) {
-      $criteria->compare('t.moderation', self::STATUS_APPROVED);
-    }
+
     $relations = $this->relations();
     //if User model has been configured
     if (isset($relations['user'])) {
