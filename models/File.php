@@ -91,7 +91,7 @@ class File extends DaActiveRecord {
   public function relations() {
     return array(
       'childs' => array(self::HAS_MANY, 'File', 'id_parent_file'),
-      'parameters' => array(self::BELONGS_TO, 'ObjectParamterer', 'id_parameter'),
+      'parameters' => array(self::BELONGS_TO, 'ObjectParameter', 'id_parameter'),
     );
   }
 
