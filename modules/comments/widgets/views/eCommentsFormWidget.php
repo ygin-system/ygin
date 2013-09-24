@@ -73,7 +73,8 @@ $form=$this->beginWidget('CActiveForm', array(
         <?php 
           echo $form->textArea($newComment, 'comment_text', array(
             'rows' => 8,
-            'class' => 'input-xxlarge',
+            'style' => 'width:380px',
+            'class' => 'input-xlarge',
             'title' => 'Комментарий',
             'placeholder' => 'Комментарий',
             'autocomplete' => 'off',
