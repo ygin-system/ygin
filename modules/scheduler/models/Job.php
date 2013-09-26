@@ -45,6 +45,7 @@ class Job extends DaActiveRecord {
   public function rules() {
     return array(
       array('id_job', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД должен содержать дефис'),
+      array('id_job', 'unique'),
       array('name, class_name, id_job', 'required'),
       array('interval_value, error_repeat_interval, first_start_date, last_start_date, next_start_date, failures, active, priority, start_date, max_second_process', 'numerical', 'integerOnly'=>true),
       array('id_job, name, class_name', 'length', 'max'=>255),

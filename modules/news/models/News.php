@@ -73,13 +73,6 @@ class News extends DaActiveRecord implements ISearchable {
        ),
       ),
     );
-    if (Yii::app()->hasModule('comments')) {
-      $behaviors['CommentableRelationBehavior'] = array(
-        'class' => 'comments.behaviors.CommentableRelationBehavior',
-        'idObject' => $this->getIdObject(),
-        'idInstance' => $this->id_news,
-      );
-    }
     return $behaviors;
   }
   

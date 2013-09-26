@@ -6,6 +6,9 @@ class PermissionWhereEvent extends CEvent {
   public $where;
   public $params = array();
 
+  /**
+   * @var CDbCriteria
+   */
   public $criteria = null;
 
   public function __construct($sender, $idObject, $where, $params=array()) {

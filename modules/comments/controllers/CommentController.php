@@ -10,13 +10,7 @@
 */
 class CommentController extends Controller {
   const EVENT_TYPE_NEW_COMMENT = 50;
-  public $defaultAction = 'admin';
-  /**
-   * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-   * using two-column layout. See 'protected/views/layouts/column2.php'.
-   */
-  public $layout='//layouts/column1';
-  
+
   /**
    * @return array action filters
    */
@@ -39,15 +33,11 @@ class CommentController extends Controller {
         'users'=>array('@'),
       ),
       array('allow',
-      'actions'=>array('postComment', 'captcha', 'view'),
-      'users'=>array('*'),
-      ),
-      array('allow',
-      'actions'=>array('admin', 'delete', 'approve'),
-      'users'=>array('admin'),
+        'actions'=>array('postComment', 'captcha', 'view'),
+        'users'=>array('*'),
       ),
       array('deny',  // deny all users
-      'users'=>array('*'),
+        'users'=>array('*'),
       ),
     );
   }
@@ -81,21 +71,6 @@ class CommentController extends Controller {
     echo CJSON::encode($result);
   }
 
-  /**
-   * Manages all models.
-   */
-  public function actionAdmin() {
-    $model= BaseActiveRecord::newModel('CommentYii', 'search');
-    $model->unsetAttributes();  // clear any default values
-    $className = get_class($model);
-    if(isset($_GET[$className])) {
-      $model->attributes=$_GET[$className];
-    }
-    $this->render('admin',array(
-      'model'=>$model,
-    ));
-  }
-      
   public function actionPostComment() {
     $comment = BaseActiveRecord::newModel('CommentYii');
     $className = get_class($comment);
@@ -122,7 +97,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $comment->ownerModel,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     
@@ -181,7 +155,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $model,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     return $this->clips['list'];
