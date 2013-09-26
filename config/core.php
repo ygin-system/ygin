@@ -43,6 +43,9 @@ return array(
          'timeout' => '7200',
        ),
      ),
+     'db' => array(
+       'nullConversion' => PDO::NULL_EMPTY_STRING,
+     ),
      'log'=>array(
        'class'=>'CLogRouter',
        'routes' => array(

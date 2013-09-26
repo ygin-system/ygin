@@ -1,6 +1,6 @@
 <?php if (count($products) == 0) { ?>
 
-Верстка когда нет товаров в корзине.
+В корзине нет товаров, оформить заказ пока нет возможности.
 
 <?php
   return;
@@ -46,6 +46,9 @@ $totalSumma = 0;
 $backLink = Yii::app()->user->getState("shop_cart");
 if ($backLink == "") $backLink = Yii::app()->createUrl(ShopModule::ROUTE_MAIN);
 
+$currencyImage = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/assets/rub.png');
+$currencyImage18 = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/assets/rub18.png');
+
 ?>
 
   <?php echo Yii::app()->user->getFlash("offer-message"); ?>
@@ -81,7 +84,7 @@ if ($backLink == "") $backLink = Yii::app()->createUrl(ShopModule::ROUTE_MAIN);
     <div class="control-group">
       <label class="control-label" for="add_info">Пожелания и прочая контактная информация</label>
       <div class="controls">
-        <?php echo $form->textArea($offer, 'comment', array('class' => 'span6')); ?>
+        <?php echo $form->textArea($offer, 'comment', array('class' => 'span6', 'style' => 'height:100px; width: 385px;')); ?>
         <?php echo $form->error($offer, 'comment'); ?>
       </div>
     </div>
@@ -122,7 +125,7 @@ if ($backLink == "") $backLink = Yii::app()->createUrl(ShopModule::ROUTE_MAIN);
 
                 <td class="price">
                     <div class="val" title="<?php echo $sum; ?>">&nbsp;<?php echo $sum; ?></div>
-                    <img title="руб." alt="руб." src="/gfx/rub.png">
+                    <img title="руб." alt="руб." src="<?php echo $currencyImage; ?>">
                 </td>
             </tr>
             <?php endfor; ?>
@@ -134,7 +137,7 @@ if ($backLink == "") $backLink = Yii::app()->createUrl(ShopModule::ROUTE_MAIN);
                 <td colspan="2">Итого:</td>
                 <td class="sum">
                     <span title="<?php echo $totalSumma; ?>"><?php echo $totalSumma; ?></span>
-                    <img title="руб." alt="руб." src="/gfx/rub18.png">
+                    <img title="руб." alt="руб." src="<?php echo $currencyImage18; ?>">
                 </td>
             </tr>
         </tbody>

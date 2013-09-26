@@ -72,6 +72,13 @@ class HU {
     return HEmailEncode::checkEmail($email);
   }
 
+  public static function arrayToQueryArray($arrayName, array $parameters) {
+    $result = array();
+    foreach($parameters AS $key => $value)
+      $result[$arrayName.'['.$key.']'] = $value;
+    return $result;
+  }
+
   /**
    * Возвращает значение ключа $name из массива $_GET
    * @package url

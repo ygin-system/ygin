@@ -74,6 +74,8 @@ class DaObject extends DaActiveRecord {
     return array(
       array('parent_object, id_object', 'match', 'pattern'=>'~\d+|[a-zA-Z\d\_]+\-[a-zA-Z\d\_\-]*[a-zA-Z\d\_]+~', 'message'=>'ИД объекта должен содержать дефис'),
       array('name, id_object', 'required'),
+      array('id_object', 'unique'),
+      array('parent_object', 'default', 'setOnEmpty' => true, 'value' => null),
       array('order_type, object_type, sequence, use_domain_isolation', 'numerical', 'integerOnly'=>true),
       array('id_field_caption, id_field_order, id_object, name, table_name, folder_name, yii_model', 'length', 'max'=>255),
     );
@@ -258,9 +260,9 @@ class DaObject extends DaActiveRecord {
         $p->id_object = $idObject;
         $p->id_parameter_type = DataType::PRIMARY_KEY;
         $p->caption = 'id';
-        $fieldName = 'id_'.str_replace('da_', '', str_replace('pr_', '', $this->table_name));
+        $fieldName = 'id_'.str_replace(array('da_', 'pr_'), '', $this->table_name);
         $p->field_name = $fieldName;
-        $p->id_parameter = $idObject.'-'.$fieldName;
+        $p->id_parameter = $idObject.'-'.str_replace('_', '-', $fieldName);
         $p->setIsRequired(true);
         $p->save();
       }
