@@ -43,7 +43,10 @@ class DbSettings extends CFormModel {
     try {
       $dbConnection->active = true;
     } catch (CDbException $e) {
-      $this->addError('dbname', 'Настройки подключения указаны не верно.');
+      $this->addError(
+        'dbname',
+        'Не удалось подключиться к базе данных. Ошибка: "'. $e->getMessage() . '"'
+      );
     }
     return parent::afterValidate();
   }
