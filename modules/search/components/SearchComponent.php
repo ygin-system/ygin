@@ -4,11 +4,14 @@ class SearchComponent extends CApplicationComponent {
   const SEARCH_MODE_STRICT = 1;
   const SEARCH_MODE_BASE = 2;
   const SEARCH_MODE_SOFT = 3;
-  
+
   //private $page = 1;
   //private $count = 20;
   public $paginator = null;
-  private $criteria = null;
+
+  private $baseCriteria = null;
+  public $criteria;
+
     
   private $conditionSqlList = array();
   private $orderSqlList = array();
@@ -227,8 +230,10 @@ class SearchComponent extends CApplicationComponent {
       $this->paginator->pageSize = 20;
     }
     $this->paginator->applyLimit($criteria);
-    
-    $this->criteria = $criteria;
+
+    if ($this->criteria !== null) $criteria->mergeWith($this->criteria);
+
+    $this->baseCriteria = $criteria;
     
     if ($this->logQuery) {
       self::addSearchLog($srcQuery, $criteria->condition." (params: ".print_r($criteria->params, true).")", "page=".$this->paginator->getCurrentPage()."; count=".$this->paginator->getPageSize());
@@ -243,7 +248,7 @@ class SearchComponent extends CApplicationComponent {
   
   public function getTotalResult() {
     if (is_null($this->totalResult)) {
-      $this->totalResult = Search::model()->count($this->criteria);
+      $this->totalResult = Search::model()->count($this->baseCriteria);
       $this->paginator->setItemCount($this->totalResult);
     }
     return $this->totalResult;

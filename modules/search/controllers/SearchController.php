@@ -3,6 +3,11 @@
 class SearchController extends Controller {
   
   protected $urlAlias = 'search';
+
+  /**
+   * @var CDbCriteria Позволяет добавить условия поиска относительно главной таблицы поискового индекса da_search_data
+   */
+  protected $criteria = null;
   
   public function actionIndex() {
     // объекты, по которым идет поиск
@@ -15,6 +20,7 @@ class SearchController extends Controller {
     try {
       $search = new SearchComponent();
       $search->logQuery = true;
+      $search->criteria = $this->criteria;
       $paginator = new CPagination();
       $paginator->setPageSize($this->module->pageSize);
       $paginator->validateCurrentPage = false;
