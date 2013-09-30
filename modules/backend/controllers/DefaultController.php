@@ -152,11 +152,11 @@ class DefaultController extends DaObjectController {
     }
 
     // условие по родителю
-    if (!$searchActive && $this->getGroupInstance() == null && ($pk=$object->getParameterObjectByField($object->getFieldByType(DataType::ID_PARENT))) != null) {
+    if (!$searchActive && $this->getGroupInstance() == null && $idParentField != null) {
       if ($idParent == null) {
-        $criteria->addCondition($pk->getFieldName()." IS NULL");
+        $criteria->addCondition($idParentField." IS NULL");
       } else {
-        $criteria->addCondition($pk->getFieldName()." = :id_parent");
+        $criteria->addCondition($idParentField." = :id_parent");
         $criteria->params[':id_parent'] = $idParent;
       }
     } else if ($this->getGroupInstance() != null) { // Добавляем ограничения по подчинённым сущностям.

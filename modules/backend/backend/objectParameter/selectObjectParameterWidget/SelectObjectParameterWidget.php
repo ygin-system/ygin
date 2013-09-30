@@ -2,6 +2,9 @@
 
 Yii::import('backend.widgets.dropDownList.DropDownObjectWidget', true);
 
+/**
+ * Визуальный элемент, выводящий свойства конкретного объекта
+ */
 class SelectObjectParameterWidget extends DropDownObjectWidget {
 
   public $parameterOfObject = null;
