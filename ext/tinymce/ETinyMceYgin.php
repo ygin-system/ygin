@@ -209,7 +209,7 @@ class ETinyMceYgin extends ETinyMce {
       $styles = '';
       foreach($this->_advancedStyles AS $caption => $style)
         $styles .= $caption.'='.$style.';';
-      $options['theme_advanced_styles'] = $styles;
+      $options['theme_advanced_styles'] = rtrim($styles, ';');
 
       $this->firstRowOfButtons[] = '|';
       $this->firstRowOfButtons[] = 'styleselect';
