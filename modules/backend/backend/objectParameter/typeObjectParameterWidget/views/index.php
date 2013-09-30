@@ -247,7 +247,7 @@ function changeParameterField(paramType) {
     ),
     'type'=>'POST',
     'dataType'=>'json',
-    'success'=>'js:function(data){if (data.error !== undefined) {alert(data.error); return;} $(data.html).replaceAll(element); }',
+    'success'=>'js:function(data){if (data.error !== undefined) {alert(data.error); return;} element.parent().html(data.html); }',
   ));
 ?>
   }

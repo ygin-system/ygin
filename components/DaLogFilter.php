@@ -21,7 +21,7 @@ class DaLogFilter extends CLogFilter {
             unset($logs[$logKey]);
           } else if (strpos($ignCat, '.*') !== false) {
             $ignCat = str_replace('.*', '', $ignCat) . '.'; 
-            if (strpos($logCategory . '.', $ignCat) !== false) {
+            if (strpos($category . '.', $ignCat) !== false) {
               unset($logs[$logKey]);
             }
           }

@@ -35,6 +35,20 @@ class DaWebController extends CController {
   public function getCaption() {
     return $this->_caption;
   }
+
+  /**
+   * Фильтр аналогичен фильтру ajaxOnly, только по нему не происходит уведомлений об ошибках на e-mail
+   * The filter method for 'ajaxOnly' filter.
+   * This filter throws an exception (CHttpException with code 400) if the applied action is receiving a non-AJAX request.
+   * @param CFilterChain $filterChain the filter chain that the filter is on.
+   * @throws CHttpException if the current request is not an AJAX request.
+   */
+  public function filterAjaxOnlySilent($filterChain) {
+    if(Yii::app()->getRequest()->getIsAjaxRequest())
+      $filterChain->run();
+    else
+      throw new DaHttpException(400,Yii::t('yii','Your request is invalid.'));
+  }
   
   /**
    * Путь к файлам ресурсов (css, js). В конце присутствует DIRECTORY_SEPARATOR

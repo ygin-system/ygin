@@ -11,19 +11,15 @@
 class CommentController extends Controller {
   const EVENT_TYPE_NEW_COMMENT = 50;
   public $defaultAction = 'admin';
-  /**
-   * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-   * using two-column layout. See 'protected/views/layouts/column2.php'.
-   */
-  public $layout='//layouts/column1';
-  
+
   /**
    * @return array action filters
    */
   public function filters() {
     return array(
       'accessControl', // perform access control for CRUD operations
-      'ajaxOnly + PostComment, Delete, Approve',
+      'ajaxOnly + Delete, Approve',
+      'ajaxOnlySilent + PostComment',
     );
   }
       
@@ -39,15 +35,15 @@ class CommentController extends Controller {
         'users'=>array('@'),
       ),
       array('allow',
-      'actions'=>array('postComment', 'captcha', 'view'),
-      'users'=>array('*'),
+        'actions'=>array('postComment', 'captcha', 'view'),
+        'users'=>array('*'),
       ),
       array('allow',
-      'actions'=>array('admin', 'delete', 'approve'),
-      'users'=>array('admin'),
+        'actions'=>array('admin', 'delete', 'approve'),
+        'users'=>array('admin'),
       ),
       array('deny',  // deny all users
-      'users'=>array('*'),
+        'users'=>array('*'),
       ),
     );
   }
