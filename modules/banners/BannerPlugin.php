@@ -10,10 +10,10 @@ class BannerPlugin extends PluginAbstract {
     return 'Баннеры';
   }
   public function getVersion() {
-    return '1.1';
+    return '1.1.0.';
   }
   public function getVersionDate() {
-    return '02.10.2013';
+    return '03.10.2013';
   }
   public function getShortDescription() {
     return 'Общий инструмент, предназначенный для хранения баннеров и учета их посещаемости.';
@@ -67,7 +67,9 @@ class BannerPlugin extends PluginAbstract {
   }
 
   public function updatePlugin(Plugin $plugin) {
-    $this->installAggregateViewsStatisticJob();
+    if ($plugin->getIsEnabled()) {
+      $this->installAggregateViewsStatisticJob();
+    }
   }
 
 }
