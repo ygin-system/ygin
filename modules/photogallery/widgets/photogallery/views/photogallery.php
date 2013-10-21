@@ -4,19 +4,29 @@
     $this->registerCssFile('jquery-photowall.css');
     $this->registerJsFile('jquery-photowall.js');
     
-    $addScript = "";
+    $data = array();
     $i = 0;
     foreach ($photos AS $photo) {
       $preview = $photo->getImagePreview('_list');
       if ($preview == null) continue;
-      if ($i > 0) $addScript .= ',';
       $i++;
       $previewSizes = getimagesize($preview->file_path);
-      $addScript .= "photosArray['photo".$i."'] = {id:'photo".$i."',img:'".$photo->image->getUrlPath()."',width:500,height:400, title:'".$photo->name."',
-             th:{src:'".$preview->getUrlPath()."', width:50, height:40, previewWidth:".$previewSizes[0].",
-                 zoom_src:'".$preview->getUrlPath()."', zoom_factor:2
-                }
-            }";
+
+      $data['photo'.$i] = array(
+        'id' => 'photo'.$i,
+        'img' => $photo->image->getUrlPath(),
+        'width' => 500,
+        'height' => 400,
+        'title' => $photo->name,
+        'th' => array(
+          'src' => $preview->getUrlPath(),
+          'width' => 50,
+          'height' => 40,
+          'previewWidth' => $previewSizes[0],
+          'zoom_src' => $preview->getUrlPath(),
+          'zoom_factor' => 2,
+        ),
+      );
     }
 
     $script = "        PhotoWall.init({
@@ -32,9 +42,8 @@
                                                      // (may be little bigger due to resize to fit line)
         });
         
-        var photosArray = new Array();
-        ".$addScript."
-                
+        var photosArray = ".CJavaScript::encode($data).";
+
         PhotoWall.load(photosArray);
   ";
     Yii::app()->clientScript->registerScript('da_gal', $script, CClientScript::POS_READY);
