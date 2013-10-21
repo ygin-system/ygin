@@ -17,7 +17,7 @@
         'img' => $photo->image->getUrlPath(),
         'width' => 500,
         'height' => 400,
-        'title' => $photo->name,
+        'title' => CHtml::encode($photo->name),
         'th' => array(
           'src' => $preview->getUrlPath(),
           'width' => 50,
