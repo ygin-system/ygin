@@ -40,14 +40,14 @@ class CommentEventHandler extends BackendEventHandler {
     }
   }
   public function onProcessPermissionWhere(PermissionWhereEvent $event) {
-    $where = $event->where;
     if ($idObject = intval(HU::get(self::URL_PARAM_OBJECT))) {
-      $where = HText::addCondition($where, 'id_object = '.Yii::app()->db->quoteValue($idObject));
+      $event->criteria->addCondition('id_object = :id_object_comment');
+      $event->criteria->params[':id_object_comment'] = $idObject;
     }
     if ($idInstance = intval(HU::get(self::URL_PARAM_INSTANCE))) {
-      $where = HText::addCondition($where, 'id_instance = '.Yii::app()->db->quoteValue($idInstance));
+      $event->criteria->addCondition('id_instance = :id_instance_comment');
+      $event->criteria->params[':id_instance_comment'] = $idInstance;
     }
-    $event->where = $where;
   }
   public function onParameterAvailableToSearch(ParameterAvailableToSearchEvent $event) {
     $param = $event->objectParameter;

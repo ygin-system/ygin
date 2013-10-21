@@ -10,7 +10,6 @@
 */
 class CommentController extends Controller {
   const EVENT_TYPE_NEW_COMMENT = 50;
-  public $defaultAction = 'admin';
 
   /**
    * @return array action filters
@@ -18,8 +17,7 @@ class CommentController extends Controller {
   public function filters() {
     return array(
       'accessControl', // perform access control for CRUD operations
-      'ajaxOnly + Delete, Approve',
-      'ajaxOnlySilent + PostComment',
+      'ajaxOnly + PostComment, Delete, Approve',
     );
   }
       
@@ -37,10 +35,6 @@ class CommentController extends Controller {
       array('allow',
         'actions'=>array('postComment', 'captcha', 'view'),
         'users'=>array('*'),
-      ),
-      array('allow',
-        'actions'=>array('admin', 'delete', 'approve'),
-        'users'=>array('admin'),
       ),
       array('deny',  // deny all users
         'users'=>array('*'),
@@ -77,21 +71,6 @@ class CommentController extends Controller {
     echo CJSON::encode($result);
   }
 
-  /**
-   * Manages all models.
-   */
-  public function actionAdmin() {
-    $model= BaseActiveRecord::newModel('CommentYii', 'search');
-    $model->unsetAttributes();  // clear any default values
-    $className = get_class($model);
-    if(isset($_GET[$className])) {
-      $model->attributes=$_GET[$className];
-    }
-    $this->render('admin',array(
-      'model'=>$model,
-    ));
-  }
-      
   public function actionPostComment() {
     $comment = BaseActiveRecord::newModel('CommentYii');
     $className = get_class($comment);
@@ -118,7 +97,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $comment->ownerModel,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     
@@ -177,7 +155,6 @@ class CommentController extends Controller {
     $this->beginClip("list");
     $this->widget('comments.widgets.ECommentsListWidget', array(
         'model' => $model,
-        'showPopupForm' => false,
     ));
     $this->endClip();
     return $this->clips['list'];

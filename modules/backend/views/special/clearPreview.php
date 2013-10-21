@@ -20,10 +20,10 @@ function getImageFiles($dir='.', $exclude) {
     if ($v == '.' || $v == '..') {
       continue;
     }
-    if (is_dir($dir.'/'.$v)) {
-      $files = array_merge($files, getImageFiles($dir.'/'.$v, $exclude));
+    if (is_dir(HFile::addSlashPath($dir).$v)) {
+      $files = array_merge($files, getImageFiles(HFile::addSlashPath($dir).$v, $exclude));
     } else if (isImage(HFile::getExtension($v))) {
-      $files[] = str_replace($exclude, '', $dir.'/'.$v);
+      $files[] = str_replace($exclude, '', HFile::addSlashPath($dir).$v);
     }
   }
   return $files;
@@ -36,7 +36,7 @@ function getWordFinishByNumber($number, $one, $two, $five) {
   return $number%10 == 1 ? $one : ($number%10 < 5 ? $two : $five);
 }
 
-$arrayOfNoRegisteredFiles = getImageFiles(Yii::getPathOfAlias('webroot').'/content/', Yii::getPathOfAlias('webroot').'/');
+$arrayOfNoRegisteredFiles = getImageFiles(HFile::addSlashPath(Yii::getPathOfAlias('webroot')).'content/', HFile::addSlashPath(Yii::getPathOfAlias('webroot')));
 
 $action = HU::get('action');
 $data = File::model()->findAll();

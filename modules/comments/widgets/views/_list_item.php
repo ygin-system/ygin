@@ -1,10 +1,10 @@
-<ul class="comments-list" rel="0">
+<ul rel="0" class="media-list">
   <?php foreach($comments as $comment):?>
       <?php if ($comment->childs == false && $comment->moderation != CommentYii::STATUS_APPROVED) :?>
       <?php continue; ?>
       <?php endif; ?>
-      <li id="comment-<?=$comment->id_comment;?>" <?php if ($comment->isUnWatchComment) echo ' class="'.$this->classUnWatchCommentView.'"';?>>
-      <div id="comment_<?=$comment->id_comment;?>" class="addComments item">
+      <li id="comment-<?=$comment->id_comment;?>" class="media <?php if ($comment->isUnWatchComment) echo $this->classUnWatchCommentView;?>">
+        <div id="comment_<?=$comment->id_comment;?>" class="item">
         <?php if ($comment->moderation != CommentYii::STATUS_APPROVED) : ?>
           <?php 
           if ($comment->childs == true) {
@@ -12,53 +12,50 @@
           }
           ?>
         <?php else :?>
-          <div class="comment-header">
-            <div class="author">
-              <table cellpadding="0" cellspacing="0">
-              <tr>
-
-              <td>
-                <div class="commentheader name">
-                  <span class="commentauthor"><b>
-                  <?php
-                  if (isset($comment->user)) {
-                    echo CHtml::encode($comment->user->full_name);
-                  } else {
-                    echo $comment->processTextFromFoul(CHtml::encode($comment->comment_name));                   
-                  }
-                  ?>
-                  </b>, <div class="date"><?=Yii::app()->dateFormatter->formatDateTime($comment->comment_date);?></div></span>
+        <?php //TODO: надо выводить юзерпик ?>
+              <?php // <a class="pull-left userpic" href="#"><img src="http://dummyimage.com/64x64/eeeeee/000" class="media-object"></a> ?>
+              <div class="media-body item-body">
+                <div class="media-heading hdr">
                   <div class="tools">
                   <?php
                   
                     if ($this->allowSubcommenting === true && ($this->registeredOnly === false || Yii::app()->user->isGuest === false)) {
-                      echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Свернуть'), '#',
-                        array('rel'=>$comment->id_comment, 'class'=>'minimize')) . "] ";
+                      echo '<button class="btn btn-mini minimize" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Свернуть').'"><i class="icon-minus"></i></button>';
+                      /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Свернуть'), '#',
+                        array('rel'=>$comment->id_comment, 'class'=>'minimize')) . "] ";*/
                       if ($this->disableAddComments == false) {
-                        echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Ответить'), '#',
-                          array('rel'=>$comment->id_comment, 'class'=>'add-comment')) . "]";
+                        echo '<button class="btn btn-mini add-comment" rel="'.$comment->id_comment.'"><i class="icon-share-alt" title="'.Yii::t('CommentsModule.msg', 'Ответить').'"></i></button>';
+                        /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Ответить'), '#',
+                          array('rel'=>$comment->id_comment, 'class'=>'add-comment')) . "]";*/
                       }
                       //Удаление коммента разрешено либо владельцу поста либо владельцу этого коммента
                       if (($this->isObjectBlog == true && $this->isOwnerBlog == true) || $comment->isOwnerComment() == true) {
-                        echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Удалить'), '/comments/comment/setStatusDeleteComment',
-                          array('rel'=>$comment->id_comment, 'class'=>'delete-comment')) . "]";
+                        echo '<a href="/comments/comment/setStatusDeleteComment" class="btn btn-mini delete-comment" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Удалить').'"><i class="icon-remove"></i></a>';
+                        /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Удалить'), '/comments/comment/setStatusDeleteComment',
+                          array('rel'=>$comment->id_comment, 'class'=>'delete-comment')) . "]";*/
                       }
                       
                     }
 
                   ?>
                   </div>
+                  <div class="author label">
+                  <?php
+                  if (isset($comment->user)) {
+                    echo CHtml::encode($comment->user->full_name);
+                  } else {
+                    echo $comment->processTextFromFoul(CHtml::encode($comment->comment_name));
+                  }
+                  ?>
+                  </div>
+                  <div class="date"><?=Yii::app()->dateFormatter->formatDateTime($comment->comment_date);?></div>
                 </div>
-                <div class="commentbody body">
+                <div class="txt-body">
                   <b class="repl"></b>
-                   <div class="commenttitle"><b><?=$comment->comment_theme;?></b></div>
-                   <div class="comment txt"><?=$comment->processTextFromFoul(nl2br(trim(CHtml::encode($comment->comment_text))));?></div>
+                  <h4 class="title"><?=$comment->comment_theme;?></h4>
+                  <div class="txt"><?=$comment->processTextFromFoul(nl2br(trim(CHtml::encode($comment->comment_text))));?></div>
                 </div>
-              </td>
-              </tr>
-              </table>
-            </div>
-          </div>
+              </div>
           <?php endif;?>
         </div>
         <?php 

@@ -10,6 +10,13 @@ defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 
 return array(
+
+  'modules'=>(!YII_DEBUG ? array() : array(
+    'gii'=>array(
+      'password' => '123',
+    ),
+  )),
+
   'components' => array(
     'db' => array(
       'connectionString' => '<?php echo $dbSettings->getConnectionString(); ?>',
@@ -21,6 +28,12 @@ return array(
       'enableProfiling' => true,
       'enableParamLogging' => true,
     ),
+
+    'clientScript' => array(
+      'combineCss' => true,
+      'combineJs' => true,
+    ),
+
     'log' => array(
       'routes' => array(
         /*

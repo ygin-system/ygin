@@ -16,11 +16,6 @@ Yii::import('ygin.modules.comments.widgets.ECommentsBaseWidget');
 class ECommentsListWidget extends ECommentsBaseWidget {   
 
   private $_uniqueId = null;
-  
-  /**
-   * @var boolean showPopupForm
-   */
-  public $showPopupForm = false;
 
   /**
    * @var boolean allowSubcommenting
@@ -35,12 +30,10 @@ class ECommentsListWidget extends ECommentsBaseWidget {
   public $disableAddComments = false;
   
   private $updateCommentUrl = '/comments/comment/updateComment';
-  
-  
+
   /**
    * Initializes the widget.
    */
-
   public function init() {
     parent::init();
     if(count($this->_config) > 0) {
@@ -50,29 +43,23 @@ class ECommentsListWidget extends ECommentsBaseWidget {
       }
     }
   }
-  
+
   public function getUniqueId() {
     if ($this->_uniqueId === null) {
       $this->_uniqueId = time()*rand(0, 10000);
     }
     return $this->_uniqueId;
   }
-      
+
   public function run() {
     $newComment = $this->createNewComment();
     $comments = $newComment->getCommentsTree();
     $this->render('eCommentsListWidget', array(
       'comments' => $comments,
       'newComment' => $newComment,
-      'count' => $newComment->getCountCommentsByInstance($newComment->id_instance),
+      'count' => $newComment->getCountComments($newComment->id_object, $newComment->id_instance),
     ));
     $options = CJavaScript::encode(array(
-      'dialogTitle' => Yii::t('CommentsModule.msg', 'Add comment'),
-      'deleteConfirmString' => Yii::t('CommentsModule.msg', 'Delete this comment?'),
-      'approveConfirmString' => Yii::t('CommentsModule.msg', 'Approve this comment?'),
-      'postButton' => Yii::t('CommentsModule.msg', 'Add comment'),
-      'cancelButton' => Yii::t('CommentsModule.msg', 'Cancel'),
-      'showPopupForm' => $this->showPopupForm,
       'updateCommentUrl' => $this->updateCommentUrl,
       'isGuest' => Yii::app()->user->isGuest,
     ));

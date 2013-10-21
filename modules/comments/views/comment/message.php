@@ -17,5 +17,5 @@ echo strtr($str, array(
   '{theme}' => CHtml::encode($model->comment_theme),
   '{comment}' => CHtml::encode($model->comment_text),
   '{editLink}' => Yii::app()->request->hostInfo."/admin/page/250/".$model->primaryKey."/view/67/",
-  '{viewLink}' => Yii::app()->request->urlReferrer.'#commentsUID',
+  '{viewLink}' => Yii::app()->request->urlReferrer.'#comment-'.$model->primaryKey,
 ));

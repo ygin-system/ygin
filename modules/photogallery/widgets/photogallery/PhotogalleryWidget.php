@@ -11,8 +11,8 @@ class PhotogalleryWidget extends DaWidget {
       $ass.'exit.gif',
       $ass.'loader.gif',
       $ass.'lock.gif',
-//      $ass.'lll.png',
-//      $ass.'lrr.png',
+      $ass.'lll.png',
+      $ass.'lrr.png',
     ));
     
 //    $photos = PhotogalleryPhoto::model()->with('image')->byInstance($this->model)->findAll();
