@@ -62,6 +62,11 @@ return array(
            'subject' => 'Ошибка на сайте ('.$errorSubjectHost.')',
            'enabled' => YII_DEBUG == false,
          ),
+         'mailErrorLog' => array(  // ошибки при отправке почты
+           'class' => 'DaFileLogRoute',
+           'categories'=>'application.sendMail.error',
+           'logFile' => 'mail_error_log.log',
+         ),
          'errorLog' => array(  // все ошибки (кроме 404) записываем в лог. Также в лог попадают переменные окружения (см. logVars)
            'class' => 'CFileLogRoute',
            'levels' => 'error, warning',
@@ -71,6 +76,7 @@ return array(
              'ignoreCategories' => array(
                'exception.CHttpException.404',
                'exception.DaHttpException.*',
+               'application.sendMail.error',
              ),
              'logVars' => array('_GET','_POST','_FILES','_COOKIE','_SESSION','_SERVER'),
            ),
