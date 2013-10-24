@@ -2,6 +2,7 @@
   class DaFrontendController extends DaWebController {
 
     protected $urlAlias = null;
+    public $encodeEmail = true;
 
     public function init() {
       parent::init();
@@ -10,7 +11,7 @@
 
     public function processOutput($output) {
       $output = parent::processOutput($output);
-      if (true || $this->_encodeEmail) {  // TODO
+      if ($this->encodeEmail) {
         $output = HEmailEncode::encodeHtmlSource($output);
       }
       return $output;
