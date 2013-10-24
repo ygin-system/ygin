@@ -27,12 +27,13 @@ if ($showWelcome) :
     </div>
 <?php endif; ?>
 <?php if (count($devNotices) > 0) : ?>
-    <div class="alert alert-info">
+    <div class="noticeForDev alert alert-info">
       <button type="button" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'});" class="close" data-dismiss="alert">&times;</button>
       <p>Обратите внимание на последние изменения, которые необходимо внести в проектные файлы:</p>
       <?php foreach($devNotices AS $notice) {
         echo CHtml::tag('p', array(), CHtml::tag('b', array(), nl2br($notice)));
       }?>
+      <p style="text-align:left;"> <button class="btn btn-mini" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'}); $(this).parents('.noticeForDev').slideUp()">Всё сделано, закрыть сообщение</button></p>
     </div>
 <?php endif; ?>
   <div class="plugin-list">
