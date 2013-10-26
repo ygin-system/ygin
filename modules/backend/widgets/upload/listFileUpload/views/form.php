@@ -17,6 +17,9 @@ $cs->registerScript('list-file-upload-exist-model#'.$this->id, '
 $cs->registerScript('list-file-upload#'.$this->id, '
   $("#'.$this->id.'")
     .on("fileuploadfailed", function(e, data) {
+      if (!data.jqXHR) {
+        return;
+      }
       if (data.jqXHR.statusText == "abort") {
         return;
       }

@@ -41,7 +41,7 @@ class FileUploadForm extends XUploadForm {
     }
     $objectParameter = $this->getObjectParameter();
     //если есть ограничение по типу файлов, то нужно добавить в валидатор
-    if ($addParam = $objectParameter->getAdditionalParameter()) {
+    if ($objectParameter && ($addParam = $objectParameter->getAdditionalParameter())) {
       $types = FileExtension::getExtensionsByType($addParam);
       $validators = $this->getValidators('file');
       if (isset($validators[0]) && $validators[0] instanceof CFileValidator) {
@@ -72,7 +72,8 @@ class FileUploadForm extends XUploadForm {
    * @return DaActiveRecord
    */
   public function getObjectParameter() {
-    $object = $this->getObject();
-    return $object->getParameterObjectByIdParameter($this->parameterId);
+    if ($object = $this->getObject()) {
+      return $object->getParameterObjectByIdParameter($this->parameterId);
+    }
   }
 }
