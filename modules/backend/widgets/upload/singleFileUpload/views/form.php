@@ -9,7 +9,7 @@ $cs->registerScript('single-file-upload-exist-model#'.$this->id, '
   CJavaScript::encode(array(
     'files' => $files,
   )).')).find(".template-download").addClass("in");
-  
+  BackendUploadedFiles.addList('.CJavaScript::encode($files).');
 ', CClientScript::POS_READY);
 
 $cs->registerScript('single-file-upload#'.$this->id, '
@@ -31,6 +31,7 @@ $cs->registerScript('single-file-upload#'.$this->id, '
       var fileId = "";
       if (data.result.files[0]) {
         fileId = data.result.files[0].fileId;
+        BackendUploadedFiles.add(data.result.files[0]);
       }
       $("#'.CHtml::activeId($this->mainModel, $this->objectParameter->getFieldName()).'").val(fileId);
     }).on("fileuploaddestroyed", function(e, data) {
@@ -38,6 +39,7 @@ $cs->registerScript('single-file-upload#'.$this->id, '
       var fileId = $btn.data("fileid");
       if (fileId) {
         $("#'.CHtml::activeId($this->mainModel, $this->objectParameter->getFieldName()).'").val("");
+        BackendUploadedFiles.remove(fileId);
       }
     }).on("fileuploadfailed", function(e, data) {
       data.context.find(".delete").closest(".template-download").remove();
