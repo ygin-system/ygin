@@ -176,7 +176,11 @@ class FileUploadAction extends CAction {
         }
         $this->afterUpload();
       } else {
-        throw new CHttpException(400, $this->getModelErrors($formModel));
+        if (isset($formModel->errors['file'])) {
+          throw new DaHttpException(400, $this->getModelErrors($formModel)); // без логирования
+        } else {
+          throw new CHttpException(400, $this->getModelErrors($formModel));
+        }
       }
     }
   }

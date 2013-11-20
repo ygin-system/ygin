@@ -311,11 +311,11 @@ class Menu extends DaActiveRecord implements ISearchable {
    * Получить все модули раздела
    * @return array SiteModule
    */
-  public function getModules() {
+  public function getModules($idTemplate=null) {
     if ($this->_modules !== null) return $this->_modules;
     
     $this->_modules = array();
-    $idTemplate = $this->id_module_template;
+    $idTemplate = ($idTemplate != null ? $idTemplate : $this->id_module_template);
 
     if ($idTemplate == null) {
       // Если модулей нет, то устанавливаем родительские модули
@@ -342,9 +342,9 @@ class Menu extends DaActiveRecord implements ISearchable {
    * @param int $place
    * @return array SiteModule
    */
-  public function getModulesByPlace($place) {
+  public function getModulesByPlace($place, $idTemplate=null) {
     $result = array();
-    $modules = $this->getModules();
+    $modules = $this->getModules($idTemplate);
     foreach ($modules AS $module) {
       if ($module->place->place == $place) $result[] = $module;
     }

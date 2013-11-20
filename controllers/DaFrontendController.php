@@ -2,6 +2,7 @@
   class DaFrontendController extends DaWebController {
 
     protected $urlAlias = null;
+    public $idSiteModuleTemplate = null;
 
     public function init() {
       parent::init();
@@ -30,8 +31,11 @@
             $menu = $menu->getParent();
           }
           $this->breadcrumbs = array_reverse($this->breadcrumbs);
+          /**
+           * @var Menu $menu
+           */
           $menu = Yii::app()->menu->current;
-          
+
           // title
           if ($menu->title_teg != null) $this->setPageTitle($menu->title_teg);
           
@@ -41,7 +45,6 @@
           // description
           if ($menu->meta_description != null) $this->setDescription($menu->meta_description);
           	else $this->setDescription($menu->caption);
-          	
         }
         return true;
       }
