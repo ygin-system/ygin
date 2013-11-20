@@ -15,6 +15,11 @@ class DaMenu extends CApplicationComponent {
     if (is_array($actionParams) && !isset($actionParams[MenuModule::ROUTE_STATIC_MENU_PARAM]) && $urlAlias == null) {
       $idMenu = Yii::app()->domain->model->id_default_page;
       $current = $this->getAll()->getById($idMenu);
+      if ($route != MenuModule::ROUTE_STATIC_MENU && Yii::app()->request->url != '/') {
+        // не главная страница. Текущий контроллер не связан с каким-либо разделом.
+        // Даем ему все свойства главной страницы, а набор виджетов присваеваем набору по умолчанию
+        $current->id_module_template = SiteModuleTemplate::getIdDefaultTemplate();
+      }
     } else if ($urlAlias != null || isset($actionParams[MenuModule::ROUTE_STATIC_MENU_PARAM])) {
       $alias = $urlAlias;
       if ($alias == null) {
