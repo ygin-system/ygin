@@ -24,8 +24,8 @@ Yii::app()->clientScript->registerCssFile('/themes/business/css/jqzoom.css');
 <div class="b-emarket-product">
   <div class="details">
 <?php if ($preview != null): ?>
-<a href="/themes/business/gfx/hh.jpg" class="to_zoom">
-    <img class="image" src="<?php echo $preview->getUrlPath(); ?>" alt="<?php echo CHtml::encode($product->name); ?> title="IMAGE TITLE"">
+    <a href="<?php echo $product->mainPhoto->getUrlPath(); ?>" class="to_zoom">
+      <img class="image" src="<?php echo $preview->getUrlPath(); ?>" alt="<?php echo CHtml::encode($product->name); ?> title="IMAGE TITLE"">
     </a>
 <?php endif; ?>
     <div class="info-bar">
