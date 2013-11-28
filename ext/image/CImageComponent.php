@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.extensions.image.Image');
+require_once(dirname(__FILE__).'/Image.php');
 
 /**
  * Description of CImageComponent

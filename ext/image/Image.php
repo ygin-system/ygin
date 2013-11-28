@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('application.extensions.image.Image_Driver');
+require_once(dirname(__FILE__).'/Image_Driver.php');
 
 /**
  * Manipulate images using standard methods such as resize, crop, rotate, etc.
@@ -119,8 +119,9 @@ class Image {
 		// Set driver class name
 		$driver = 'Image_'.ucfirst($this->config['driver']).'_Driver';
 
-        // Load the driver
-        Yii::import("application.extensions.image.drivers.$driver");
+    // Load the driver
+    require_once(dirname(__FILE__).'/drivers/'.$driver.'.php');
+        //Yii::import("application.extensions.image.drivers.$driver");
 
 		// Initialize the driver
 		$this->driver = new $driver($this->config['params']);
