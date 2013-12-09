@@ -17,6 +17,7 @@ class TextFieldWidget extends VisualElementWidget {
     return ($this->getObjectParameter()->getType() == DataType::INT);
   }
   public function onPostForm(PostFormEvent $event) {
+    if ($this->isReadOnly()) return;
     $value = $this->getFormValue();
     if (trim($value) === '') $value = null;
     if ($this->isInt()) {
