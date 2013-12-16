@@ -233,6 +233,8 @@ class ETinyMceYgin extends ETinyMce {
     $options['theme_advanced_resizing'] = true;
     $options['theme_advanced_resize_horizontal'] = false;
 
+    $options['media_use_script'] = false;
+
     //$options['theme_advanced_path_location'] = 'bottom';
 
 
