@@ -253,7 +253,7 @@ class FileUploadAction extends CAction {
   }
   protected function afterUpload() {
     if ($this->hasEventHandler('onAfterUpload')) {
-      $this->onBeforeUpload(new CEvent($this));
+      $this->onAfterUpload(new CEvent($this));
     }
   }
   protected function beforeUploadValidate() {
