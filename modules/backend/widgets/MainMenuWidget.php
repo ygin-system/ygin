@@ -91,8 +91,8 @@ class MainMenuWidget extends CMenu {
     }
     //print_r($this->items);exit;
     Yii::app()->clientScript->registerScript('menu.run', '
-      $(".b-menu-side-main .panel-heading.active").parents(".panel").removeClass("panel-default").addClass("panel-primary");
-      if ($(".b-menu-side-main .in").length == 0) $(".b-menu-side-main .panel-heading:eq(0)").click();
+      $(".b-menu-side-main .panel-heading.active").click().parents(".panel").removeClass("panel-default").addClass("panel-primary");
+      if ($(".b-menu-side-main .active").length == 0) $(".b-menu-side-main .panel-heading:eq(0).collapsed").click();
     ', CClientScript::POS_LOAD);
   }
   
@@ -102,7 +102,7 @@ class MainMenuWidget extends CMenu {
       $this->items = $item['items'];
       if (count($this->items) == 0) continue;
       echo '<div class="panel panel-default">
-              <a class="panel-heading" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
+              <a class="panel-heading collapsed" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
               <div id="smm-'.$item['id_object'].'" class="collapse panel-collapse">';
       parent::run();
       echo '

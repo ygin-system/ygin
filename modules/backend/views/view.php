@@ -110,8 +110,7 @@ echo $form->errorSummary($model,
   } else {
         // Обработка кнопок
         Yii::app()->clientScript->registerScript('admin.form.init', '
-    $(".b-instance-edit-form .form-actions")
-      .daFixedActionBarBind();
+    $(".b-instance-edit-form .form-actions").daFixedActionBarBind();
     $(".b-instance-edit-form .form-actions")
       .find(".btn-save").on("click", function(){
         if ( !$("#aMainForm").hasClass("lock")){

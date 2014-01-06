@@ -110,15 +110,15 @@ jQuery.daSticker = function( options ) {
 
   switch (options.type){
     case "info":
-      icon     = '<i class="icon-info-sign"></i> ';
+      icon     = '<i class="glyphicon glyphicon-info-sign"></i> ';
       msgClass = ' alert-info';
       break;
     case "error":
-      icon     = '<i class="icon-remove-sign icon-red"></i> ';
+      icon     = '<i class="glyphicon glyphicon-remove-sign icon-red"></i> ';
       msgClass = ' alert-error';
       break;
     case "success":
-      icon     = '<i class="icon-ok-sign icon-green"></i> ';
+      icon     = '<i class="glyphicon glyphicon-ok-sign icon-green"></i> ';
       msgClass = ' alert-success';
       break;
   }
@@ -262,37 +262,37 @@ jQuery.fn.daSubData = function( options ) {
 
 
 /**
- * Схлопывает все менюшки в админке, кроме тех, у которых класс ul.cur
+ * Разворачивает менюшки, перечисленные в куках
  */
 jQuery.fn.daAccordionMenu = function( options ) {
   var options = jQuery.extend({
     activeItemClass     : 'active',
+    accordionClass      : 'panel',
     accordionBodyClass  : 'panel-collapse',
     openItemClass       : 'in',
-    togglerClass        : 'accordion-toggle',
+    collapsedItemClass  : 'collapsed',
+    togglerClass        : 'panel-heading',
 
   },options);
 
   return this.each(function() {
-
     // Отмечаем текущую категорию меню
-    $(this).find('.'+options.activeItemClass).parents('.'+options.accordionBodyClass).addClass(options.openItemClass).prev().addClass(options.activeItemClass);
+    $(this).find('.'+options.activeItemClass).parents('.'+options.accordionClass).find('.'+options.togglerClass).addClass(options.activeItemClass).removeClass(options.collapsedItemClass);
 
     // Блокируем меню, которое пользователь ранее сознательно открыл
     $(this).find('.'+options.accordionBodyClass).each(function(){
       var idMenuCategory = $(this).attr('id');
       var openedCategory = $.cookie('daMenuCategoty['+idMenuCategory+']');
-      if (openedCategory == 1) $(this).addClass(options.openItemClass);
-      else $(this).removeClass(options.openItemClass);
+      if (openedCategory == 1) $(this).parents('.'+options.accordionClass).find('.'+options.togglerClass+'.collapsed').click();
     });
     
 
     // Схлопываем всё лишнее
     $(this).find('.'+options.togglerClass).click(function(){
-      var accordionBody = $(this).parent().next();
-      var curShlop = accordionBody.hasClass(options.openItemClass);
+      var accordionBody = $(this).parents('.'+options.accordionClass).find('.'+options.accordionBodyClass);
+      var curShlop = $(this).hasClass(options.collapsedItemClass);
       var idMenuCategory = accordionBody.attr('id');
-      $.cookie('daMenuCategoty['+idMenuCategory+']', (curShlop?null:1), {expires:1000, path:'/'});
+      $.cookie('daMenuCategoty['+idMenuCategory+']', (curShlop?1:null), {expires:1000, path:'/'});
     });
 
   });
@@ -326,8 +326,8 @@ jQuery.fn.daNotNullChange = function( options ){
     fileFieldParentClass   : 'controls',
     fieldParentClass       : 'form-group',
     errorMessageClass      : 'label-message',
-    successClass           : 'success',
-    errorClass             : 'error',
+    successClass           : 'has-success',
+    errorClass             : 'has-error',
   },options);
 
   return this.each(function(){
@@ -431,7 +431,7 @@ jQuery.fn.daUpdateSequence = function( options ) {
  */
 jQuery.fn.daCheckNotNullFields = function( options ) {
   var options = jQuery.extend({
-    parentErrorClass : "error",
+    parentErrorClass : "has-error",
   },options);
 
   var checkResult = true;
