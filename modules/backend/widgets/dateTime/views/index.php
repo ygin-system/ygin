@@ -6,9 +6,9 @@ $timeFormName = get_class($model).'[dateTimes]['.$dateTimeForm->dateTimeAttribut
 <span id="<?php echo $this->id.'-date-element'; ?>" class="field-date">
 <span class="datepicker">
 <?php echo CHtml::textField($dateFormName, $dateTimeForm->date, array(
-  'class' => 'input-small',
+  'class' => 'input-sm',
 )); ?>
- <i class="icon-calendar"></i>
+ <i class="glyphicon glyphicon-calendar"></i>
 </span>&nbsp;
 <?php Yii::app()->clientScript->registerScript('admin.date.init', "
   $('.datepicker input').datepicker({
@@ -25,9 +25,9 @@ $timeFormName = get_class($model).'[dateTimes]['.$dateTimeForm->dateTimeAttribut
 <?php if ($dateTimeForm->isTimeAvailable) : ?>
     <span class="timepicker">
       <?php echo CHtml::textField($timeFormName, $dateTimeForm->time, array(
-        'class' => 'input-small',
+        'class' => 'input-sm',
       )); ?>
-      <i class="icon-time"></i>
+      <i class="glyphicon glyphicon-time"></i>
     </span>&nbsp;
 <?php Yii::app()->clientScript->registerScript('admin.time.init', "
   $('.timepicker input').each(function(){

@@ -7,15 +7,13 @@ $this->beginContent('/layouts/main');
 $searchModel = $this->searchModel;
 if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || count($this->buttons) > 0) {
 
-  echo CHtml::openTag('div', array('class'=>'top navbar btn-toolbar'));
-  echo CHtml::openTag('div', array('class'=>'navbar-inner'));
+  echo CHtml::openTag('div', array('class'=>'navbar navbar-default b-toolbar'));
 
   foreach($this->buttons AS $button) {
     if (isset($button['html'])) {
       echo $button['html'];
     } else {
-      $link = CHtml::link($button['caption'], $button['url'], array('class'=>'btn '.$button['class']));
-      echo CHtml::tag('div', array('class'=>'btn-group'), $link.(isset($button['addButtonData']) ? $button['addButtonData'] : '') );
+      echo CHtml::link($button['caption'], $button['url'], array('class'=>'btn navbar-btn '.$button['class'])).(isset($button['addButtonData']) ? $button['addButtonData'] : '');
     }
   }
 
@@ -32,7 +30,8 @@ if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || c
       'enableAjaxValidation' => false,
       'enableClientValidation' => true,
       'htmlOptions' => array(
-        'class' => 'form-inline navbar-search pull-right input-append',
+        'class' => 'b-navbar-search navbar-form navbar-right form-inline',
+        'role'  => 'form',
       ),
       'clientOptions' => array(
         'validateOnSubmit' => true,
@@ -42,29 +41,35 @@ if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || c
         ObjectUrlRule::PARAM_OBJECT_INSTANCE, // TODO DA_URL_VNUM, DA_URL_GO
       )),
     ));
-
-    echo $form->dropDownList($searchModel, 'parameter', $searchModel->toListData(), $htmlOptions=array('class'=>'fields'));
+    echo CHtml::openTag('div', array('class'=>'form-group'));
+    echo $form->dropDownList($searchModel, 'parameter', $searchModel->toListData(), $htmlOptions=array('class'=>'fields form-control'));
+    echo CHtml::closeTag('div'); // .form-group
+    echo CHtml::openTag('div', array('class'=>'form-group'));
+    echo CHtml::openTag('div', array('class'=>'input-group query-group'));
     echo $form->textField($searchModel, 'value', array(
-      'class' => 'query input-medium',
+      'class' => 'query form-control',
       'value'=>$searchModel->value,
     ));
-    echo CHtml::htmlButton('<i class="icon-search icon-white"></i>', array(
+    echo CHtml::openTag('div', array('class'=>'input-group-btn'));
+    echo CHtml::htmlButton('<i class="glyphicon glyphicon-search"></i>', array(
       'class' => 'btn btn-primary',
       'title'=>'Найти',
       'type'=>'submit',
     ));
+    echo CHtml::closeTag('div'); // .input-group-btn
+    echo CHtml::closeTag('div'); // .input-group
+    echo CHtml::closeTag('div'); // .form-group
     $this->endWidget();
   }
 
-  echo CHtml::closeTag('div'); // .navbar-inner
   echo CHtml::closeTag('div'); // .navbar
 
 }
 
 if (!empty($this->breadcrumbs)) { // Цепочка навигации
-  //echo '<div><i class="icon-upload" title="Цепочка навигации"></i>&nbsp;';
+  //echo '<div><i class="glyphicon glyphicon-upload" title="Цепочка навигации"></i>&nbsp;';
   $this->widget('BreadcrumbsWidget', array(
-    //'homeLink' => array('<i class="icon-upload" title="Цепочка навигации"></i>&nbsp;' => ''),
+    //'homeLink' => array('<i class="glyphicon glyphicon-upload" title="Цепочка навигации"></i>&nbsp;' => ''),
     'links' => $this->breadcrumbs,
   ));
   //echo '</div>';

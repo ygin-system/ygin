@@ -4,12 +4,12 @@
   
   /*<label class="control-label"><?php echo $label.$hint.$parameter; ?></label>*/
 ?>
-<div class="control-group">
+<div class="form-group">
   <?php echo $label.$parameter; ?>
-  <div class="controls">
+  <div class="controls col-lg-8">
     <?php echo $content; ?>
     <?php if ($hint){ ?>
-    <p><span class="label"><?php echo $hint ?></span></p>
+    <p><span class="label label-default"><?php echo $hint ?></span></p>
     <?php } ?>
   </div>
 </div>

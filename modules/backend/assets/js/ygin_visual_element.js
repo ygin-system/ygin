@@ -416,7 +416,7 @@ function fileSingleUpload(fileId, objectParameters) {
         fileUploadAnimation(true, fileId);
         if (DaFileUploader.isUploadXML()) {
           //Добавление div-а, где будет бегать progress
-          $("#" + fileId + "_uploadAnimation").parent().after('<div class="progress progress-striped active" id="' + fileId + '_progressbar"><div class="bar" id="' + fileId + '_dataUpload"></div></div>');
+          $("#" + fileId + "_uploadAnimation").parent().after('<div class="progress progress-striped active" id="' + fileId + '_progressbar"><div class="progress-bar" id="' + fileId + '_dataUpload"></div></div>');
         }
       },
 

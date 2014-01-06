@@ -173,7 +173,7 @@ jQuery.daSticker = function( options ) {
 jQuery.daHintBind  = function() {
   $('[rel="popover"]').popover({placement:'bottom'});
   $('[rel="tooltip"]').tooltip();
-  $('.navbar .brand').tooltip({placement:'bottom'});
+  $('.navbar .navbar-brand').tooltip({placement:'bottom'});
 }
 
 /*****
@@ -267,7 +267,7 @@ jQuery.fn.daSubData = function( options ) {
 jQuery.fn.daAccordionMenu = function( options ) {
   var options = jQuery.extend({
     activeItemClass     : 'active',
-    accordionBodyClass  : 'accordion-body',
+    accordionBodyClass  : 'panel-collapse',
     openItemClass       : 'in',
     togglerClass        : 'accordion-toggle',
 
@@ -324,7 +324,7 @@ jQuery.fn.daNotNullChange = function( options ){
     fileFieldClass         : 'field-file',
     fileFieldUploadedClass : 'field-file-uploaded',
     fileFieldParentClass   : 'controls',
-    fieldParentClass       : 'control-group',
+    fieldParentClass       : 'form-group',
     errorMessageClass      : 'label-message',
     successClass           : 'success',
     errorClass             : 'error',
@@ -440,7 +440,7 @@ jQuery.fn.daCheckNotNullFields = function( options ) {
     if (errorParent.length > 0){
       checkResult = false;
       if ( !$(this).next().hasClass('label-message') )
-        $(this).after('<br class="label-message"><span class="label label-important label-message">'+options.messageText+'</span>');
+        $(this).after('<br class="label-message"><span class="label label-danger label-message">'+options.messageText+'</span>');
       alert(options.alertText);
     }
   });

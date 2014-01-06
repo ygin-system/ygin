@@ -14,7 +14,7 @@ if ($showWelcome) :
     <p class="about-description">
       Если вам потребуется помощь, посмотрите нашу документацию на странице «<a href="<?php echo Yii::app()->createUrl('instruction'); ?>">Первые шаги с ygin</a>». Если вы хотите сразу начать работать, здесь собраны действия, которые большинство пользователей выполняют ежедневно при работе с сайтом.
     </p>
-    <p style="text-align:right;">Уже всё знаете? <button class="btn btn-mini" onclick="$.cookie('daMainWelcome', 1, {expires:10000, path:'/'}); $(this).parents('.introduction').slideUp()">Закройте это сообщение ×</button></p>
+    <p style="text-align:right;">Уже всё знаете? <button class="btn btn-default btn-xs" onclick="$.cookie('daMainWelcome', 1, {expires:10000, path:'/'}); $(this).parents('.introduction').slideUp()">Закройте это сообщение ×</button></p>
   </div>
 <?php endif; ?>
 <?php if (count($alertError) > 0) : ?>
@@ -44,21 +44,21 @@ $i = -1;
 foreach($mainElements AS $element) {
   $i++;
   $addButton = (isset($element['link-add']) ? '<a class="btn btn-success" href="'.$element['link-add'].'"><i class="icon-plus icon-white"></i> Добавить</a>' : '');
-  $block .= '<div class="span4">
+  $block .= '<div class="col-md-4">
         <div class="caption">
           <h4>'.$element['name'].'</h4>
           <p>'.$element['desc'].'</p>
           <p>'.$addButton.'
-              <a class="btn" href="'.$element['link-list'].'"><i class="icon-list"></i> Просмотр</a>
+              <a class="btn btn-default" href="'.$element['link-list'].'"><i class="glyphicon glyphicon-list"></i> Просмотр</a>
             </p>
         </div>
       </div>';
   if (($i+1) % 3 == 0) {
-    $html .= CHtml::tag('div', array('class'=>'row-fluid'), $block);
+    $html .= CHtml::tag('div', array('class'=>'row'), $block);
     $block = '';
   }
 }
-if ($block != '') $html .= CHtml::tag('div', array('class'=>'row-fluid'), $block);
+if ($block != '') $html .= CHtml::tag('div', array('class'=>'row'), $block);
 
 echo $html.'
   </div><!-- .plugin-list -->

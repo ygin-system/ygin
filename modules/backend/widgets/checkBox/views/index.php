@@ -4,4 +4,4 @@
  * @var $form CActiveForm
  */
 
-echo $form->checkBox($model, $attributeName);
+echo '<div class="checkbox">'.$form->checkBox($model, $attributeName).'</div>';

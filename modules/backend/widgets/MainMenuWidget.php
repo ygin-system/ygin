@@ -2,7 +2,7 @@
 Yii::import('zii.widgets.CMenu');
 class MainMenuWidget extends CMenu {
  
-  public $htmlOptions = array('class' => 'accordion-inner nav nav-list');
+  public $htmlOptions = array('class' => 'panel-body nav nav-list');
   public $activeCssClass = 'active';
   
   public $idObjectCurrent = null;
@@ -91,8 +91,8 @@ class MainMenuWidget extends CMenu {
     }
     //print_r($this->items);exit;
     Yii::app()->clientScript->registerScript('menu.run', '
-      $(".b-menu-side-main .accordion-heading.active .accordion-toggle").removeClass("btn-inverse").addClass("btn-primary");
-      if ($(".b-menu-side-main .in").length == 0) $(".b-menu-side-main .accordion-heading:eq(0) .accordion-toggle").click();
+      $(".b-menu-side-main .panel-heading.active").parents(".panel").removeClass("panel-default").addClass("panel-primary");
+      if ($(".b-menu-side-main .in").length == 0) $(".b-menu-side-main .panel-heading:eq(0)").click();
     ', CClientScript::POS_LOAD);
   }
   
@@ -101,15 +101,13 @@ class MainMenuWidget extends CMenu {
     foreach($items AS $item) {
       $this->items = $item['items'];
       if (count($this->items) == 0) continue;
-      echo '<div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle btn btn-inverse" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
-          </div>
-          <div id="smm-'.$item['id_object'].'" class="collapse accordion-body">';
+      echo '<div class="panel panel-default">
+              <a class="panel-heading" href="#smm-'.$item['id_object'].'" data-toggle="collapse">'.$item['label'].'</a>
+              <div id="smm-'.$item['id_object'].'" class="collapse panel-collapse">';
       parent::run();
       echo '
-          </div>
-        </div>
+              </div>
+            </div>
 ';
     }
   }

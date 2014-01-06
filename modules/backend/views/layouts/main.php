@@ -30,15 +30,14 @@
   Yii::app()->clientScript->registerCoreScript('daGallery');
   Yii::app()->clientScript->registerCoreScript('ygin');
 
-  $this->registerCssFile('bootstrap-responsive.min.css', 'ygin.assets.bootstrap.css');
-  $ass       = Yii::getPathOfAlias('ygin.assets.bootstrap.img').DIRECTORY_SEPARATOR;
-  $yginAss   = Yii::getPathOfAlias('ygin.assets.gfx').DIRECTORY_SEPARATOR;
-  $backendAss = Yii::getPathOfAlias('ygin.modules.backend.assets.gfx').DIRECTORY_SEPARATOR;
+  $bootstrapFont = Yii::getPathOfAlias('ygin.assets.bootstrap.fonts').DIRECTORY_SEPARATOR;
+  $yginAss       = Yii::getPathOfAlias('ygin.assets.gfx').DIRECTORY_SEPARATOR;
+  $backendAss    = Yii::getPathOfAlias('ygin.modules.backend.assets.gfx').DIRECTORY_SEPARATOR;
   Yii::app()->clientScript->addDependResource('bootstrap.min.css', array(
-    $ass.'glyphicons-halflings.png' => '../img/',
-    $ass.'glyphicons-halflings-white.png' => '../img/',
-    $ass.'glyphicons-halflings-red.png' => '../img/',
-    $ass.'glyphicons-halflings-green.png' => '../img/',
+    $bootstrapFont.'glyphicons-halflings-regular.eot' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.svg' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.ttf' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.woff' => '../fonts/',
   ));
   Yii::app()->clientScript->addDependResource('ygin.css', array(
     $backendAss.'actions.png' => '../gfx/',
@@ -50,17 +49,21 @@
     $backendAss.'textareabg.gif' => '../gfx/',
     Yii::getPathOfAlias('ygin.assets.gfx').'/loading_s.gif' => '../../../../assets/gfx/',
   ));
-  Yii::app()->clientScript->addDependResource('yginTollBar.css', array(
-    $yginAss.'siteToolBar.png' => '../../../../assets/gfx/',
-  ));
-  
-  
   Yii::app()->clientScript->registerScript('admin.init', 'adminDrawInit(); $.daHintBind();', CClientScript::POS_READY);
 ?>
   <title><?php echo CHtml::encode($this->getPageTitle().' © ygin'); ?></title>
 </head>
 <body lang="ru">
 <?php
+  // Header
+?>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#b-navbar-collapse"><span class="sr-only">Меню</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+<?php
+  Yii::beginProfile('top menu', 'backend.layout.main');
+  
   // Version
   $version = '';
   if (Yii::app()->user->checkAccess(DaWebUser::ROLE_DEV)) {
@@ -73,28 +76,32 @@
     }
     */
   }
-  
-  // Header
-?>
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-<?php
-  Yii::beginProfile('top menu', 'backend.layout.main');
+
   // Logo ygin
   if ($version){
-    echo CHtml::link("ygin <span class=\"label label-important\">CMF</span>", Yii::app()->homeUrl,
-      array('class' => 'brand',
-            'data-original-title' => 'v. '.$version,
+    echo CHtml::link("ygin <span class=\"label label-danger\">CMF</span>", Yii::app()->homeUrl,
+      array('class' => 'navbar-brand',
+            'data-toggle' => "tooltip",
+            'title'       => 'v. '.$version,
             )
     );
   } else {
-    echo CHtml::link("ygin", Yii::app()->homeUrl, array('class' => 'brand'));
+    echo CHtml::link("ygin", Yii::app()->homeUrl, array('class' => 'navbar-brand'));
   }
-  
-  // Кнопка перехода на сайт
-  if (Yii::app()->backend->rightTopWidget != null) {
-    $this->widget(Yii::app()->backend->rightTopWidget);
-  }
+?>
+      </div><!-- .navbar-header -->
+      <div class="collapse navbar-collapse" id="b-navbar-collapse">
+<?php
+  // Верхнее меню админки
+  $topMenuWidget = $this->createWidget(Yii::app()->backend->topMenuWidget, array('htmlOptions' => array('class' => 'nav navbar-nav')));
+  Yii::app()->backend->raiseEvent(BackendModule::EVENT_ON_BEFORE_TOP_MENU, new CEvent($topMenuWidget));
+  $topMenuWidget->run();
+
+  Yii::endProfile('top menu', 'backend.layout.main');
+?>
+
+
+<?php
   
   // Пользовательское меню (Профиль, Выход)
   if (Yii::app()->backend->userMenuWidget != null) {
@@ -102,7 +109,7 @@
     $userMenuWidget = $this->createWidget(Yii::app()->backend->userMenuWidget, array('htmlOptions' => array('class' => 'dropdown-menu')) );
     if (Yii::app()->user->model != null && Yii::app()->authManager->checkObjectInstance(DaDbAuthManager::OPERATION_EDIT, Yii::app()->user->id, User::ID_OBJECT, Yii::app()->user->id, false)) {
       $userMenuWidget->items[] = array(
-        'label' => '<i class="icon-edit"></i> Профиль',
+        'label' => '<i class="glyphicon glyphicon-edit"></i> Профиль',
         'active' => false,
         'url' => '/admin/page/24/'.Yii::app()->user->id.'/view/6/',  // TODO верно формировать ссылку
       );
@@ -119,7 +126,7 @@
     }
 
     $userMenuWidget->items[] = array(
-      'label' => '<i class="icon-share"></i> Выйти',
+      'label' => '<i class="glyphicon glyphicon-share"></i> Выйти',
       'active' => false,
       'url' => Yii::app()->createUrl(UserModule::ROUTE_ADMIN_LOGOUT),
     );
@@ -129,31 +136,32 @@
     } else {
       $userName   = (Yii::app()->user->model->full_name == null) ? Yii::app()->user->model->name : Yii::app()->user->model->full_name;
     }
-    echo '<div class="btn-group pull-right">
-          <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> '.$userName.' <span class="caret"></span></button>';
-    $userMenuWidget->run();
-    echo '</div>';
-  }
-  
-  // Верхнее меню админки
 ?>
-        <div class="nav-collapse pull-right">
+          <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown">
+              <button class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user icon-white"></i> <?php echo $userName; ?> <b class="caret"></b></button>
+              <?php $userMenuWidget->run(); ?>
+            </li>
 <?php
-  $topMenuWidget = $this->createWidget(Yii::app()->backend->topMenuWidget, array('htmlOptions' => array('class' => 'nav')));
-  Yii::app()->backend->raiseEvent(BackendModule::EVENT_ON_BEFORE_TOP_MENU, new CEvent($topMenuWidget));
-  $topMenuWidget->run();
-
-  Yii::endProfile('top menu', 'backend.layout.main');
+    // Кнопка перехода на сайт
+    if (Yii::app()->backend->rightTopWidget != null) {
+      $this->widget(Yii::app()->backend->rightTopWidget);
+    }
 ?>
-        </div>
+          </ul>
+<?php
+  }
+?>
 
-    </div><!-- .navbar-inner -->
+      </div><!-- .navbar-collapse -->
+    </div><!-- .container -->
   </div><!-- .navbar -->
 
 <?php // Menu ?>
-  <div class="container-fluid">
-    <div class="row-fluid">
-      <div id="menu-side-main" class="b-menu-side-main span3 accordion">
+  <div class="container">
+    <div class="row">
+      <div id="menu-side-main" class="b-menu-side-main col-md-3 panel-group">
 <?php
   Yii::beginProfile('main menu', 'backend.layout.main');
   
@@ -167,16 +175,16 @@
       </div><!-- .b-menu-side-main -->
 
 <?php // Content ?>
-      <div class="b-content-container span9">
+      <div class="b-content-container col-md-9">
         <?php if ($this->caption != null) echo CHtml::tag('h1', array(), $this->caption); ?>
         <?php echo $content; ?>
       </div><!-- .b-content-container -->
-    </div><!-- .row-fluid -->
-  </div><!-- .container-fluid -->
+    </div><!-- .row -->
+  </div><!-- .container -->
 <?php // Footer ?>
   <hr>
-  <footer class="container-fluid">
-    <p>© 2013, <a target="_blank" href="http://www.ygin.ru" class="ygin-copy">ygin</a></p>
+  <footer class="container">
+    <p>© 2013, <a href="http://www.ygin.ru" class="ygin-copy">ygin</a></p>
   </footer>
 </body>
 </html>
