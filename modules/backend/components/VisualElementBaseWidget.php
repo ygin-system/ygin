@@ -28,14 +28,14 @@ class VisualElementBaseWidget extends DaWidget {
    * @param bool $layout
    * @return VisualElementBaseWidget
    */
-  public function createChildWidget($name, $attribute, $model=null, $layout=false) {
+  public function createChildWidget($name, $attribute, $model=null, $layout=false, $params=array()) {
     if ($model == null) $model = $this->model;
-    return $this->controller->createWidget($name, array(
+    return $this->controller->createWidget($name, CMap::mergeArray(array(
       'form' => $this->form,
       'model' => $this->model,
       'attributeName' => $attribute,
       'layout' => $layout,
-    ));
+    ), $params));
   }
 
   public function getFormValue() {

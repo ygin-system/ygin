@@ -152,7 +152,7 @@ echo $form->errorSummary($model,
         </div>
         &nbsp;&nbsp;
         <a class="btn btn-success btn-save" id="acceptButton" title="Ctrl+Shift+Enter" data-action="3"><i class="glyphicon glyphicon-ok icon-white"></i> Применить</a>&nbsp;&nbsp;
-        <?php if ($idFormInstance != null && $copyInstance) { ?><button class="btn btn-default" id="saveAsNewButton" data-action="4"><i class="glyphicon glyphicon-asterisk"></i> Сохранить как новый</button>&nbsp;&nbsp;<?php } ?>
+        <?php /* if ($idFormInstance != null && $copyInstance) { ?><button class="btn btn-default" id="saveAsNewButton" data-action="4"><i class="glyphicon glyphicon-asterisk"></i> Сохранить как новый</button>&nbsp;&nbsp;<?php } */ ?>
         <a class="btn btn-danger" id="cancelButton" title="Ctrl+Esc" href="<?php echo $backLink ?>"><i class="glyphicon glyphicon-remove icon-white"></i> Отменить</a>
 <?php } ?>
       <div>
