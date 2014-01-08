@@ -210,6 +210,7 @@ abstract class DaActiveRecord extends BaseActiveRecord {
   public final function getObjectInstance() {
     if ($this->__object == null) {
       $this->__object = DaObject::getById($this->getIdObject(), false);
+      if ($this->__object == null) throw new ErrorException('Не найден объект с ИД='.$this->getIdObject());
     }
     return $this->__object;
   }
