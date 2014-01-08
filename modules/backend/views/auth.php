@@ -42,7 +42,7 @@
   ));
 ?>
 
-<fieldset class="well">
+<fieldset>
   <div class="form-group">
     <label for="LoginForm_username">Логин:</label>
     <?php echo $form->textField($model, 'username', array('class'=>'form-control nullField', 'size'=>15, 'autofocus'=>'autofocus')); ?>
@@ -66,7 +66,7 @@
   </div>
 </fieldset>
 
-<div class="ygin-copy"><a target="_blank" href="http://ygin.ru">&copy; 2013, ygin</a></div>
+<div class="ygin-copy">&copy; 2014, <a target="_blank" href="http://ygin.ru" class="label label-danger">ygin</a></div>
 <?php $this->endWidget(); ?>
 <?php
   if ($model->username != null || $model->password != null) {  // TODO: пользователь также может быть заблокирован. Или не иметь в принципе доступа в админку

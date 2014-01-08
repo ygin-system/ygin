@@ -26,7 +26,7 @@ foreach($places AS $place) {
 // Получили в массиве nid модули, приписанные каким-либо местам
 //+ в $idUpdatedModules идентификаторы этих модулей (пригодится позднее при выводе модулей из архива)
 echo '<div id="modulesSeqPlace">
-      <div class="span6">
+      <div class="col-lg-6">
                 <div id="placeNonVisible" class="b-widget-place well">
                   <h4>Не используемые модули</h4>
                   <ul>';
@@ -39,7 +39,7 @@ foreach($modules AS $m) {
     echo '<li id="module_'.$id.'">
                     <input type="hidden" value="" name="mod_'.$id.'_seq" class="contSeq">
                     <input type="hidden" value="" name="mod_'.$id.'_plc" class="contDid">
-                    <span class="label label-important"><sup>'.++$position.'</sup> '.$m->name.'</span>
+                    <span class="label label-danger"><sup>'.++$position.'</sup> '.$m->name.'</span>
                   </li>';
   }
 }
@@ -50,7 +50,7 @@ echo '    </ul>
 // Пробег по всем положениям модулей
 $ref = ReferenceElement::model()->byReference(32)->findAll();
 
-echo '<div class="span6">';
+echo '<div class="col-lg-6">';
 foreach ($ref as $r) {
   $idModulePlace = $r->getIdReferenceElement();
   $value = $r->getValue();

@@ -80,7 +80,7 @@ class DefaultController extends DaObjectController {
           $this->buttons[] = array(
             'url' => $link,
             'caption' => '<i class="glyphicon glyphicon-arrow-up icon-white"></i> Вверх',
-            'class' => 'btn-warning'
+            'class' => 'btn-primary'
           );
 
           $this->breadcrumbs = array();

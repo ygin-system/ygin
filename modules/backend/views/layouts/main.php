@@ -184,7 +184,7 @@
 <?php // Footer ?>
   <hr>
   <footer class="container">
-    <p>© 2013, <a href="http://www.ygin.ru" class="ygin-copy">ygin</a></p>
+    <p>© 2014, <a href="http://www.ygin.ru" class="ygin-copy">ygin.ru</a></p>
   </footer>
 </body>
 </html>

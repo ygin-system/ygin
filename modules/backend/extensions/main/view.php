@@ -18,7 +18,7 @@ if ($showWelcome) :
   </div>
 <?php endif; ?>
 <?php if (count($alertError) > 0) : ?>
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
       <p>Обнаружены важные замечания, влияющие на производительность/безопасность сайта:</p>
     <?php $i =0; foreach($alertError AS $error) {
       $i++;
@@ -33,7 +33,7 @@ if ($showWelcome) :
       <?php foreach($devNotices AS $notice) {
         echo CHtml::tag('p', array(), CHtml::tag('b', array(), nl2br($notice)));
       }?>
-      <p style="text-align:left;"> <button class="btn btn-mini" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'}); $(this).parents('.noticeForDev').slideUp()">Всё сделано, закрыть сообщение</button></p>
+      <p style="text-align:left;"> <button class="btn btn-success btn-mini" onclick="$.cookie('<?php echo $noticeDevCookieName; ?>', 1, {expires:10000, path:'/'}); $(this).parents('.noticeForDev').slideUp()"><i class="glyphicon glyphicon-ok"></i> Всё сделано, закрыть сообщение</button></p>
     </div>
 <?php endif; ?>
   <div class="plugin-list">

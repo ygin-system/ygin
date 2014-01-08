@@ -37,9 +37,9 @@ class BooleanColumn extends BaseColumn {
   } else {
     $.daSticker({text:data.message, type:"success"});
   }
-  newClass = "glyphicon glyphicon-remove icon-red";
-  if (data.value == 1) newClass = "glyphicon glyphicon-ok icon-green";
-  $("#bool_" + data.idInstance + "_" + data.idObjectParameter).removeClass("load").addClass(newClass);
+  newClass = "glyphicon glyphicon-remove icon-red editable";
+  if (data.value == 1) newClass = "glyphicon glyphicon-ok icon-green editable";
+  $("#bool_" + data.idInstance + "_" + data.idObjectParameter).removeClass().addClass(newClass);
 }',
     )).'
 }';

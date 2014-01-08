@@ -26,8 +26,8 @@
   ));
   
   Yii::app()->clientScript->addDependResource('auth.css', array(
-    $backendAss.'body.png' => '../gfx/',
-    $backendAss.'grad.png' => '../gfx/',
+    $backendAss.'gradient_black.png' => '../gfx/',
+    $backendAss.'texture_20.png' => '../gfx/',
     $backendAss.'input-bg.gif' => '../gfx/',
   ));
 ?>
