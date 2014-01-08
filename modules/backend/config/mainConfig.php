@@ -78,7 +78,7 @@ $mainConfig = array(
       'class' => 'CWidgetFactory',
       'widgets' => array(
         'BreadcrumbsWidget' => array(
-          'separator' => ' <span class="divider">/</span>',
+          'separator' => '',
           'tagName' => 'ul',
           'htmlOptions' => array('class' => 'breadcrumb'),
           'encodeLabel' => false,
@@ -90,9 +90,9 @@ $mainConfig = array(
       'corePackages' => require dirname(__FILE__).DIRECTORY_SEPARATOR.'../../../config/packages.php',
     
       'class'=>'ygin.ext.ExtendedClientScript.ExtendedClientScript',
-      'combineCss' => true,
+      'combineCss' => false,
       'compressCss' => !YII_DEBUG,
-      'combineJs' => true,
+      'combineJs' => false,
       'compressJs' => false, //!YII_DEBUG,
       'jsMinPath' => 'ygin.ext.ExtendedClientScript.jsmin.JSMin',
       'cssMinPath' => 'ygin.ext.ExtendedClientScript.cssmin.cssmin',

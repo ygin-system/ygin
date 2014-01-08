@@ -16,7 +16,7 @@ $form = $this->beginWidget('CActiveForm', array(
     'validateOnSubmit' => true,
     'validateOnChange' => false,
   ),
-  //'errorMessageCssClass' => 'label label-important',
+  //'errorMessageCssClass' => 'label label-danger',
   'action' => Yii::app()->createUrl(PluginModule::ROUTE_PLUGIN_VIEW, array('code' => $plugin->code)),
 ));
 
@@ -36,7 +36,7 @@ $form = $this->beginWidget('CActiveForm', array(
     } else if ($option['type'] == DataType::RADIO) {
       $content = $form->radioButtonList($model, $name, $model->getOptions($name), array('template'=>'<div class="radio">{input} {label}</div>', 'separator'=>'', 'labelOptions'=>array('class'=>'label-radio')));
     } else if ($option['type'] == DataType::TEXTAREA) {
-      $content = $form->textArea($model, $name, array('rows'=>11, 'style'=>'width:100%', 'class'=>'span12'));
+      $content = $form->textArea($model, $name, array('rows'=>11));
     }
     $content .= $form->error($model, $name);
     
@@ -49,9 +49,9 @@ $form = $this->beginWidget('CActiveForm', array(
   }
 ?>
     <div class="form-actions">
-      <div class="bar">
-        <button type="submit" class="btn btn-success"><i class="icon-ok icon-white"></i> Сохранить</button>
-        <a class="btn btn-danger" href="<?php echo Yii::app()->createUrl(PluginModule::ROUTE_PLUGIN_LIST); ?>"><i class="icon-remove icon-white"></i> Отменить</a>
+      <div class="progress-bar">
+        <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok icon-white"></i> Сохранить</button>
+        <a class="btn btn-danger" href="<?php echo Yii::app()->createUrl(PluginModule::ROUTE_PLUGIN_LIST); ?>"><i class="glyphicon glyphicon-remove icon-white"></i> Отменить</a>
       </div>
     </div>
     </fieldset>

@@ -3,7 +3,7 @@
 class DropDownListWidget extends VisualElementWidget {
 
   protected $_data = array();
-  public $htmlOption = array();
+  public $htmlOption = array('class' => 'form-control');
 
   public $maxData = 1000;
 

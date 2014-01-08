@@ -1,6 +1,6 @@
 <?php
 class BackendActiveForm extends CActiveForm {
-  public $errorMessageCssClass = 'label label-important label-message';
+  public $errorMessageCssClass = 'label label-danger label-message';
   public $requiredCssClass     = 'required';
 
   public function error($model,$attribute,$htmlOptions=array(),$enableAjaxValidation=true,$enableClientValidation=true) {

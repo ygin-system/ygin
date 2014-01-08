@@ -12,7 +12,7 @@ if (count($files = $this->getFiles()) > 0) {
     echo CHtml::openTag('li');
     if ($file->getIsImage()) {
       if ($prev = $file->getPreview(70, 50, 'top', '_da')) {
-        echo CHtml::link(CHtml::image($prev->getUrlPath(), 'Превью', array('class' => 'img-polaroid')),
+        echo CHtml::link(CHtml::image($prev->getUrlPath(), 'Превью', array('class' => 'img-thumbnail')),
           $file->getUrlPath(),
           array('rel' => 'gallery'.$this->getObjectParameter()->id_parameter)
         );

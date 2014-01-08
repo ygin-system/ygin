@@ -53,39 +53,39 @@ $cs->registerScript('single-file-upload#'.$this->id, '
 
 <!-- The file upload form used as target for the file upload widget -->
 
-  <div class="fileupload-buttonbar">
-  	<div class="span5">
-  		<!-- The fileinput-button span is used to style the file input field as button -->
-  		<span class="btn fileinput-button field-file <?php echo ($this->objectParameter->not_null?'b-field-notnull':'');?>">
-              <i class="icon-plus"></i>
-              <span><?php echo $this->t('1#Add files|0#Choose file', $this->multiple); ?></span>
-  			<?php
+  <div class="fileupload-buttonbar row">
+    <div class="col-md-4">
+      <!-- The fileinput-button span is used to style the file input field as button -->
+      <span class="btn btn-default fileinput-button field-file <?php echo ($this->objectParameter->not_null?'b-field-notnull':'');?>">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span><?php echo $this->t('1#Add files|0#Choose file', $this->multiple); ?></span>
+              <?php
               if ($this -> hasModel()) :
                   echo CHtml::activeFileField($this -> model, $this -> attribute, $htmlOptions) . "\n";
               else :
                   echo CHtml::fileField($name, $this -> value, $htmlOptions) . "\n";
               endif;
               ?>
-  		</span>
-  		<?php
-  		 echo CHtml::activeHiddenField($this->mainModel, $this->objectParameter->getFieldName());
-     echo $this->owner->form->error($this->mainModel, $this->objectParameter->getFieldName());
+      </span>
+      <?php
+      echo CHtml::activeHiddenField($this->mainModel, $this->objectParameter->getFieldName());
+      echo $this->owner->form->error($this->mainModel, $this->objectParameter->getFieldName());
     ?>
     <?php if ($this->mainModel->isNewRecord) : ?>
     <?php echo CHtml::hiddenField(CHtml::activeName($this->mainModel, 'tmpId'), $this->model->tmpId); ?>
     <?php endif ?>
-  	</div>
-  	<div class="span5">
-  		<!-- The global progress bar -->
-  		<div class="progress progress-success progress-striped active fade">
-  			<div class="bar" style="width:0%;"></div>
-  		</div>
-  	</div>
+    </div>
+    <div class="col-md-8">
+        <!-- The global progress bar -->
+      <div class="progress progress-success progress-striped active fade">
+        <div class="progress-bar" style="width:0%;"></div>
+      </div>
+    </div>
   </div>
   <!-- The loading indicator is shown during image processing -->
   <div class="fileupload-loading"></div>
   <!-- The table listing the files available for upload/download -->
   <table class="table table-striped">
-  	<tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+    <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
   </table>
 
