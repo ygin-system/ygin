@@ -90,9 +90,9 @@ $mainConfig = array(
       'corePackages' => require dirname(__FILE__).DIRECTORY_SEPARATOR.'../../../config/packages.php',
     
       'class'=>'ygin.ext.ExtendedClientScript.ExtendedClientScript',
-      'combineCss' => false,
+      'combineCss' => true,
       'compressCss' => !YII_DEBUG,
-      'combineJs' => false,
+      'combineJs' => true,
       'compressJs' => false, //!YII_DEBUG,
       'jsMinPath' => 'ygin.ext.ExtendedClientScript.jsmin.JSMin',
       'cssMinPath' => 'ygin.ext.ExtendedClientScript.cssmin.cssmin',
