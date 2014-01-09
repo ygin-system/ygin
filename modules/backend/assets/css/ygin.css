@@ -231,7 +231,7 @@ br.label-message {display:block; line-height: 0; float:left}
 
 #yii-debug-toolbar-switcher {top:55px !important}
 .b-toolbar {padding:0 10px}
-.b-toolbar .navbar-btn {margin-right:10px}
+.b-toolbar .btn-group {margin-right:10px}
 
 
 

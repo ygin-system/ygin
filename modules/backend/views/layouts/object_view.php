@@ -10,11 +10,13 @@ if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || c
   echo CHtml::openTag('div', array('class'=>'navbar navbar-default b-toolbar'));
 
   foreach($this->buttons AS $button) {
+    echo CHtml::openTag('div', array('class'=>'btn-group'));
     if (isset($button['html'])) {
       echo $button['html'];
     } else {
       echo CHtml::link($button['caption'], $button['url'], array('class'=>'btn navbar-btn '.$button['class'])).(isset($button['addButtonData']) ? $button['addButtonData'] : '');
     }
+    echo CHtml::closeTag('div'); // .btn-group
   }
 
   if ($searchModel != null) {
@@ -41,15 +43,18 @@ if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || c
         ObjectUrlRule::PARAM_OBJECT_INSTANCE, // TODO DA_URL_VNUM, DA_URL_GO
       )),
     ));
+
     echo CHtml::openTag('div', array('class'=>'form-group'));
     echo $form->dropDownList($searchModel, 'parameter', $searchModel->toListData(), $htmlOptions=array('class'=>'fields form-control'));
     echo CHtml::closeTag('div'); // .form-group
+
     echo CHtml::openTag('div', array('class'=>'form-group'));
     echo CHtml::openTag('div', array('class'=>'input-group query-group'));
     echo $form->textField($searchModel, 'value', array(
       'class' => 'query form-control',
       'value'=>$searchModel->value,
     ));
+
     echo CHtml::openTag('div', array('class'=>'input-group-btn'));
     echo CHtml::htmlButton('<i class="glyphicon glyphicon-search"></i>', array(
       'class' => 'btn btn-primary',
@@ -57,6 +62,7 @@ if (($searchModel != null && $searchModel->getHasVisibleSearchParameters()) || c
       'type'=>'submit',
     ));
     echo CHtml::closeTag('div'); // .input-group-btn
+
     echo CHtml::closeTag('div'); // .input-group
     echo CHtml::closeTag('div'); // .form-group
     $this->endWidget();
