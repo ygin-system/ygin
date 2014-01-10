@@ -16,19 +16,18 @@
   Yii::app()->clientScript->registerCoreScript('ygin');
   
   $this->registerCssFile('auth.css', 'backend.assets.css');
-  $this->registerCssFile('bootstrap-responsive.min.css', 'ygin.assets.bootstrap.css');
-  $ass       = Yii::getPathOfAlias('ygin.assets.bootstrap.img').DIRECTORY_SEPARATOR;
-  $backendAss = Yii::getPathOfAlias('ygin.modules.backend.assets.gfx').DIRECTORY_SEPARATOR;
+  $bootstrapFont = Yii::getPathOfAlias('ygin.assets.bootstrap.fonts').DIRECTORY_SEPARATOR;
+  $backendAss    = Yii::getPathOfAlias('ygin.modules.backend.assets.gfx').DIRECTORY_SEPARATOR;
   Yii::app()->clientScript->addDependResource('bootstrap.min.css', array(
-    $ass.'glyphicons-halflings.png' => '../img/',
-    $ass.'glyphicons-halflings-white.png' => '../img/',
-    $ass.'glyphicons-halflings-red.png' => '../img/',
-    $ass.'glyphicons-halflings-green.png' => '../img/',
+    $bootstrapFont.'glyphicons-halflings-regular.eot' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.svg' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.ttf' =>  '../fonts/',
+    $bootstrapFont.'glyphicons-halflings-regular.woff' => '../fonts/',
   ));
   
   Yii::app()->clientScript->addDependResource('auth.css', array(
-    $backendAss.'body.png' => '../gfx/',
-    $backendAss.'grad.png' => '../gfx/',
+    $backendAss.'gradient_black.png' => '../gfx/',
+    $backendAss.'texture_20.png' => '../gfx/',
     $backendAss.'input-bg.gif' => '../gfx/',
   ));
 ?>

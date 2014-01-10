@@ -49,7 +49,7 @@ class SiteModuleEventHandler extends BackendEventHandler {
           $addButtonData = null;
           $phpScripts = PhpScript::model()->findAllByAttributes(array('id_php_script_interface' => PhpScript::ID_PHP_SCRIPT_INTERFACE_MODULE));
           if (count($phpScripts) > 0) {
-            $addButtonData = '<button class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>';
+            $addButtonData = '<button class="btn navbar-btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>';
             $addButtonData .= '<ul class="dropdown-menu">'."\n";
             foreach($phpScripts AS $phpScript) {
               /**

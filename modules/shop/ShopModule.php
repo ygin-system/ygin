@@ -115,6 +115,7 @@ class ShopModule extends DaWebModuleAbstract implements IApplicationComponent {
     $this->setImport(array(
       'shop.models.*',
       'shop.controllers.*',
+      'zii.behaviors.CTimestampBehavior',
     ));
 
     Yii::app()->setComponent('daShop', $this);

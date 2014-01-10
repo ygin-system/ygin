@@ -165,12 +165,12 @@ class XUpload extends CJuiInputWidget {
             $messages = CJavaScript::encode(array(
                 'fileupload' => array(
                     'errors' => array(
-                        "maxFileSize" => $this->t('File is too big'),
-                        "minFileSize" => $this->t('File is too small'),
-                        "acceptFileTypes" => $this->t('Filetype not allowed'),
-                        "maxNumberOfFiles" => $this->t('Max number of files exceeded'),
-                        "uploadedBytes" => $this->t('Uploaded bytes exceed file size'),
-                        "emptyResult" => $this->t('Empty file upload result'),
+                        "File is too big" => $this->t('File is too big'),
+                        "File is too small" => $this->t('File is too small'),
+                        "Filetype not allowed" => $this->t('Filetype not allowed'),
+                        "Max number of files exceeded" => $this->t('Max number of files exceeded'),
+                        "Uploaded bytes exceed file size" => $this->t('Uploaded bytes exceed file size'),
+                        "Empty file upload result" => $this->t('Empty file upload result'),
                     ),
                     'error' => $this->t('Error'),
                     'start' => $this->t('Start'),

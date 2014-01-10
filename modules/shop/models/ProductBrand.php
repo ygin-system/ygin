@@ -9,7 +9,6 @@
  * @property integer $id_parent
  * @property integer $image
  * @property integer $sequence
- * @property integer $id_category
  */
 class ProductBrand extends DaActiveRecord
  {
@@ -35,7 +34,7 @@ class ProductBrand extends DaActiveRecord
   public function rules() {
     return array(
       array('name', 'required'),
-      array('id_parent, image, sequence, id_category', 'numerical', 'integerOnly'=>true),
+      array('id_parent, image, sequence', 'numerical', 'integerOnly'=>true),
       array('name', 'length', 'max'=>255),
 
     );
@@ -67,7 +66,6 @@ class ProductBrand extends DaActiveRecord
       'id_parent' => 'Id Parent',
       'image' => 'Image',
       'sequence' => 'Sequence',
-      'id_category' => 'Id Category',
     );
   }
   

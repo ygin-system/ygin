@@ -37,9 +37,9 @@ class BooleanColumn extends BaseColumn {
   } else {
     $.daSticker({text:data.message, type:"success"});
   }
-  newClass = "icon-remove icon-red";
-  if (data.value == 1) newClass = "icon-ok icon-green";
-  $("#bool_" + data.idInstance + "_" + data.idObjectParameter).removeClass("load").addClass(newClass);
+  newClass = "glyphicon glyphicon-remove icon-red editable";
+  if (data.value == 1) newClass = "glyphicon glyphicon-ok icon-green editable";
+  $("#bool_" + data.idInstance + "_" + data.idObjectParameter).removeClass().addClass(newClass);
 }',
     )).'
 }';
@@ -49,8 +49,8 @@ class BooleanColumn extends BaseColumn {
   protected function renderDataCellContent($row, $data) {
     $field = $this->name;
     $value = $data->$field;
-    $htmlOptions = array('class'=>'icon-ok icon-green');
-    if ($value == 0) $htmlOptions['class'] = 'icon-remove icon-red';
+    $htmlOptions = array('class'=>'glyphicon glyphicon-ok icon-green');
+    if ($value == 0) $htmlOptions['class'] = 'glyphicon glyphicon-remove icon-red';
     if ($this->objectParameter != null) {
       $idInstance = $data->getIdInstance();
       $idObject = $this->object->id_object;

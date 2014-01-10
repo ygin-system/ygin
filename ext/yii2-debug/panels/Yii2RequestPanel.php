@@ -14,62 +14,18 @@ class Yii2RequestPanel extends Yii2DebugPanel
 
 	public function getSummary()
 	{
-		$url = $this->getUrl();
-
-		$status = '';
-		if ($statusCode = $this->data['statusCode']) {
-			if ($statusCode >= 200 && $statusCode < 300) {
-				$class = 'label-success';
-			} elseif ($statusCode >= 100 && $statusCode < 200) {
-				$class = 'label-info';
-			} else {
-				$class = 'label-important';
-			}
-			$status .= <<<HTML
-<div class="yii2-debug-toolbar-block">
-	<a href="$url" title="Status code: $statusCode">Status <span class="label $class">$statusCode</span></a>
-</div>
-HTML;
-		}
-
-		return $status . <<<HTML
-<div class="yii2-debug-toolbar-block">
-	<a href="$url">Action <span class="label">{$this->data['action']}</span></a>
-</div>
-HTML;
+		$data = $this->getData();
+		return $this->render(dirname(__FILE__) . '/../views/panels/request_bar.php', array(
+			'statusCode' => $data['statusCode'],
+			'route' => $data['route'],
+			'action' => $data['action'],
+		));
 	}
 
 	public function getDetail()
 	{
-		$data = array(
-			'Route' => $this->data['route'],
-			'Action' => $this->data['action'],
-			'Parameters' => $this->data['actionParams'],
-		);
-		return $this->renderTabs(array(
-			array(
-				'label' => 'Parameters',
-				'content' => $this->renderDetail('Routing', $data)
-					. $this->renderDetail('$_GET', $this->data['GET'])
-					. $this->renderDetail('$_POST', $this->data['POST'])
-					. $this->renderDetail('$_FILES', $this->data['FILES'])
-					. $this->renderDetail('$_COOKIE', $this->data['COOKIE']),
-				'active' => true,
-			),
-			array(
-				'label' => 'Headers',
-				'content' => $this->renderDetail('Request Headers', $this->data['requestHeaders'])
-					. $this->renderDetail('Response Headers', $this->data['responseHeaders']),
-			),
-			array(
-				'label' => 'Session',
-				'content' => $this->renderDetail('$_SESSION', $this->data['SESSION'])
-					. $this->renderDetail('Flashes', $this->data['flashes']),
-			),
-			array(
-				'label' => '$_SERVER',
-				'content' => $this->renderDetail('$_SERVER', $this->data['SERVER']),
-			),
+		return $this->render(dirname(__FILE__) . '/../views/panels/request.php', array(
+			'data' => $this->getData(),
 		));
 	}
 
@@ -104,7 +60,7 @@ HTML;
 		$route = Yii::app()->getUrlManager()->parseUrl(Yii::app()->getRequest());
 		$action = null;
 		$actionParams = array();
-		if (($ca = Yii::app()->createController($route)) !== null) {
+		if (($ca = @Yii::app()->createController($route)) !== null) {
 			/* @var CController $controller */
 			/* @var string $actionID */
 			list($controller, $actionID) = $ca;
@@ -153,8 +109,9 @@ HTML;
 		}
 	}
 
-	public function __construct()
+	public function __construct($owner, $id)
 	{
+		parent::__construct($owner, $id);
 		if (!function_exists('http_response_code')) {
 			Yii::app()->attachEventHandler('onException', array($this, 'onException'));
 		}
@@ -170,5 +127,22 @@ HTML;
 		} else {
 			$this->_statusCode = 500;
 		}
+	}
+
+	/**
+	 * @param int $statusCode
+	 * @return string html
+	 */
+	public static function getStatusCodeHtml($statusCode)
+	{
+		$type = 'important';
+		if ($statusCode >= 100 && $statusCode < 200) {
+			$type = 'info';
+		} elseif ($statusCode >= 200 && $statusCode < 300) {
+			$type = 'success';
+		} elseif ($statusCode >= 300 && $statusCode < 400) {
+			$type = 'warning';
+		}
+		return CHtml::tag('span', array('class' => 'label label-' . $type), $statusCode);
 	}
 }

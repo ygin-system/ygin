@@ -8,22 +8,10 @@
  * @var Yii2DebugPanel $activePanel
  */
 
-$this->pageTitle = 'Yii Debugger';
+$this->pageTitle = $activePanel->getName() . ' - Yii Debugger';
 ?>
 <div class="default-view">
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div class="container">
-				<div class="yii2-debug-toolbar-block title">
-					Yii Debugger
-				</div>
-				<?php foreach ($panels as $panel): ?>
-					<?php echo $panel->getSummary(); ?>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</div>
-
+	<?php $this->renderPartial('_toolbar', array('panels' => $panels)); ?>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span2">
@@ -37,7 +25,7 @@ $this->pageTitle = 'Yii Debugger';
 				</ul>
 			</div><!--/span-->
 			<div class="span10">
-				<div class="meta alert alert-info">
+				<div class="callout alert alert-info">
 					<div class="btn-group">
 						<?php echo CHtml::link('All', array('index'), array('class' => 'btn')); ?>
 						<button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -48,27 +36,37 @@ $this->pageTitle = 'Yii Debugger';
 							<?php
 							$count = 0;
 							foreach ($manifest as $meta) {
-								$label = $meta['tag'] . ': ' . $meta['method'] . ' ' . $meta['url'] . ($meta['ajax'] ? ' (AJAX)' : '')
+								$label = $meta['method'] . ' ' . urldecode($meta['url']) . ($meta['ajax'] ? ' (AJAX)' : '')
 									. ', ' . date('Y-m-d h:i:s', $meta['time'])
 									. ', ' . $meta['ip'];
 								$url = array('view', 'tag' => $meta['tag'], 'panel' => $activePanel->id);
-								if ($meta['tag'] == $tag) {
-									echo '<li class="disabled">';
-								} else {
-									echo '<li>';
+								if ($meta['tag'] == $tag && $count > 0) {
+									echo '<li class="divider"></li>';
 								}
+								echo '<li>';
 								echo CHtml::link(CHtml::encode($label), $url);
 								echo '</li>';
 								if (++$count >= 10) {
 									break;
 								}
+								if ($meta['tag'] == $tag) {
+									echo '<li class="divider"></li>';
+								}
 							}
 							?>
 						</ul>
 					</div>
-					<?php echo $summary['tag']; ?>:
+					<?php echo CHtml::link(
+						'<i class="icon-star' . (!$this->owner->getLock($tag) ? '-empty' : '') . '"></i>',
+						array('lock', 'tag' => $tag),
+						array(
+							'class' => 'lock btn' . ($this->owner->getLock($tag) ? ' active' : ''),
+							'data-toggle' => 'button',
+							'title' => 'Lock or unlock of deleting',
+						)
+					); ?>
 					<?php echo $summary['method']; ?>
-					<?php echo CHtml::link(CHtml::encode($summary['url']), $summary['url'], array('class' => 'label')); ?>
+					<?php echo CHtml::link(CHtml::encode(urldecode($summary['url'])), $summary['url']); ?>
 					<?php echo $summary['ajax'] ? ' (AJAX)' : ''; ?>
 					at <?php echo date('Y-m-d h:i:s', $summary['time']); ?>
 					by <?php echo $summary['ip']; ?>
@@ -78,3 +76,19 @@ $this->pageTitle = 'Yii Debugger';
 		</div>
 	</div>
 </div>
+<?php
+Yii::app()->clientScript->registerScript(__CLASS__ . '#view', <<<JS
+	$('a.lock').tooltip().click(function(e){
+		e.preventDefault();
+		var el = $(this);
+		$.get(el.attr('href'), function(data){
+			if (data) {
+				$(el).addClass('active').children('i').addClass('icon-star').removeClass('icon-star-empty');
+			} else {
+				$(el).removeClass('active').children('i').addClass('icon-star-empty').removeClass('icon-star');
+			}
+		});
+	});
+JS
+);
+?>

@@ -1,6 +1,6 @@
 <?php
 
-echo 'Временно отключено';
+echo 'Логгирование временно отключено, обратитесь к разработчикам.';
 return;
 
 function array_assoc_sort_instance(&$array, $sort, $isDesc=false, $isNumeric=true,  $sort2=null) {

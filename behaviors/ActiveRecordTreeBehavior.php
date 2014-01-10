@@ -267,7 +267,7 @@ class ActiveRecordTreeBehavior extends CBehavior {
     if (($cache = Yii::app()->{$this->cacheId}) instanceof ICache) {
       $cacheKeys = $cache->get($this->getCacheKeysKey());
       if ($cacheKeys !== false) {
-        $tableCacheKeys = HArray::val($cacheKeys, $tableName);
+        $tableCacheKeys = HArray::val($cacheKeys, $tableName, array());
         foreach ($tableCacheKeys as $key) {
           unset($cache[$key]);
         }

@@ -25,7 +25,7 @@ class MultiSelectWidget extends VisualElementWidget {
     ), $this->htmlOptions);
     $this->columnHtmlOptions = CMap::mergeArray(array(
       'class' => $this->htmlOptions['class'],
-      'offset' => 'offset1',
+      'offset' => 'col-md-offset-1',
     ), $this->columnHtmlOptions);
   }
   

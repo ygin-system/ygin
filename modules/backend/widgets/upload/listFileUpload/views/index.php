@@ -19,5 +19,8 @@ $this->widget('fileUpload.fileUploadWidget.FileUploadWidget', array(
     'crop' => 'top',
     'postfix' => '_da',
   ),
+  'options' => array(
+    'maxFileSize' => HFile::getMaxUploadFileSize(),
+  ),
 ));
 ?></div>

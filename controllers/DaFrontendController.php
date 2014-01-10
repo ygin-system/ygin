@@ -3,6 +3,7 @@
 
     protected $urlAlias = null;
     public $idSiteModuleTemplate = null;
+    public $encodeEmail = true;
 
     public function init() {
       parent::init();
@@ -11,12 +12,12 @@
 
     public function processOutput($output) {
       $output = parent::processOutput($output);
-      if (true || $this->_encodeEmail) {  // TODO
+      if ($this->encodeEmail) {
         $output = HEmailEncode::encodeHtmlSource($output);
       }
       return $output;
     }
-    
+
     protected function beforeAction($action) {
       if (parent::beforeAction($action)) {
         // Пытаемся найти раздел меню по урлу

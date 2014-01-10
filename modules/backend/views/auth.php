@@ -34,33 +34,30 @@
       'validateOnChange' => false,
     ),
     'action' => Yii::app()->createUrl(UserModule::ROUTE_ADMIN_LOGIN),
-    'errorMessageCssClass' => 'label label-important',
+    'errorMessageCssClass' => 'label label-danger',
     'htmlOptions' => array(
-      'class' => 'b-login-form form-horizontal'
+      'class' => 'b-login-form',
+      'role'  => 'form',
     ),
   ));
 ?>
 
-<fieldset class="well">
-  <div class="control-group">
+<fieldset>
+  <div class="form-group">
     <label for="LoginForm_username">Логин:</label>
-    <div>
-      <?php echo $form->textField($model, 'username', array('class'=>'input-xlarge nullField', 'size'=>15, 'autofocus'=>'autofocus')); ?>
-    </div>
+    <?php echo $form->textField($model, 'username', array('class'=>'form-control nullField', 'size'=>15, 'autofocus'=>'autofocus')); ?>
   </div>
-  <div class="control-group">
+  <div class="form-group">
     <label for="LoginForm_password">Пароль:</label>
-    <div>
-      <?php echo $form->passwordField($model, 'password', array('class'=>'input-xlarge nullField', 'size'=>15)); ?>
-    </div>
+    <?php echo $form->passwordField($model, 'password', array('class'=>'form-control nullField', 'size'=>15)); ?>
   </div>
   <div>
     <table><tr>
     <td>
-      <button type="submit" class="btn btn-large"><i class="icon-check"></i> Войти</button>
+      <button type="submit" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-check"></i> Войти</button>
     </td>
-    <td>
-      <label class="checkbox">
+    <td class="checkbox">
+      <label>
         <?php echo $form->checkBox($model, 'rememberMe', array('class' => 'remind')); ?> <?php echo $form->label($model, 'rememberMe', array('label' => 'запомнить меня')); ?>
       </label>
     </td>
@@ -69,12 +66,12 @@
   </div>
 </fieldset>
 
-<div class="ygin-copy"><a target="_blank" href="http://ygin.ru">&copy; 2013, ygin</a></div>
+<div class="ygin-copy">&copy; 2014, <a target="_blank" href="http://ygin.ru" class="label label-danger">ygin</a></div>
 <?php $this->endWidget(); ?>
 <?php
   if ($model->username != null || $model->password != null) {  // TODO: пользователь также может быть заблокирован. Или не иметь в принципе доступа в админку
-    echo '<div class="alert alert-error">
-            <i class="icon-warning-sign"></i> Вы ввели неверный логин или пароль.
+    echo '<div class="alert alert-danger">
+            <i class="glyphicon glyphicon-warning-sign"></i> Вы ввели неверный логин или пароль.
           </div>';
   }
 ?>

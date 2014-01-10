@@ -7,29 +7,38 @@
  * @author Roman Zhuravlev <zhuravljov@gmail.com>
  * @package Yii2Debug
  * @since 1.1.13
+ *
+ * @property Yii2Debug $owner
+ * @property string $id страницы
+ * @property string $tag метка для просмотра информации
+ * @property string $url
  */
 class Yii2DebugPanel extends CComponent
 {
 	/**
-	 * @var string id страницы
+	 * @var bool|null подсветка кода. По умолчанию Yii2Debug::$highlightCode
 	 */
-	public $id;
+	public $highlightCode;
 	/**
-	 * @var string метка для просмотра информации
+	 * @var callback функция для обработки данных панели перед сохранением
 	 */
-	public $tag;
+	public $filterData;
 	/**
 	 * @var Yii2Debug
 	 */
-	public $component;
+	private $_owner;
+	/**
+	 * @var string id страницы
+	 */
+	private $_id;
+	/**
+	 * @var string tag метка для просмотра информации
+	 */
+	private $_tag;
 	/**
 	 * @var array массив отладочных данных
 	 */
-	public $data;
-	/**
-	 * @var bool|null подчветка кода. По умолчанию Yii2Debug::$highlightCode
-	 */
-	public $highlightCode;
+	private $_data;
 
 	/**
 	 * @return string название панели для вывода в меню
@@ -61,12 +70,58 @@ class Yii2DebugPanel extends CComponent
 	 */
 	public function save()
 	{
-		return null;
 	}
 
-	public function load($data)
+	/**
+	 * @param Yii2Debug $owner
+	 * @param string $id
+	 */
+	public function __construct($owner, $id)
 	{
-		$this->data = $data;
+		$this->_owner = $owner;
+		$this->_id = $id;
+		$this->_tag = $owner->getTag();
+	}
+
+	/**
+	 * @return Yii2Debug
+	 */
+	public function getOwner()
+	{
+		return $this->_owner;
+	}
+
+	/**
+	 * @return Yii2Debug
+	 * @deprecated will removed in v1.2
+	 */
+	public function getComponent()
+	{
+		return $this->_owner;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->_id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTag()
+	{
+		return $this->_tag;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getData()
+	{
+		return $this->_data;
 	}
 
 	/**
@@ -74,10 +129,39 @@ class Yii2DebugPanel extends CComponent
 	 */
 	public function getUrl()
 	{
-		return Yii::app()->createUrl($this->component->moduleId .  '/default/view', array(
-			'panel' => $this->id,
-			'tag' => $this->tag,
+		return Yii::app()->createUrl($this->getOwner()->moduleId .  '/default/view', array(
+			'tag' => $this->getTag(),
+			'panel' => $this->getId(),
 		));
+	}
+
+	/**
+	 * @param array $data
+	 * @param null|string $tag
+	 */
+	public function load($data, $tag = null)
+	{
+		if ($tag) $this->_tag = $tag;
+		$this->_data = $data;
+	}
+
+	/**
+	 * Renders a view file
+	 * @param string $_viewFile_ view file
+	 * @param array $_data_ data to be extracted and made available to the view file
+	 * @return string the rendering result
+	 */
+	public function render($_viewFile_, $_data_ = null)
+	{
+		if (is_array($_data_)) {
+			extract($_data_);
+		} else {
+			$data = $_data_;
+		}
+		ob_start();
+		ob_implicit_flush(false);
+		require($_viewFile_);
+		return ob_get_clean();
 	}
 
 	/**
@@ -85,37 +169,29 @@ class Yii2DebugPanel extends CComponent
 	 * @param string $caption
 	 * @param array $values
 	 * @return string
+	 * @deprecated
 	 */
-	protected function renderDetail($caption, $values)
+	public function renderDetail($caption, $values)
 	{
-		if (empty($values)) {
-			return "<h3>$caption</h3>\n<p>Empty.</p>";
-		}
-		$rows = '';
-		foreach ($values as $name => $value) {
-			if (is_string($value)) {
-				$value = CHtml::encode($value);
-			} elseif ($this->highlightCode) {
-				$value = $this->highlightPhp(var_export($value, true));
-			} else {
-				$value = CHtml::encode(var_export($value, true));
-			}
-			$rows .= '<tr><th style="width:300px;word-break:break-all;">'
-				. CHtml::encode($name)
-				. '</th><td><div style="overflow:auto">'
-				. $value
-				. '</div></td></tr>';
-		}
+		return $this->render(dirname(__FILE__) . '/views/panels/_detail.php', array(
+			'caption' => $caption,
+			'values' => $values,
+		));
+	}
 
-		return <<<HTML
-<h3>$caption</h3>
-<table class="table table-condensed table-bordered table-striped table-hover" style="table-layout: fixed;">
-<thead><tr><th style="width: 300px;">Name</th><th>Value</th></tr></thead>
-<tbody>
-$rows
-</tbody>
-</table>
-HTML;
+	/**
+	 * Рендер панели с закладками
+	 * @param array $items
+	 * @return string
+	 * @deprecated
+	 */
+	public function renderTabs($items)
+	{
+		static $counter = 0;
+		return $this->render(dirname(__FILE__) . '/views/panels/_tabs.php', array(
+			'id' => 'tabs' . ($counter++),
+			'items' => $items,
+		));
 	}
 
 	/**
@@ -139,39 +215,5 @@ HTML;
 		}
 		$html = $this->_hl->highlight($code);
 		return strip_tags($html, '<div>,<span>');
-	}
-
-	/**
-	 * Рендер панели с закладками
-	 * @param array $items
-	 * @return string
-	 */
-	protected function renderTabs($items)
-	{
-		static $counter = 0;
-		$counter++;
-		$id = "tabs$counter";
-
-		$tabs = '';
-		foreach ($items as $num => $item) {
-			$tabs .= CHtml::tag('li', array(
-					'class' => isset($item['active']) && $item['active'] ? 'active' : ''
-				), CHtml::link($item['label'], "#$id-tab$num", array('data-toggle' => 'tab'))
-			);
-		}
-
-		$details = '';
-		foreach ($items as $num => $item) {
-			$details .= CHtml::tag('div', array(
-					'id' => "$id-tab$num",
-					'class' => 'tab-pane' . (isset($item['active']) && $item['active'] ? ' active' : ''),
-				), $item['content']
-			);
-		}
-
-		return <<<HTML
-<ul id="tabs{$counter}" class="nav nav-tabs">$tabs</ul>
-<div class="tab-content">$details</div>
-HTML;
 	}
 }

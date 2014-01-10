@@ -17,8 +17,9 @@ $form = $controller->beginWidget('backend.widgets.BackendActiveForm', array(
   'enableAjaxValidation' => false,
   'enableClientValidation' => true,
   'htmlOptions' => array(
-    'class' => 'form-horizontal b-instance-edit-form',
+    'class'   => 'b-instance-edit-form form-horizontal',
     'enctype' => 'multipart/form-data',
+    'role'    => 'form',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
@@ -55,7 +56,7 @@ echo $form->errorSummary($model,
        <div class="modal-body">',
   '</div>
        <div class="modal-footer">
-         <a href="#" class="btn" data-dismiss="modal">Закрыть</a>
+         <a href="#" class="btn btn-default" data-dismiss="modal">Закрыть</a>
        </div>',
   array('class'=>'modal errorSummary', 'role'=>'dialog'));
 ?>
@@ -85,7 +86,7 @@ echo $form->errorSummary($model,
         $isAdditionalParamExists = true;
         if ($isBaseParamExists) {
           echo '<div class="additional-property-container">
-                    <a class="btn" onclick="$(this).next().slideToggle(); return false;"><i class="icon-chevron-down"></i> Дополнительные характеристики</a>
+                    <a class="btn btn-default" onclick="$(this).next().slideToggle(); return false;"><i class="glyphicon glyphicon-chevron-down"></i> Дополнительные характеристики</a>
                     <div class="additional-property-list">'."\n";
         }
       }
@@ -105,12 +106,11 @@ echo $form->errorSummary($model,
   $link = Yii::app()->request->url;
   $backLink = ObjectUrlRule::createUrlFromCurrent(BackendModule::ROUTE_INSTANCE_LIST, array(), array(ObjectUrlRule::PARAM_OBJECT_INSTANCE, ObjectUrlRule::PARAM_ACTION_VIEW, ObjectUrlRule::PARAM_SYSTEM_MODULE));
   if ($readOnlyInstance) {
-    echo CHtml::link('Вернуться', $backLink, array('class' => 'btn'));
+    echo CHtml::link('Вернуться', $backLink, array('class' => 'btn btn-default'));
   } else {
         // Обработка кнопок
         Yii::app()->clientScript->registerScript('admin.form.init', '
-    $(".b-instance-edit-form .form-actions")
-      .daFixedActionBarBind();
+    $(".b-instance-edit-form .form-actions").daFixedActionBarBind();
     $(".b-instance-edit-form .form-actions")
       .find(".btn-save").on("click", function(){
         if ( !$("#aMainForm").hasClass("lock")){
@@ -141,18 +141,19 @@ echo $form->errorSummary($model,
 ?>
         <input type="hidden" name="submit_form" value="1" autocomplete="off">
         <div class="btn-group dropup">
-          <a class="btn btn-success btn-save" id="saveAndCloseButton" title="Ctrl+Enter" data-action="2"><i class="icon-ok icon-white"></i> Сохранить и выйти <i class="icon-share-alt icon-white"></i></a>
+          <a class="btn btn-success btn-save" id="saveAndCloseButton" title="Ctrl+Enter" data-action="2"><i class="glyphicon glyphicon-ok icon-white"></i> Сохранить и выйти <i class="glyphicon glyphicon-share-alt icon-white"></i></a>
           <a class="btn btn-success dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a id="saveAndNewButton" class="btn-save" title="Ctrl+Alt+Enter" data-action="5" href="#"><i class="icon-ok"></i> Сохранить и добавить еще <i class="icon-plus"></i></a></li>
-            <!--<li><a id="saveAsNew" class="btn-save" data-action="6" href="#"><i class="icon-ok"></i> Сохранить как новый <i class="icon-file"></i></a></li>-->
+            <li><a id="saveAndNewButton" class="btn-save" title="Ctrl+Alt+Enter" data-action="5" href="#"><i class="glyphicon glyphicon-ok"></i> Сохранить и добавить еще <i class="glyphicon glyphicon-plus"></i></a></li>
+<!--             <li><a id="saveAsNew" class="btn-save" data-action="6" href="#"><i class="glyphicon glyphicon-ok"></i> Сохранить как новое <i class="glyphicon glyphicon-file"></i></a></li>  -->
           </ul>
         </div>
         &nbsp;&nbsp;
-        <a class="btn btn-success btn-save" id="acceptButton" title="Ctrl+Shift+Enter" data-action="3"><i class="icon-ok icon-white"></i> Применить</a>&nbsp;&nbsp;
-        <a class="btn btn-danger" id="cancelButton" title="Ctrl+Esc" href="<?php echo $backLink ?>"><i class="icon-remove icon-white"></i> Отменить</a>
+        <a class="btn btn-success btn-save" id="acceptButton" title="Ctrl+Shift+Enter" data-action="3"><i class="glyphicon glyphicon-ok icon-white"></i> Применить</a>&nbsp;&nbsp;
+        <?php /* if ($idFormInstance != null && $copyInstance) { ?><button class="btn btn-default" id="saveAsNewButton" data-action="4"><i class="glyphicon glyphicon-asterisk"></i> Сохранить как новый</button>&nbsp;&nbsp;<?php } */ ?>
+        <a class="btn btn-danger" id="cancelButton" title="Ctrl+Esc" href="<?php echo $backLink ?>"><i class="glyphicon glyphicon-remove icon-white"></i> Отменить</a>
 <?php } ?>
       <div>
   </div>

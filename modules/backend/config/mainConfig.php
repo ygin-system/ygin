@@ -78,7 +78,7 @@ $mainConfig = array(
       'class' => 'CWidgetFactory',
       'widgets' => array(
         'BreadcrumbsWidget' => array(
-          'separator' => ' <span class="divider">/</span>',
+          'separator' => '',
           'tagName' => 'ul',
           'htmlOptions' => array('class' => 'breadcrumb'),
           'encodeLabel' => false,

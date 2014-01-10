@@ -72,11 +72,17 @@ class DaEmailLogRoute extends CEmailLogRoute {
   }
   
   private function log($msg) {
+    $format = '{time} {message}'.PHP_EOL;
+    $msg = strtr($format, array('{time}' => date('Y.m.d H:i:s', time()), '{message}' => $msg));
+    Yii::log($msg, CLogger::LEVEL_ERROR, 'application.sendMail.error');
+    return;
+
     $fileName = Yii::getPathOfAlias('application.runtime').'/'.__CLASS__.'Error.log';
     $format = '{time} {message}'.PHP_EOL;
     $f = fopen($fileName, 'a');
     fwrite($f, strtr($format, array('{time}' => date('Y.m.d H:i:s', time()), '{message}' => $msg)));
     fclose($f);
+
   }
   
   public function sendEmail($emails, $subject, $message) {

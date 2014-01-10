@@ -13,13 +13,13 @@ $idObject = $model->getIdInstance();
     <input type="checkbox" name="create_rep" onchange="var elem = $('#view-description'); (this.checked) ? elem.slideDown() : elem.slideUp();" value="1" >
   </div>
   <div id="view-description" style="display:none">
-    <div class="control-group">
-      <label class="control-label">Название представления (если пусто, то колонки будут добавлены к текущему представлению)</label>
-      <div class="controls"><input name="create_rep_name" value="<?php echo $model->getName(); ?>"></div>
+    <div class="form-group">
+      <label class="control-label col-lg-4">Название представления (если пусто, то колонки будут добавлены к текущему представлению)</label>
+      <div class="controls col-lg-8"><input class="form-control" name="create_rep_name" value="<?php echo $model->getName(); ?>"></div>
     </div>
-    <div class="control-group">
-      <label class="control-label">Колонки представления</label>
-      <div class="controls">
+    <div class="form-group">
+      <label class="control-label col-lg-4">Колонки представления</label>
+      <div class="controls col-lg-8">
     <?php
       if (!is_null($idObject) && $model->table_name != "") {
         $params = $model->parameters;

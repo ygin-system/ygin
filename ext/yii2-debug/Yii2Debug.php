@@ -16,6 +16,10 @@ class Yii2Debug extends CApplicationComponent
 	 */
 	public $allowedIPs = array('127.0.0.1', '::1');
 	/**
+	 * @var null|string|callback дополнительное условие доступа к панели
+	 */
+	public $accessExpression;
+	/**
 	 * @var array|Yii2DebugPanel[]
 	 */
 	public $panels = array();
@@ -36,9 +40,25 @@ class Yii2Debug extends CApplicationComponent
 	 */
 	public $moduleId = 'debug';
 	/**
+	 * @var bool использование внутренних url-правил
+	 */
+	public $internalUrls = true;
+		/**
 	 * @var bool подсветка кода на страницах с отладочной информацией
 	 */
 	public $highlightCode = true;
+	/**
+	 * @var bool показывать или нет страницу с конфигурацией приложения
+	 */
+	public $showConfig = false;
+	/**
+	 * @var array список опций значения которых необходимо скрывать при выводе
+	 * на страницу с конфигурацией приложения.
+	 */
+	public $hiddenConfigOptions = array(
+		'components/db/username',
+		'components/db/password',
+	);
 
 	private $_tag;
 
@@ -62,20 +82,27 @@ class Yii2Debug extends CApplicationComponent
 			$this->logPath = Yii::app()->getRuntimePath() . '/debug';
 		}
 
-		foreach (array_merge($this->corePanels(), $this->panels) as $id => $config) {
-			$config['id'] = $id;
-			$config['tag'] = $this->getTag();
-			$config['component'] = $this;
+		$panels = array();
+		foreach (CMap::mergeArray($this->corePanels(), $this->panels) as $id => $config) {
 			if (!isset($config['highlightCode'])) $config['highlightCode'] = $this->highlightCode;
-			$this->panels[$id] = Yii::createComponent($config);
+			$panels[$id] = Yii::createComponent($config, $this, $id);
 		}
+		$this->panels = $panels;
 
-		Yii::app()->setModules(array_merge(Yii::app()->getModules(), array(
+		Yii::app()->setModules(array(
 			$this->moduleId => array(
 				'class' => 'Yii2DebugModule',
-				'component' => $this,
+				'owner' => $this,
 			),
-		)));
+		));
+
+		if ($this->internalUrls && (Yii::app()->getUrlManager()->urlFormat == 'path')) {
+			$rules = array();
+			foreach ($this->coreUrlRules() as $key => $value) {
+				$rules[$this->moduleId . '/' . $key] = $this->moduleId . '/' . $value;
+			}
+			Yii::app()->getUrlManager()->addRules($rules, false);
+		}
 
 		Yii::app()->attachEventHandler('onEndRequest', array($this, 'onEndRequest'));
 		$this->initToolbar();
@@ -93,7 +120,7 @@ class Yii2Debug extends CApplicationComponent
 	/**
 	 * @return array страницы по умолчанию
 	 */
-	public function corePanels()
+	protected function corePanels()
 	{
 		return array(
 			'config' => array(
@@ -114,10 +141,21 @@ class Yii2Debug extends CApplicationComponent
 		);
 	}
 
+	protected function coreUrlRules()
+	{
+		return array(
+			'' => 'default/index',
+			'<tag:[0-9a-f]+>/<action:toolbar|explain>' => 'default/<action>',
+			'<tag:[0-9a-f]+>/<panel:\w+>' => 'default/view',
+			'<tag:[0-9a-f]+>' => 'default/view',
+			'<action:\w+>' => 'default/<action>',
+		);
+	}
+
 	/**
 	 * Регистрация скриптов для загрузки дебаг-панели
 	 */
-	public function initToolbar()
+	protected function initToolbar()
 	{
 		if (!$this->checkAccess()) return;
 		$assetsUrl = CHtml::asset(dirname(__FILE__) . '/assets');
@@ -171,32 +209,53 @@ JS
 		$path = $this->logPath;
 		if (!is_dir($path)) mkdir($path);
 
-		$indexFile = "$path/index.json";
+		// Конвертация данных из json в serialize
+		if (file_exists("$path/index.json")) {
+			foreach (glob("$path/*.json") as $jsonFile) {
+				$data = json_decode(file_get_contents($jsonFile), true);
+				$dataFile = substr($jsonFile, -4) . 'data';
+				file_put_contents($dataFile, serialize($data));
+				@unlink($jsonFile);
+			}
+		}
+
+		$indexFile = "$path/index.data";
 		$manifest = array();
 		if (is_file($indexFile)) {
-			$manifest = json_decode(file_get_contents($indexFile), true);
+			$manifest = unserialize(file_get_contents($indexFile));
 		}
+
+		$data = array();
+		foreach ($this->panels as $panel) {
+			$data[$panel->getId()] = $panel->save();
+			if (isset($panel->filterData)) {
+				$data[$panel->getId()] = $panel->evaluateExpression(
+					$panel->filterData,
+					array('data' => $data[$panel->getId()])
+				);
+			}
+			$panel->load($data[$panel->getId()]);
+		}
+
+		$statusCode = null;
+		if (isset($this->panels['request']) && isset($this->panels['request']->data['statusCode'])) {
+			$statusCode = $this->panels['request']->data['statusCode'];
+		}
+
 		$request = Yii::app()->getRequest();
-		$manifest[$this->getTag()] = $summary = array(
+		$manifest[$this->getTag()] = $data['summary'] = array(
 			'tag' => $this->getTag(),
 			'url' => $request->getHostInfo() . $request->getUrl(),
-			'ajax' => $request->isAjaxRequest,
-			'method' => isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET',
-			'ip' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1',
+			'ajax' => $request->getIsAjaxRequest(),
+			'method' => $request->getRequestType(),
+			'code' => $statusCode,
+			'ip' => $request->getUserHostAddress(),
 			'time' => time(),
 		);
 		$this->resizeHistory($manifest);
 
-		$dataFile = "$path/{$this->getTag()}.json";
-		$data = array();
-		foreach ($this->panels as $panel) {
-			$data[$panel->id] = $panel->save();
-			$panel->load($data[$panel->id]);
-		}
-		$data['summary'] = $summary;
-
-		file_put_contents($dataFile, json_encode($data));
-		file_put_contents($indexFile, json_encode($manifest));
+		file_put_contents("$path/{$this->getTag()}.data", serialize($data));
+		file_put_contents($indexFile, serialize($manifest));
 	}
 
 	/**
@@ -205,13 +264,20 @@ JS
 	 */
 	protected function resizeHistory(&$manifest)
 	{
-		if (count($manifest) > $this->historySize + 10) {
+		$tags = array_keys($manifest);
+		$count = 0;
+		foreach ($tags as $tag) {
+			if (!$this->getLock($tag)) $count++;
+		}
+		if ($count > $this->historySize + 10) {
 			$path = $this->logPath;
-			$n = count($manifest) - $this->historySize;
-			foreach (array_keys($manifest) as $tag) {
-				@unlink("$path/$tag.json");
-				unset($manifest[$tag]);
-				if (--$n <= 0) break;
+			$n = $count - $this->historySize;
+			foreach ($tags as $tag) {
+				if (!$this->getLock($tag)) {
+					@unlink("$path/$tag.data");
+					unset($manifest[$tag]);
+					if (--$n <= 0) break;
+				}
 			}
 		}
 	}
@@ -222,7 +288,13 @@ JS
 	 */
 	public function checkAccess()
 	{
-		$ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+		if (
+			$this->accessExpression !== null &&
+			!$this->evaluateExpression($this->accessExpression)
+		) {
+			return false;
+		}
+		$ip = Yii::app()->getRequest()->getUserHostAddress();
 		foreach ($this->allowedIPs as $filter) {
 			if (
 				$filter === '*' || $filter === $ip || (
@@ -234,5 +306,90 @@ JS
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Дамп переменной
+	 * @param mixed $data
+	 */
+	public static function dump($data)
+	{
+		Yii::log(serialize($data), CLogger::LEVEL_INFO, Yii2LogPanel::CATEGORY_DUMP);
+	}
+
+	/**
+	 * @var
+	 */
+	private $_locks;
+
+	/**
+	 * @param string $tag
+	 * @return bool
+	 */
+	public function getLock($tag)
+	{
+		if ($this->_locks === null) {
+			$locksFile = $this->logPath . '/locks.data';
+			if (is_file($locksFile)) {
+				$this->_locks = array_flip(unserialize(file_get_contents($locksFile)));
+			} else {
+				$this->_locks = array();
+			}
+		}
+		return isset($this->_locks[$tag]);
+	}
+
+	/**
+	 * @param string $tag
+	 * @param bool $value
+	 */
+	public function setLock($tag, $value)
+	{
+		$value = !!$value;
+		if ($this->getLock($tag) !== $value) {
+			if ($value) {
+				$this->_locks[$tag] = true;
+			} else {
+				unset($this->_locks[$tag]);
+			}
+			$locksFile = $this->logPath . '/locks.data';
+			file_put_contents($locksFile, serialize(array_keys($this->_locks)));
+		}
+	}
+
+	/**
+	 * Каскадное преобразование смешанных данных в массив
+	 * @param mixed $data
+	 * @return array
+	 */
+	public static function prepareData($data)
+	{
+		static $parents = array();
+
+		$result = array();
+		if (is_array($data) || $data instanceof CMap) {
+			foreach ($data as $key => $value) {
+				$result[$key] = self::prepareData($value);
+			}
+		} elseif (is_object($data)) {
+			if (!in_array($data, $parents, true)) {
+				array_push($parents, $data);
+				$result['class'] = get_class($data);
+				if ($data instanceof CActiveRecord) {
+					foreach ($data->attributes as $field => $value) {
+						$result[$field] = $value;
+					}
+				}
+				foreach (get_object_vars($data) as $key => $value) {
+					$result[$key] = self::prepareData($value);
+				}
+				array_pop($parents);
+			} else {
+				$result = get_class($data) . '()';
+			}
+		} else {
+			$result = $data;
+		}
+		return $result;
 	}
 }

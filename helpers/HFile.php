@@ -207,4 +207,21 @@ class HFile extends CFileHelper {
     file_put_contents($filePath, $data);
   }
 
+  private static function toBytes($str){
+    $val = trim($str);
+    $last = strtolower($str[strlen($str)-1]);
+    switch($last) {
+      case 'g': $val *= 1024;
+      case 'm': $val *= 1024;
+      case 'k': $val *= 1024;
+    }
+    return $val;
+  }
+
+  public static function getMaxUploadFileSize() {
+    $postSize = self::toBytes(ini_get('post_max_size'));
+    $uploadSize = self::toBytes(ini_get('upload_max_filesize'));
+    return min($postSize, $uploadSize);
+  }
+
 }

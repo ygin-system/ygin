@@ -46,7 +46,7 @@ echo '  </tbody>
 return;
 /*
 // Доступность объекта в разрезе Доменов
-echo '<div><span class="label">Доступность объекта в доменах:</span></div>';
+echo '<div><span class="label label-default">Доступность объекта в доменах:</span></div>';
 if (!is_null($idObject)) {
   // Редактируется существующий экземпляр
   $sql = "SELECT a.id_domain AS id, a.name, b.id_object

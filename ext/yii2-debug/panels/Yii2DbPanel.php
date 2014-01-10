@@ -11,6 +11,10 @@ class Yii2DbPanel extends Yii2DebugPanel
 	 * @var bool вставлять или нет значения параметров в sql-запрос
 	 */
 	public $insertParamValues = true;
+	/**
+	 * @var bool разрешен или нет explain для sql-запросов
+	 */
+	public $canExplain = true;
 
 	public function getName()
 	{
@@ -20,150 +24,82 @@ class Yii2DbPanel extends Yii2DebugPanel
 	public function getSummary()
 	{
 		$timings = $this->calculateTimings();
-		$queryCount = count($timings);
-		$queryTime = 0;
+		$count = count($timings);
+		$time = 0;
 		foreach ($timings as $timing) {
-			$queryTime += $timing[4];
+			$time += $timing[4];
 		}
-		$queryTime = number_format($queryTime * 1000) . ' ms';
-		$url = $this->getUrl();
-		$output = <<<HTML
-<div class="yii2-debug-toolbar-block">
-	<a href="$url" title="Executed $queryCount database queries which took $queryTime.">
-		DB <span class="label">$queryCount</span> <span class="label">$queryTime</span>
-	</a>
-</div>
-HTML;
-		return $queryCount > 0 ? $output : '';
+		if (!$count) return '';
+		return $this->render(dirname(__FILE__) . '/../views/panels/db_bar.php', array(
+			'count' => $count,
+			'time' => number_format($time * 1000) . ' ms',
+		));
 	}
 
 	public function getDetail()
 	{
-		$queriesCount = count($this->calculateTimings());
-		$resumeCount = count($this->calculateResume());
-		$connectionsCount = count($this->data['connections']);
-		return $this->renderTabs(array(
-			array(
-				'label' => "Queries ($queriesCount)",
-				'content' => $this->getQueriesDetail(),
-				'active' => true,
-			),
-			array(
-				'label' => "Resume ($resumeCount)",
-				'content' => $this->getResumeDetail(),
-			),
-			array(
-				'label' => "Connections ($connectionsCount)",
-				'content' => $this->getConnectionsDetail(),
-			)
+		return $this->render(dirname(__FILE__) . '/../views/panels/db.php', array(
+			'queries' => $this->getQueriesInfo(),
+			'queriesCount' => count($this->calculateTimings()),
+			'resume' => $this->getResumeInfo(),
+			'resumeCount' => count($this->calculateResume()),
+			'connectionsCount' => count($this->data['connections']),
+			'connections' => $this->getConnectionsInfo(),
 		));
 	}
 
 	/**
-	 * @return string html-контент закладки со списком sql-запросов
+	 * @return array
 	 */
-	protected function getQueriesDetail()
+	protected function getQueriesInfo()
 	{
-		$rows = array();
+		$items = array();
 		foreach ($this->calculateTimings() as $timing) {
-			$time = $timing[3];
-			$time = date('H:i:s.', $time) . sprintf('%03d', (int)(($time - (int)$time) * 1000));
-			$duration = sprintf('%.1f ms', $timing[4] * 1000);
-			$procedure = $this->formatSql($timing[1]);
-			if ($this->highlightCode) {
-				$procedure = $this->highlightSql($procedure);
-			} else {
-				$procedure = CHtml::encode($procedure);
-			}
-			$rows[] = "<tr><td style=\"width: 100px;\">$time</td><td style=\"width: 80px;\">$duration</td><td>$procedure</td>";
+			$items[] = array(
+				'time' => date('H:i:s.', $timing[3]) . sprintf('%03d', (int)(($timing[3] - (int)$timing[3]) * 1000)),
+				'duration' => sprintf('%.1f ms', $timing[4] * 1000),
+				'procedure' => $this->formatSql($timing[1], $this->insertParamValues),
+			);
 		}
-		$rows = implode("\n", $rows);
-		return <<<HTML
-<table class="table table-condensed table-bordered table-striped table-hover" style="table-layout: fixed;">
-<thead>
-<tr>
-	<th style="width: 100px;">Time</th>
-	<th style="width: 80px;">Duration</th>
-	<th>Query</th>
-</tr>
-</thead>
-<tbody>
-$rows
-</tbody>
-</table>
-HTML;
+		return $items;
 	}
 
 	/**
-	 * @return string html-контент закладки с группировкой sql-запросов
+	 * @return array
 	 */
-	protected function getResumeDetail()
+	protected function getResumeInfo()
 	{
-		$rows = array();
-		$num = 0;
+		$items = array();
 		foreach ($this->calculateResume() as $item) {
-			$num++;
-			list($query, $count, $total, $min, $max) = $item;
-			if ($this->highlightCode) {
-				$query = $this->highlightSql($query);
-			} else {
-				$query = CHtml::encode($query);
-			}
-			$avg = sprintf('%.1f ms', $total * 1000 / $count);
-			$total = sprintf('%.1f ms', $total * 1000);
-			$min = sprintf('%.1f ms', $min * 1000);
-			$max = sprintf('%.1f ms', $max * 1000);
-			$rows[] = <<<HTML
-<tr>
-	<td style="width:30px;">$num</td>
-	<td>$query</td>
-	<td style="width:50px;">$count</td>
-	<td style="width:70px;">$total</td>
-	<td style="width:70px;">$avg</td>
-	<td style="width:70px;">$min</td>
-	<td style="width:70px;">$max</td>
-</tr>
-HTML;
+			$items[] = array(
+				'procedure' => $item[0],
+				'count' => $item[1],
+				'total' => sprintf('%.1f ms', $item[2] * 1000),
+				'avg' => sprintf('%.1f ms', $item[2] * 1000 / $item[1]),
+				'min' => sprintf('%.1f ms', $item[3] * 1000),
+				'max' => sprintf('%.1f ms', $item[4] * 1000),
+			);
 		}
-		$rows = implode("\n", $rows);
-		return <<<HTML
-<table class="table table-condensed table-bordered table-striped table-hover" style="table-layout: fixed;">
-<thead>
-<tr>
-	<th style="width:30px;">#</th>
-	<th>Query</th>
-	<th style="width:50px;">Count</th>
-	<th style="width:70px;">Total</th>
-	<th style="width:70px;">Avg</th>
-	<th style="width:70px;">Min</th>
-	<th style="width:70px;">Max</th>
-</tr>
-</thead>
-<tbody>
-$rows
-</tbody>
-</table>
-HTML;
+		return $items;
 	}
 
 	/**
-	 * @return string html-контент закладки с детальной информацией активных
-	 * подключений к базам данных
+	 * @return array
 	 */
-	protected function getConnectionsDetail()
+	protected function getConnectionsInfo()
 	{
-		$content = '';
+		$connections = array();
 		foreach ($this->data['connections'] as $id => $connection) {
-			$caption = "Component: $id ($connection[class])";
-			unset($connection['class']);
-			foreach (explode('  ', $connection['info']) as $line) {
-				list($key, $value) = explode(': ', $line, 2);
-				$connection[$key] = $value;
+			if (isset($connection['info'])) {
+				foreach (explode('  ', $connection['info']) as $line) {
+					list($key, $value) = explode(': ', $line, 2);
+					$connection[$key] = $value;
+				}
+				unset($connection['info']);
 			}
-			unset($connection['info']);
-			$content .= $this->renderDetail($caption, $connection);
+			$connections[$id] = $connection;
 		}
-		return $content;
+		return $connections;
 	}
 
 	private $_timings;
@@ -181,7 +117,7 @@ HTML;
 		$timings = array();
 		$stack = array();
 		foreach ($messages as $i => $log) {
-			list($token, $level, $category, $timestamp) = $log;
+			list($token, , $category, $timestamp) = $log;
 			$log[4] = $i;
 			if (strpos($token, 'begin:') === 0) {
 				$log[0] = $token = substr($token, 6);
@@ -216,7 +152,7 @@ HTML;
 		$resume = array();
 		foreach ($this->calculateTimings() as $timing) {
 			$duration = $timing[4];
-			$query = $this->formatSql($timing[1]);
+			$query = $this->formatSql($timing[1], $this->insertParamValues);
 			$key = md5($query);
 			if (!isset($resume[$key])) {
 				$resume[$key] = array($query, 1, $duration, $duration, $duration);
@@ -240,23 +176,24 @@ HTML;
 	/**
 	 * Выделение sql-запроса из лога и подстановка параметров
 	 * @param string $message
+	 * @param bool $insertParams
 	 * @return string
 	 */
-	protected function formatSql($message)
+	public function formatSql($message, $insertParams)
 	{
 		$sqlStart = strpos($message, '(') + 1;
 		$sqlEnd = strrpos($message , ')');
 		$sql = substr($message, $sqlStart, $sqlEnd - $sqlStart);
 		if (strpos($sql, '. Bound with ') !== false) {
 			list($query, $params) = explode('. Bound with ', $sql);
-			if (!$this->insertParamValues) return $query;
-			$sql = strtr($query, $this->parseParamsSql($params));
+			if (!$insertParams) return $query;
+			$sql = $this->insertParamsToSql($query, $this->parseParamsSql($params));
 		}
 		return $sql;
 	}
 
 	/**
-	 * Парсинг строки с параметрами
+	 * Парсинг строки с параметрами типа (:xxx, ?)
 	 * @param string $params
 	 * @return array key/value
 	 */
@@ -264,7 +201,7 @@ HTML;
 	{
 		$binds = array();
 		$pos = 0;
-		while (preg_match('/(\:[a-z0-9\.\_\-]+)\s*\=\s*/', $params, $m, PREG_OFFSET_CAPTURE, $pos)) {
+		while (preg_match('/((?:\:[a-z0-9\.\_\-]+)|\d+)\s*\=\s*/i', $params, $m, PREG_OFFSET_CAPTURE, $pos)) {
 			$start = $m[0][1] + strlen($m[0][0]);
 			$key = $m[1][0];
 			if (($params{$start} == '"') || ($params{$start} == "'")) {
@@ -291,6 +228,62 @@ HTML;
 	}
 
 	/**
+	 * Умная подстановка параметров в SQL-запрос.
+	 *
+	 * Поиск параметров производится за пределами строк в кавычках ["'`].
+	 * Значения подставляются для параметров типа (:xxx, ?).
+	 * @param string $query
+	 * @param array $params
+	 * @return string
+	 */
+	private function insertParamsToSql($query, $params)
+	{
+		$sql = '';
+		$pos = 0;
+		do {
+			// Выявление ближайшей заэкранированной части строки
+			$quote = '';
+			if (preg_match('/[`"\']/', $query, $m, PREG_OFFSET_CAPTURE, $pos)) {
+				$qchar = $m[0][0];
+				$qbegin = $m[0][1];
+				$qend = $qbegin;
+				do {
+					$sls = 0;
+					if (($qend = strpos($query, $qchar, $qend + 1)) !== false) {
+						while ($query{$qend - $sls - 1} == '\\') $sls++;
+					} else {
+						$qend = strlen($query) - 1;
+					}
+				} while ($sls % 2);
+				$quote = substr($query, $qbegin, $qend - $qbegin + 1);
+				$token = substr($query, $pos, $qbegin - $pos);
+				$pos = $qend + 1;
+			} else {
+				$token = substr($query, $pos);
+			}
+			// Подстановка параметров в незаэкранированную часть SQL
+			$subsql = '';
+			$pind= 0;
+			$tpos = 0;
+			while (preg_match('/\:[a-z0-9\.\_\-]+|\?/i', $token, $m, PREG_OFFSET_CAPTURE, $tpos)) {
+				$key = $m[0][0];
+				if ($key == '?') $key = $pind++;
+				if (isset($params[$key])) {
+					$value = $params[$key];
+				} else {
+					$value = $m[0][0];
+				}
+				$subsql .= substr($token, $tpos, $m[0][1] - $tpos) . $value;
+				$tpos = $m[0][1] + strlen($m[0][0]);
+			}
+			$subsql .= substr($token, $tpos);
+			// Склейка
+			$sql .= $subsql . $quote;
+		} while ($quote !== '');
+		return $sql;
+	}
+
+	/**
 	 * @var CTextHighlighter
 	 */
 	private $_hl;
@@ -300,7 +293,7 @@ HTML;
 	 * @param string $sql
 	 * @return string
 	 */
-	protected function highlightSql($sql)
+	public function highlightSql($sql)
 	{
 		if ($this->_hl === null) {
 			$this->_hl = Yii::createComponent(array(
@@ -324,9 +317,11 @@ HTML;
 				$connections[$id] = array(
 					'class' => get_class($component),
 					'driver' => $component->getDriverName(),
-					'server' => $component->getServerVersion(),
-					'info' => $component->getServerInfo(),
 				);
+				try {
+					$connections[$id]['server'] = $component->getServerVersion();
+					$connections[$id]['info'] = $component->getServerInfo();
+				} catch (Exception $e) {}
 			}
 		}
 
@@ -334,5 +329,69 @@ HTML;
 			'messages' => $messages,
 			'connections' => $connections,
 		);
+	}
+
+	/**
+	 * Return explain procedure or null
+	 * @param string $query
+	 * @param string $driver name
+	 * @return string|null
+	 */
+	public static function getExplainQuery($query, $driver)
+	{
+		if (preg_match('/^\s*SELECT/', $query)) {
+			switch ($driver) {
+				case 'mysql': return 'EXPLAIN ' . $query;
+				case 'pgsql': return 'EXPLAIN ' . $query;
+				case 'sqlite': return 'EXPLAIN QUERY PLAN ' . $query;
+				case 'oci': return 'EXPLAIN PLAN FOR ' . $query;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Run explain procedure
+	 * @param string $query
+	 * @param CDbConnection $connection
+	 * @return array
+	 */
+	public static function explain($query, $connection)
+	{
+		$procedure = self::getExplainQuery($query, $connection->driverName);
+		if ($procedure === null) {
+			throw new Exception('Explain not available');
+		}
+		return $connection->createCommand($procedure)->queryAll();
+	}
+
+	/**
+	 * Return connection list for query
+	 * @param string $query
+	 * @return array connection list
+	 */
+	public function getExplainConnections($query)
+	{
+		$connections = array();
+		foreach ($this->data['connections'] as $name => $connection) {
+			if (self::getExplainQuery($query, $connection['driver']) !== null) {
+				$connections[$name] = $connection;
+			}
+		}
+		return $connections;
+	}
+
+	/**
+	 * @param int $number
+	 * @return string sql-query
+	 */
+	public function messageByNum($number)
+	{
+		foreach ($this->calculateTimings() as $timing) {
+			if (!$number--) {
+				return $timing[1];
+			}
+		}
+		return null;
 	}
 }

@@ -87,7 +87,7 @@ class MainPageController extends DaBackendController implements IBackendExtensio
     $mainElements = array();
     if (Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, 528)) {
       $arrayItem = array(
-        'name'=>'<i class="icon-wrench"></i> Плагины',
+        'name'=>'<i class="glyphicon glyphicon-wrench"></i> Плагины',
         'desc'=>'Дополнения к системе, позволяющие значительно расширить функционал сайта',
         'link-list'=>'/admin/page/528/',
       );
@@ -96,7 +96,7 @@ class MainPageController extends DaBackendController implements IBackendExtensio
 
     if (Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, Menu::ID_OBJECT)) {
       $arrayItem = array(
-        'name'=>'<i class="icon-list-alt"></i> Меню',
+        'name'=>'<i class="glyphicon glyphicon-list-alt"></i> Меню',
         'desc'=>'Пункты меню сайта являются основными страницами с постоянным содержимым.',
         'link-list'=>'/admin/page/'.Menu::ID_OBJECT.'/',
       );
@@ -108,7 +108,7 @@ class MainPageController extends DaBackendController implements IBackendExtensio
 
     if (Yii::app()->hasModule('news') && Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, News::ID_OBJECT)) {
       $arrayItem = array(
-        'name'=>'<i class="icon-bullhorn"></i> Новости',
+        'name'=>'<i class="glyphicon glyphicon-bullhorn"></i> Новости',
         'desc'=>'Модуль для написания периодической информации. Позволяет вести новостную ленту, размещая различные медиа-данные.',
         'link-list'=>'/admin/page/'.News::ID_OBJECT.'/',
       );
@@ -119,7 +119,7 @@ class MainPageController extends DaBackendController implements IBackendExtensio
     }
     if (Yii::app()->hasModule('photogallery') && Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, Photogallery::ID_OBJECT)) {
       $arrayItem = array(
-        'name'=>'<i class="icon-picture"></i> Фотогалереи',
+        'name'=>'<i class="glyphicon glyphicon-picture"></i> Фотогалереи',
         'desc'=>'Инструмент для массовой загрузки и удобного просмотра фотографий на сайте.',
         'link-list'=>'/admin/page/'.Photogallery::ID_OBJECT.'/',
       );
@@ -130,14 +130,14 @@ class MainPageController extends DaBackendController implements IBackendExtensio
     }
     if (Yii::app()->hasModule('faq') && Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, Question::ID_OBJECT)) {
       $mainElements[] = array(
-        'name'=>'<i class="icon-retweet"></i> Вопрос-ответ',
+        'name'=>'<i class="glyphicon glyphicon-retweet"></i> Вопрос-ответ',
         'desc'=>'Раздел, создержащий форму для приёма вопросов от посетителей сайта с возможностью написания ответов.',
         'link-list'=>'/admin/page/'.Question::ID_OBJECT.'/',
       );
     }
     if (Yii::app()->hasModule('feedback') && Yii::app()->authManager->checkObject(DaDbAuthManager::OPERATION_LIST, Yii::app()->user->id, Feedback::ID_OBJECT)) {
       $mainElements[] = array(
-        'name'=>'<i class="icon-share-alt"></i> Обратная связь',
+        'name'=>'<i class="glyphicon glyphicon-share-alt"></i> Обратная связь',
         'desc'=>'Механизм получения сообщений или заказов от посетителей сайта.',
         'link-list'=>'/admin/page/'.Feedback::ID_OBJECT.'/',
       );
