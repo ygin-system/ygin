@@ -42,8 +42,6 @@
 ***** Новые стили ***************************************
 *********************************************************/
 
-body {padding-top: 50px}
-
 .navbar .navbar-brand {background:url(../gfx/ygin_icon.png) no-repeat 0 18px;float:left; color:#fff; padding:0 5px 0 20px; margin-left:0 !important; font-family:'Russo One', "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif; font-weight:700; line-height:50px}
 @media (max-width: 767px){
   .navbar .navbar-brand {margin-left:20px !important}
@@ -120,7 +118,7 @@ body {padding-top: 50px}
 */
 .b-instance-edit-form .form-actions {padding:10px; margin:20px 0; background-color: #f5f5f5; border: 1px solid #e5e5e5;}
 .b-instance-edit-form .form-actions .bar {position:static}
-.b-instance-edit-form .form-actions .bar-fixed {position:fixed; bottom:0; right:26px; padding:10px;
+.b-instance-edit-form .form-actions .bar-fixed {position:fixed; bottom:0; right:0; padding:10px;
   -moz-box-shadow: 0 0 10px #ccc;
   -webkit-box-shadow: 0 0 10px #ccc;
   box-shadow: 0 0 10px #ccc;
