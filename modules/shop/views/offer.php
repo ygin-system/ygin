@@ -131,8 +131,8 @@ $currencyImage18 = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/a
             <?php endfor; ?>
             <tr class="itogo">
                 <th colspan="3">
-                  <button type="submit" class="btn btn-large btn-success"><i class="icon-ok icon-white"></i> Отправить заявку на покупку</button>
-                  <a href="<?php echo $backLink; ?>" class="btn btn-mini btn-danger"><i class="icon-share-alt icon-white"></i> Вернуться в каталог</a>
+                  <button type="submit" class="btn btn-large btn-success"><i class="glyphicon glyphicon-ok icon-white"></i> Отправить заявку на покупку</button>
+                  <a href="<?php echo $backLink; ?>" class="btn btn-mini btn-danger"><i class="glyphicon glyphicon-share-alt icon-white"></i> Вернуться в каталог</a>
                 </th>
                 <td colspan="2">Итого:</td>
                 <td class="sum">

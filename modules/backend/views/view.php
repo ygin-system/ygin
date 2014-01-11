@@ -49,16 +49,20 @@ if ($model->hasErrors()) {
   Yii::app()->clientScript->registerScript('modal-error-summary', '$(".errorSummary").modal("show");', CClientScript::POS_READY);
 }
 echo $form->errorSummary($model,
-  '<div class="modal-header">
+  '<div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
          <h3>Ошибка при заполнении формы</h3>
        </div>
        <div class="modal-body">',
-  '</div>
+  '    </div>
        <div class="modal-footer">
-         <a href="#" class="btn btn-default" data-dismiss="modal">Закрыть</a>
-       </div>',
-  array('class'=>'modal errorSummary', 'role'=>'dialog'));
+         <button class="btn btn-default" data-dismiss="modal">Закрыть</button>
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->',
+  array('class'=>'modal fade errorSummary', 'role'=>'dialog'));
 ?>
 
 <fieldset class="daGallery">

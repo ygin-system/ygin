@@ -19,7 +19,7 @@
         {% } %}
         <td class="delete">
             <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                <i class="icon-trash icon-white"></i>
+                <i class="glyphicon glyphicon-trash icon-white"></i>
                 <span>{%=locale.fileupload.destroy%}</span>
             </button>
             <?php if ($this->multiple) : ?><input type="checkbox" name="delete" value="1">

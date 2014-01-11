@@ -56,7 +56,7 @@ body {padding-top: 50px}
 .b-navbar-search .query-group {width:200px}
 
 /* InstanceList */
-.b-instance-list-count {float:right; margin:12px 0 10px 0; font:10px Verdana, Arial, sans}
+.b-instance-list-count {float:right; margin:10px 0; font:10px Verdana, Arial, sans}
 .b-instance-list {clear:both}
 .b-instance-list th {
   background-color: #fbfbfb;
@@ -95,6 +95,10 @@ body {padding-top: 50px}
 .b-instance-list-select-multi .b-instance-list-select-multi {margin-left:20px}
 .b-multi-items {margin:0 0 10px 0; padding:0 0 0 15px}
 .b-multi-items li {clear:both; padding:0 0 10px 0}
+
+.b-pagination-container {text-align:center}
+.b-pagination-container .pagination {margin:0 0 15px 0}
+.b-pagination-container .b-ajax-process {margin: 5px 0 0 10px;}
 
 /* MenuStatus */
 .b-status-bar td {border:0 !important; padding:0 2px}
@@ -178,7 +182,7 @@ body {padding-top: 50px}
 /*.b-instance-edit-form .field-file-list-upload .input-file {width:40px}  TODO: Проверить, надо ли это */
 .uploadAnimation {background:url(../../../../assets/gfx/loading_s.gif) no-repeat 0 0; display:none; padding:0 10px; font-size:16px}
 
-.b-ajax-process {background:url(../../../../assets/gfx/loading_s.gif) no-repeat 0 0; display:inline-block; visibility:hidden; width:16px; height:16px; line-height:16px; vertical-align:text-top;}
+.b-ajax-process {background:url(../../../../assets/gfx/loading_s.gif) no-repeat 0 0; display:inline-block; visibility:hidden; width:16px; height:16px; line-height:16px; vertical-align:top;}
 .b-ajax-process-active {visibility:visible;}
 
 /* аякс-процесс для переключателя страниц */

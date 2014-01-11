@@ -28,7 +28,7 @@ class CommentsViewLinkColumn extends BaseColumn {
         Yii::app()->urlManager->frontendMode = true;
         $link = Yii::app()->createUrl($owner->$method());
         Yii::app()->urlManager->frontendMode = false;
-        echo CHtml::link('<i class=" icon-share"></i> просмотреть на сайте', $link, array('target'=>'_blank'));
+        echo CHtml::link('<i class=" glyphicon glyphicon-share"></i> просмотреть на сайте', $link, array('target'=>'_blank'));
       }
     }
   }

@@ -9,7 +9,7 @@
             <td class="error" colspan="2"><span class="label label-danger">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
             <td>
-                <div class="progress progress-success progress-striped active"><div class="progress-bar" style="width:0%;"></div></div>
+                <div class="progress progress-striped active"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>
             </td>
             <td class="start">{% if (!o.options.autoUpload) { %}
                 <button type="button" class="btn btn-primary">
