@@ -16,10 +16,10 @@ class InfoStatus extends BaseColumn {
     $link = $data->getUrl();
     Yii::app()->urlManager->frontendMode = false;
     if ($link != null) {
-      $text .= '<td><a class="btn btn-mini" href="'.$link.'" target="_blank" title="открыть страницу на сайте"><i class="icon-hand-up"></i></a></td>';
+      $text .= '<td><a class="btn btn-mini" href="'.$link.'" target="_blank" title="открыть страницу на сайте"><i class="glyphicon glyphicon-hand-up"></i></a></td>';
     }
     /*if ($data->getIsVisible()) {
-      $text .= '<td><i class="icon-eye-open" title="видимость"></i></td>';
+      $text .= '<td><i class="glyphicon glyphicon-eye-open" title="видимость"></i></td>';
     }*/
 
     if (($handler=null) != null) {
@@ -29,20 +29,20 @@ class InfoStatus extends BaseColumn {
       if (Yii::app()->user->checkAccess(DaWebUser::ROLE_DEV)) {
         $title .= ' ('.CHtml::encode($name).' - '.$path.')';
       }     
-      $text .= '<td><i class="icon-wrench" title="'.$title.'"></i></td>'."\n";
+      $text .= '<td><i class="glyphicon glyphicon-wrench" title="'.$title.'"></i></td>'."\n";
       */
     } else {
       if ($data->getGoToType() == Menu::GO_TO_FILE) {
-        $text .= '<td><i class="icon-download-alt" title="ссылка на загруженный файл"></i></td>';
+        $text .= '<td><i class="glyphicon glyphicon-download-alt" title="ссылка на загруженный файл"></i></td>';
       }
       if ($data->getExternalLink() != null) {
-        $text .= '<td><i class="icon-share" title="ссылка на внешний адрес"></i></td>';
+        $text .= '<td><i class="glyphicon glyphicon-share" title="ссылка на внешний адрес"></i></td>';
       }
       if ($data->content == null) {
         if ($data->getGoToType() == Menu::GO_TO_LIST_CHILD) {
-          $text .= '<td><i class="icon-indent-left" title="выводится список вложенных разделов"></i></td>'."\n";
+          $text .= '<td><i class="glyphicon glyphicon-indent-left" title="выводится список вложенных разделов"></i></td>'."\n";
         } else if ($data->getGoToType() == Menu::GO_TO_FIRST_CHILD) {
-          $text .= '<td><i class="icon-step-forward" title="переход к первому потомку"></i></td>'."\n";
+          $text .= '<td><i class="glyphicon glyphicon-step-forward" title="переход к первому потомку"></i></td>'."\n";
         }
       }
     }

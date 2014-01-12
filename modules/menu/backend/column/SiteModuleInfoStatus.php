@@ -16,7 +16,7 @@ class SiteModuleInfoStatus extends BaseColumn {
       if (Yii::app()->user->checkAccess(DaWebUser::ROLE_DEV)) {
         $title .= 'обработчик: '.CHtml::encode($name).' '.$path;
       }     
-      echo '<i rel="tooltip" class="icon-magnet" data-original-title="'.$title.'"></i>';
+      echo '<i rel="tooltip" class="glyphicon glyphicon-magnet" data-original-title="'.$title.'"></i>';
     }
   }
   

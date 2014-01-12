@@ -61,9 +61,9 @@
       
       //свернуть раскрыть ветку
       .delegate('.minimize', 'click', function(){
-      	var idComment = $(this).attr('rel');
-      	$.fn.commentsList.showCommentBranch(idComment);
-      	return false;
+        var idComment = $(this).attr('rel');
+        $.fn.commentsList.showCommentBranch(idComment);
+        return false;
       })
      /**
       * @deprecated
@@ -90,15 +90,15 @@
       
       //Ответить
       .delegate('.add-comment', 'click', function(){
-      	var idComment = $(this).attr('rel');
+        var idComment = $(this).attr('rel');
         var id = $($(this).parents('.b-comment-widget')[0]).attr("id");
         $dialog = $("#addCommentDialog-"+id);
         var commentID = $(this).attr('rel');
         if(commentID) {
           $('.parent_comment_id', $dialog).val(commentID);
         }
-      	$.fn.commentsList.moveCommentFormToComment(id, idComment);
-      	return false;
+        $.fn.commentsList.moveCommentFormToComment(id, idComment);
+        return false;
       });
     });
   };
@@ -111,11 +111,11 @@
   
   // Инициализация формы
   $.fn.commentsList.initForm = function(id){
-  	var $dialog = $('#addCommentDialog-'+id);
-  	$('body').delegate('#'+id + ' form', 'submit', function(){
-  		$.fn.commentsList.postComment($('#addCommentDialog-'+id));
-  		return false;
-  	});
+    var $dialog = $('#addCommentDialog-'+id);
+    $('body').delegate('#'+id + ' form', 'submit', function(){
+      $.fn.commentsList.postComment($('#addCommentDialog-'+id));
+      return false;
+    });
       $dialog.data('widgetID', id);
   }
       
@@ -163,23 +163,23 @@
     /**
      * @deprecated
      */
-  	//$("#comment_" + idComment + " > .item .txt-body").show();
-  	//$("#comment_" + idComment + " > .item .minimize").html("Свернуть");
+    //$("#comment_" + idComment + " > .item .txt-body").show();
+    //$("#comment_" + idComment + " > .item .minimize").html("Свернуть");
   }
   
   //Скрытие/раскрытие ветки с комментами
   $.fn.commentsList.showCommentBranch = function (idComment) {
-  	var commentBranch = $("#comment-" + idComment);
-  	var currentCommentBody = $("#comment-" + idComment + " > .item .txt-body");
+    var commentBranch = $("#comment-" + idComment);
+    var currentCommentBody = $("#comment-" + idComment + " > .item .txt-body");
 
-  	if (currentCommentBody.css('display') == "none") {
-  	  var commentBody = commentBranch.find('.txt-body:hidden');
-  	  commentBranch.find(".minimize i").removeClass().addClass('icon-minus');
-  	} else {
-  	  var commentBody = commentBranch.find('.txt-body:visible');
-  	  commentBranch.find(".minimize i").removeClass().addClass('icon-plus');
-  	}
-  	commentBody.slideToggle();
+    if (currentCommentBody.css('display') == "none") {
+      var commentBody = commentBranch.find('.txt-body:hidden');
+      commentBranch.find(".minimize i").removeClass().addClass('icon-minus');
+    } else {
+      var commentBody = commentBranch.find('.txt-body:visible');
+      commentBranch.find(".minimize i").removeClass().addClass('icon-plus');
+    }
+    commentBody.slideToggle();
   }
 
   $.fn.commentsList.overdrawCommentList = function ($dialog, data) {

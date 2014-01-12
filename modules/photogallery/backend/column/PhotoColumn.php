@@ -27,7 +27,7 @@ class PhotoColumn extends BaseColumn {
       PhotogalleryPhoto::URL_PARAM_OBJECT=>$this->object->id_object,
       PhotogalleryPhoto::URL_PARAM_INSTANCE=>$idInstance,
     ));
-    echo CHtml::link('<i class="icon-picture"></i> '.$photoCount, $link, array('title'=>'Фотографии'));
+    echo CHtml::link('<i class="glyphicon glyphicon-picture"></i> '.$photoCount, $link, array('title'=>'Фотографии', 'class'=>'btn btn-xs btn-primary'));
   }
 
 }
