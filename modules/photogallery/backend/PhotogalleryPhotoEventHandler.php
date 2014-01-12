@@ -24,7 +24,7 @@ class PhotogalleryPhotoEventHandler extends BackendEventHandler {
       if (Yii::app()->authManager->canCreateInstance($this->idObject, Yii::app()->user->id)) {
         Yii::app()->controller->buttons = CMap::mergeArray(
           Yii::app()->controller->buttons, array(array(
-            'caption' => '<i class="icon-list icon-white"></i> Пакетная загрузка',
+            'caption' => '<i class="glyphicon glyphicon-list icon-white"></i> Пакетная загрузка',
             'url' => Yii::app()->createUrl('photogallery/backendPhotogallery/index', array(
               'objectId' => HU::get(PhotogalleryPhoto::URL_PARAM_OBJECT),
               'instanceId' => HU::get(PhotogalleryPhoto::URL_PARAM_INSTANCE),  

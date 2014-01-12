@@ -30,6 +30,6 @@ class CommentsColumn extends BaseColumn {
       CommentEventHandler::URL_PARAM_OBJECT => $this->object->id_object,
       CommentEventHandler::URL_PARAM_INSTANCE => $idInstance,
     ));
-    echo CHtml::link('<i class="icon-comment"></i> '.$cnt, $link, array('title'=>'Комментарии'));
+    echo CHtml::link('<i class="glyphicon glyphicon-comment"></i> '.$cnt, $link, array('title'=>'Комментарии'));
   }
 }

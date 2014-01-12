@@ -497,6 +497,7 @@ jQuery.fn.daFixedActionBarBind = function( options ) {
   var options = jQuery.extend({
     barClass      : "bar",
     barFixedClass : "bar-fixed",
+    smallButtonClass : "btn-xs",
   },options);
 
   return this.each(function(){
@@ -506,8 +507,10 @@ jQuery.fn.daFixedActionBarBind = function( options ) {
       .scroll(function(){
         if ($(this).scrollTop()+$(this).height() < buttonSetPosition){
           actionBar.find('.'+options.barClass).addClass(options.barFixedClass);
+          actionBar.find('.btn').addClass(options.smallButtonClass);
         } else {
           actionBar.find('.'+options.barClass).removeClass(options.barFixedClass);
+          actionBar.find('.btn').removeClass(options.smallButtonClass);
         }
       })
       .keydown(function(event){
