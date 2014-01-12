@@ -3,6 +3,7 @@
 class TextareaWidget extends VisualElementWidget {
 
   public $readOnlyView = 'backend.widgets.textarea.views.readOnly';
+  public $layout = 'backend.widgets.layouts.wide';
 
   public function init() {
     parent::init();
