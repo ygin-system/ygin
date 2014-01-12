@@ -30,10 +30,10 @@ $preview = $product->getImagePreview('_list');
     <div class="elem_descr">
       <div class="property"><?php echo $desc; ?></div>
     </div>
-    <div class="remain_status"><i class="glyphicon glyphicon-signal <?php echo $product->getRemainStatus()->icon; ?>" title="количество товара: <?php echo $product->getRemainStatus()->name; ?>"></i></div>
+    <div class="remain_status"><i class="icon-signal <?php echo $product->getRemainStatus()->icon; ?>" title="количество товара: <?php echo $product->getRemainStatus()->name; ?>"></i></div>
     <div class="price_m" style="height: 26px;"><span class="catalog-price"><?php echo Product::price2str($price); ?> руб.</span></div>
     <div class="line buttons">
-      <button class="btn buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><i class="glyphicon glyphicon-shopping-cart"></i></button>
+      <button class="btn buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><i class="icon-shopping-cart"></i></button>
     </div>
   </div>
 </div>

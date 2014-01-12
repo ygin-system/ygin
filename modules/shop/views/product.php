@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerCssFile('/themes/business/css/jqzoom.css');
         <br><?php echo Product::price2str($price); ?> руб.
       </div>
       <div class="buttons">
-        <button class="btn btn-success buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> Купить</button>
+        <button class="btn btn-success buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><i class="icon-shopping-cart icon-white"></i> Купить</button>
       </div>
       <div style="clear:both;"></div>
     </div>

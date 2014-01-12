@@ -23,7 +23,7 @@ $this->pageTitle = 'Available Debug Data - Yii Debugger';
       <table class="table table-condensed table-bordered table-striped table-hover table-filtered" style="table-layout: fixed;">
         <thead>
         <tr>
-          <th style="width:20px;text-align:center;"><i class="glyphicon glyphicon-star"></i></th>
+          <th style="width:20px;text-align:center;"><i class="icon-star"></i></th>
           <th style="width: 160px;">Time</th>
           <th style="width: 120px;">IP</th>
           <th style="width: 60px;">Method</th>
@@ -36,7 +36,7 @@ $this->pageTitle = 'Available Debug Data - Yii Debugger';
           <tr>
             <td style="text-align:center;">
               <?php echo CHtml::link(
-                '<i class="glyphicon glyphicon-star' . (!$this->owner->getLock($tag) ? '-empty' : '') . '"></i>',
+                '<i class="icon-star' . (!$this->owner->getLock($tag) ? '-empty' : '') . '"></i>',
                 array('lock', 'tag' => $tag),
                 array(
                   'class' => 'lock' . ($this->owner->getLock($tag) ? ' active' : ''),
@@ -50,7 +50,7 @@ $this->pageTitle = 'Available Debug Data - Yii Debugger';
             <td style="text-align:center;"><?php echo isset($data['code']) ? Yii2RequestPanel::getStatusCodeHtml($data['code']) : ''; ?></td>
             <td style="word-break:break-all;">
               <?php echo CHtml::encode(urldecode($data['url'])); ?>
-              <?php echo CHtml::link('<i class="glyphicon glyphicon-share"></i>', $data['url'], array('class' => 'share', 'target' => 'blank')); ?>
+              <?php echo CHtml::link('<i class="icon-share"></i>', $data['url'], array('class' => 'share', 'target' => 'blank')); ?>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -66,9 +66,9 @@ Yii::app()->clientScript->registerScript(__CLASS__ . '#index', <<<JS
     var el = $(this);
     $.get(el.attr('href'), function(data){
       if (data) {
-        $(el).addClass('active').children('i').addClass('glyphicon glyphicon-star').removeClass('glyphicon glyphicon-star-empty');
+        $(el).addClass('active').children('i').addClass('icon-star').removeClass('icon-star-empty');
       } else {
-        $(el).removeClass('active').children('i').addClass('glyphicon glyphicon-star-empty').removeClass('glyphicon glyphicon-star');
+        $(el).removeClass('active').children('i').addClass('icon-star-empty').removeClass('icon-star');
       }
     });
   });

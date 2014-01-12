@@ -11,7 +11,7 @@ $this->registerCssFile("search.css");
   <form class="form-search well" action="<?php echo Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW); ?>" method="get">
     <div class="input-append">
       <input class="search-query span4" placeholder="Поиск" value="<?php echo CHtml::encode($query) ?>" name="query" autocomplete="off">
-      <button class="btn btn-inverse" type="submit"><i class="glyphicon glyphicon-search icon-white"></i> Найти</button>
+      <button class="btn btn-inverse" type="submit"><i class="icon-search icon-white"></i> Найти</button>
     </div>
   </form>
 <?php

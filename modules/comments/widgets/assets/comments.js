@@ -174,10 +174,10 @@
 
     if (currentCommentBody.css('display') == "none") {
       var commentBody = commentBranch.find('.txt-body:hidden');
-      commentBranch.find(".minimize i").removeClass().addClass('glyphicon glyphicon-minus');
+      commentBranch.find(".minimize i").removeClass().addClass('icon-minus');
     } else {
       var commentBody = commentBranch.find('.txt-body:visible');
-      commentBranch.find(".minimize i").removeClass().addClass('glyphicon glyphicon-plus');
+      commentBranch.find(".minimize i").removeClass().addClass('icon-plus');
     }
     commentBody.slideToggle();
   }
