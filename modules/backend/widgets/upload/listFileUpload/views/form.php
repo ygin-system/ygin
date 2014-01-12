@@ -64,8 +64,8 @@ $cs->registerScript('list-file-upload#'.$this->id, '
     </div>
     <div class="col-md-8 fileupload-progress fade">
     <!-- The global progress bar -->
-      <div class="progress progress-success progress-striped active">
-        <div class="progress-bar" style="width:0%;"></div>
+      <div class="progress progress-striped active">
+        <div class="progress-bar progress-bar-success" role="progressbar" style="width:0%;"></div>
       </div>
     <!-- The extended global progress information -->
       <div class="progress-extended" style="font-size: 12px">&nbsp;</div>

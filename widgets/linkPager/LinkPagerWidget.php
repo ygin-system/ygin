@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class LinkPagerWidget extends CLinkPager {
   /**
    * Css-класс дива пейджера

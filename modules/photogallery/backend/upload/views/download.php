@@ -10,7 +10,7 @@
             <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         <td>
             <button type="button" class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                <i class="icon-trash icon-white"></i>
+                <i class="glyphicon glyphicon-trash icon-white"></i>
                 <span>{%=locale.fileupload.destroy%}</span>
             </button>
             <input type="hidden" name="delete" value="1">
@@ -27,7 +27,7 @@
             <td colspan="2"></td>
             <td>
               <button type="button" class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                <i class="icon-trash icon-white"></i>
+                <i class="glyphicon glyphicon-trash icon-white"></i>
                 <span>{%=locale.fileupload.destroy%}</span>
               </button>
               <input type="hidden" name="delete" value="1">

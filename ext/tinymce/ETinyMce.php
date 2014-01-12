@@ -33,7 +33,7 @@ class ETinyMce extends CInputWidget
     * below, the cols and rows don't actually matter (they're here just for
     * XHTML compliance)
     */
-   const COLS = 40;
+   const COLS = 70;
    const ROWS = 10;
 
    /**
@@ -84,7 +84,7 @@ class ETinyMce extends CInputWidget
     *
     * @var integer
     */
-   private $height = '400px';
+   private $height = '700px';
 
    /**
     * This option enables you to specify make editor instances in readonly mode. 
@@ -702,13 +702,13 @@ class ETinyMce extends CInputWidget
       $options['theme_advanced_toolbar_location'] = 'top';
       $options['theme_advanced_toolbar_align'] = 'left';
       $options['theme_advanced_path_location'] = 'bottom';
-		$options['theme_advanced_buttons1'] = "save,newdocument,print,|,cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,removeformat,cleanup,|,spellchecker,|,visualaid,visualchars,|,ltr,rtl,|,code,preview,fullscreen,|,help";
-		$options['theme_advanced_buttons2'] = "{$sc}formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,bold,italic,underline,strikethrough,|,sub,sup{$c1}";
-		$options['theme_advanced_buttons3'] = "justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,hr,advhr,nonbreaking,pagebreak,blockquote,|,charmap,emotions,media,image,|,link,unlink,anchor,|,insertdate,inserttime";
-		$options['theme_advanced_buttons4'] = "{$c2}tablecontrols,|,insertlayer,moveforward,movebackward,absolute,|,styleprops,del,ins,attribs,|,template";
-		$options['theme_advanced_toolbar_location'] = "'top'";
-		$options['theme_advanced_toolbar_align'] = "'left'";
-		$options['theme_advanced_statusbar_location'] = "bottom";
+    $options['theme_advanced_buttons1'] = "save,newdocument,print,|,cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,removeformat,cleanup,|,spellchecker,|,visualaid,visualchars,|,ltr,rtl,|,code,preview,fullscreen,|,help";
+    $options['theme_advanced_buttons2'] = "{$sc}formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,bold,italic,underline,strikethrough,|,sub,sup{$c1}";
+    $options['theme_advanced_buttons3'] = "justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,hr,advhr,nonbreaking,pagebreak,blockquote,|,charmap,emotions,media,image,|,link,unlink,anchor,|,insertdate,inserttime";
+    $options['theme_advanced_buttons4'] = "{$c2}tablecontrols,|,insertlayer,moveforward,movebackward,absolute,|,styleprops,del,ins,attribs,|,template";
+    $options['theme_advanced_toolbar_location'] = "'top'";
+    $options['theme_advanced_toolbar_align'] = "'left'";
+    $options['theme_advanced_statusbar_location'] = "bottom";
       $options['theme_advanced_toolbar_location'] = 'top';
       $options['theme_advanced_toolbar_align'] = 'left';
       $options['theme_advanced_path_location'] = 'bottom';
@@ -739,16 +739,16 @@ class ETinyMce extends CInputWidget
       return CJavaScript::encode($options);
    }
 
-	/**
-	 * Get the options for the TinyMCE editor. You may want to extend the class
-	 * and to override this method to customize globally the options, so every
-	 * editor will have the same l&f and the same behavior. Set 'options'=>array()
-	 * in the view to get the defaults, otherwise you won't have editor :-)
-	 *
-	 * @param array $value
-	 */
-	protected function makeOptions($url='')
-	{
+  /**
+   * Get the options for the TinyMCE editor. You may want to extend the class
+   * and to override this method to customize globally the options, so every
+   * editor will have the same l&f and the same behavior. Set 'options'=>array()
+   * in the view to get the defaults, otherwise you won't have editor :-)
+   *
+   * @param array $value
+   */
+  protected function makeOptions($url='')
+  {
       list($name,$id) = $this->resolveNameID();
 
       if ($this->mode === 'html') {
@@ -808,14 +808,14 @@ class ETinyMce extends CInputWidget
    // Run Lola Run
    //***************************************************************************
 
-	/**
-	 * Executes the widget.
-	 * This method registers all needed client scripts and renders
-	 * the text field.
-	 */
-	public function run()
-	{
-		list($name, $id) = $this->resolveNameID();
+  /**
+   * Executes the widget.
+   * This method registers all needed client scripts and renders
+   * the text field.
+   */
+  public function run()
+  {
+    list($name, $id) = $this->resolveNameID();
 
       if ($this->useCookies) {
          if (isset($_COOKIE[$id.self::COOKIE_SUFFIX]) && in_array($_COOKIE[$id.self::COOKIE_SUFFIX], array('text', 'html'))) {
@@ -831,9 +831,9 @@ class ETinyMce extends CInputWidget
       $jsUseCookies = ($this->useCookies) ? 'true' : 'false';
       $jsMode = strval($this->mode);
       $jsToggleLabels = CJavaScript::encode($this->switchLabels);  
-		
-		$cs = Yii::app()->getClientScript();
-		$cs->registerCoreScript('jquery');
+    
+    $cs = Yii::app()->getClientScript();
+    $cs->registerCoreScript('jquery');
 
       if ($this->useCompression) {
          $cs->registerScriptFile($assets.'/tiny_mce/tiny_mce_gzip.js');
@@ -859,18 +859,18 @@ EOP;
       }
       if (!array_key_exists('rows', $this->htmlOptions)) {
          $this->htmlOptions['rows'] = self::ROWS;
-      }			
+      }     
     
       $js =<<<EOP
 jQuery("#{$id}").tinymce({$tinyOptions}, '{$jsMode}', {$jsUseCookies});
 EOP;
       $cs->registerScript('Yii.'.get_class($this).'#'.$id, $js, CClientScript::POS_LOAD);
 
-		if($this->hasModel()) {
-			$textarea = CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
+    if($this->hasModel()) {
+      $textarea = CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
       }
-		else {
-			$textarea = CHtml::textArea($name, $this->value, $this->htmlOptions);
+    else {
+      $textarea = CHtml::textArea($name, $this->value, $this->htmlOptions);
       }
 
       $html = '';
@@ -888,5 +888,5 @@ EOP;
       }
            
       echo $html;
-	}
+  }
 }
