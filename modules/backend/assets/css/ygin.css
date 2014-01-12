@@ -229,6 +229,7 @@ br.label-message {display:block; line-height: 0; float:left}
 .b-object-property .cache-mode-settings {margin:10px 0 0 0 !important;}
 .b-object-property .cache-mode-settings-auto, .b-object-property .cache-mode-settings-manual {list-style:none; padding:0  !important}
 .b-object-property .cache-mode-settings-db {list-style:none; padding: 0 0 0 20px;}
+.b-object-property-wide .control-label {float:none; margin-bottom: 10px;}
 
 
 #yii-debug-toolbar-switcher {top:55px !important}
