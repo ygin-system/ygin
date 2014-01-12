@@ -3,6 +3,7 @@
 class TinymceWidget extends VisualElementWidget {
 
   public $options = array();
+  public $layout = 'backend.widgets.layouts.wide';
 
   public function init() {
     parent::init();
