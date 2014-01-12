@@ -381,7 +381,7 @@ class DefaultController extends DaObjectController {
       'enablePagination'=>$withSwitchPages,
 
       'summaryCssClass'=>'b-instance-list-count',
-      'pagerCssClass'=>'pgination-container',
+      'pagerCssClass'=>'b-pagination-container',
       'cssFile'=>false,
       'itemsCssClass'=>'table table-bordered b-instance-list daGallery',
       'rowCssClass'=>array('base','alt'),

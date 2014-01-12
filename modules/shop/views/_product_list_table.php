@@ -21,8 +21,8 @@ $previewUrl = $preview == null ? 'http://dummyimage.com/100x90/cccccc/000000&tex
       </div>
     </td>
     <td class="price_m"><span class="catalog-price"><?php echo Product::price2str($price); ?> руб.</span></td>
-    <td  class="remain_status"><i class="icon-signal <?php echo $product->getRemainStatus()->icon; ?>" title="количество товара: <?php echo $product->getRemainStatus()->name; ?>"></i></td>
-    <td class="buttons"><button data-name="<?php echo CHtml::encode($product->name); ?>" data-id="<?php echo $product->id_product; ?>" data-price="<?php echo $price; ?>" class="btn buy"><i class="icon-shopping-cart"></i> В корзину</button></td>
+    <td  class="remain_status"><i class="glyphicon glyphicon-signal <?php echo $product->getRemainStatus()->icon; ?>" title="количество товара: <?php echo $product->getRemainStatus()->name; ?>"></i></td>
+    <td class="buttons"><button data-name="<?php echo CHtml::encode($product->name); ?>" data-id="<?php echo $product->id_product; ?>" data-price="<?php echo $price; ?>" class="btn buy"><i class="glyphicon glyphicon-shopping-cart"></i> В корзину</button></td>
   </tr>
 <?php } ?>
 </table>

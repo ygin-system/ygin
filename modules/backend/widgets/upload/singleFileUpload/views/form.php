@@ -77,8 +77,8 @@ $cs->registerScript('single-file-upload#'.$this->id, '
     </div>
     <div class="col-md-8">
         <!-- The global progress bar -->
-      <div class="progress progress-success progress-striped active fade">
-        <div class="progress-bar" style="width:0%;"></div>
+      <div class="progress progress-striped active fade">
+        <div class="progress-bar  progress-bar-success" role="progressbar" style="width:0%;"></div>
       </div>
     </div>
   </div>

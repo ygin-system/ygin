@@ -332,13 +332,13 @@ function CartWidgetProduct(id, count, name, price) {
       //шаблон корзины             
       'cartTemplate': '<h3 class="title">Корзина</h3>'+
                       '<div class="hdr">' +
-                        '<div class="alert alert-info"><i class="icon-info-sign icon-white"></i> Ваша корзина пуста</div>' +
+                        '<div class="alert alert-info"><i class="glyphicon glyphicon-info-sign icon-white"></i> Ваша корзина пуста</div>' +
                       '</div>' +
                       '<ul class="tovarList"></ul>'+
                       '<div class="itogo alert"><table cellpadding="0" cellspacing="0" style="width:100%"><tr><th style="width:60%">Итог</th><td style="text-align:right"> <span>0</span> </td><td>&nbsp;руб.</td></tr></table></div>' +
                       '<div class="btns">' +
-                        '<a class="btn btn-large btn-success offer" href="#"><i class="icon-shopping-cart icon-white"></i> Оформить заказ</a>' +
-                        '<button class="btn clear"><i class="icon-trash"></i> Очистить</button>' +
+                        '<a class="btn btn-large btn-success offer" href="#"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> Оформить заказ</a>' +
+                        '<button class="btn clear"><i class="glyphicon glyphicon-trash"></i> Очистить</button>' +
                       '</div>'
     },
     
