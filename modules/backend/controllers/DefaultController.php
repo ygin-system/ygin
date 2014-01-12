@@ -201,6 +201,7 @@ class DefaultController extends DaObjectController {
       'pageVar'=>'go',
       'params'=>array_merge(ObjectUrlRule::getCurrentParams(), HU::arrayToQueryArray('ParameterSearchForm', HU::get('ParameterSearchForm', array())) ),
     ) : false);
+
     $dataProvider->pagination = $paginatorConfig;
 
     Yii::import('backend.components.column.*');
@@ -377,7 +378,13 @@ class DefaultController extends DaObjectController {
       'dataProvider'=>$dataProvider,
       'columns'=>$gridColumns,
 
-      'pager'=>'LinkPagerWidget',
+      'pager'=>array(
+        'class' => 'LinkPagerWidget',
+        'pagerCssClass' => '',
+        'firstPageLabel' => '<i class="glyphicon glyphicon-chevron-left"></i>',
+        'lastPageLabel' => '<i class="glyphicon glyphicon-chevron-right"></i>',
+        'htmlOptions' => array('class' => 'yiiPager pagination pagination-sm'),
+      ),
       'enablePagination'=>$withSwitchPages,
 
       'summaryCssClass'=>'b-instance-list-count',
