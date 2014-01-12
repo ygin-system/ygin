@@ -51,7 +51,7 @@ $cs->registerScript(
       <h3 class="title">Корзина</h3>
       <div class="hdr">
 <?php //        <h3 class="caption">Ваш заказ</h3> ?>
-        <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign icon-white"></i> Ваша корзина пуста</div>
+        <div class="alert alert-info"><i class="icon-info-sign icon-white"></i> Ваша корзина пуста</div>
       </div>
       <ul class="tovarList">
 <?php foreach ($products AS $product): ?>
@@ -70,8 +70,8 @@ $cs->registerScript(
       <div class="itogo alert <?php echo $noPriceClass; ?>"><table cellpadding="0" cellspacing="0" style="width:100%"><tr><th style="width:60%">Итог</th><td style="text-align:right"> <span>0</span> </td><td>&nbsp;руб.</td></tr></table></div>
       <div class="totalItems alert alert-info">Всего товаров <span></span></div>
       <div class="btns <?php echo $noPriceClass; ?>">
-        <a class="btn btn-large btn-success offer" href="<?php echo Yii::app()->urlManager->createUrl(ShopModule::ROUTE_OFFER); ?>"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> Оформить заказ</a>
-        <button class="btn clear btn-link"><i class="glyphicon glyphicon-trash"></i> Очистить</button>
+        <a class="btn btn-large btn-success offer" href="<?php echo Yii::app()->urlManager->createUrl(ShopModule::ROUTE_OFFER); ?>"><i class="icon-shopping-cart icon-white"></i> Оформить заказ</a>
+        <button class="btn clear btn-link"><i class="icon-trash"></i> Очистить</button>
       </div>
        
     </div>

@@ -57,7 +57,7 @@ $this->pageTitle = $activePanel->getName() . ' - Yii Debugger';
             </ul>
           </div>
           <?php echo CHtml::link(
-            '<i class="glyphicon glyphicon-star' . (!$this->owner->getLock($tag) ? '-empty' : '') . '"></i>',
+            '<i class="icon-star' . (!$this->owner->getLock($tag) ? '-empty' : '') . '"></i>',
             array('lock', 'tag' => $tag),
             array(
               'class' => 'lock btn' . ($this->owner->getLock($tag) ? ' active' : ''),
@@ -83,9 +83,9 @@ Yii::app()->clientScript->registerScript(__CLASS__ . '#view', <<<JS
     var el = $(this);
     $.get(el.attr('href'), function(data){
       if (data) {
-        $(el).addClass('active').children('i').addClass('glyphicon glyphicon-star').removeClass('glyphicon glyphicon-star-empty');
+        $(el).addClass('active').children('i').addClass('icon-star').removeClass('icon-star-empty');
       } else {
-        $(el).removeClass('active').children('i').addClass('glyphicon glyphicon-star-empty').removeClass('glyphicon glyphicon-star');
+        $(el).removeClass('active').children('i').addClass('icon-star-empty').removeClass('icon-star');
       }
     });
   });

@@ -4,7 +4,7 @@ class LinkPagerWidget extends CLinkPager {
    * Css-класс дива пейджера
    * @var unknown_type
    */
-  public $pagerCssClass = 'pagination pagination-sm';
+  public $pagerCssClass = 'pagination pagination-small pagination-centered';
   
   
   /**
@@ -19,8 +19,8 @@ class LinkPagerWidget extends CLinkPager {
    */
   public $labelTemplate = '<i>{label}</i>';
   
-  public $firstPageLabel = '<i class="glyphicon glyphicon-chevron-left"></i>';
-  public $lastPageLabel = '<i class="glyphicon glyphicon-chevron-right"></i>';
+  public $firstPageLabel = "«";
+  public $lastPageLabel = "»";
   public $prevPageLabel = false;
   public $nextPageLabel = false;
   
@@ -29,10 +29,9 @@ class LinkPagerWidget extends CLinkPager {
       $this->cssFile = CHtml::asset(dirname(__FILE__).DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'pager.css');
     }
 
-    $this->header .= "";//CHtml::openTag('div', array('class' => $this->pagerCssClass));
-    $this->footer = $this->ajaxProcessTemplate/*.CHtml::closeTag('div')*/.$this->footer;
-    $this->htmlOptions['class']='yiiPager '.$this->pagerCssClass;
-
+    $this->header .= CHtml::openTag('div', array('class' => $this->pagerCssClass));
+    $this->footer = $this->ajaxProcessTemplate.CHtml::closeTag('div').$this->footer;
+    
     parent::init();
   }
   

@@ -28,7 +28,7 @@
 
             $('<div class="input-append pull-right">')
                 .append(input)
-                .append($('<span class="add-on"><i class="glyphicon glyphicon-search"></i></span>'))
+                .append($('<span class="add-on"><i class="icon-search"></i></span>'))
                 .insertBefore(table);
         });
     });
