@@ -220,7 +220,7 @@ return Form.Validator.getValidator('IsEmpty').test(element) || (/^(?:[a-z0-9!#$%
    * @return bool
    */
   protected function isAlphaNum($c) {
-    return ord($c) > 126 || $c === '\\' || preg_match('/^[\w\$]$/', $c) === 1;
+    return ord($c) > 126 || $c === '\\' || preg_match('/^[\w\$\+]$/', $c) === 1;
   }
 
   /**
