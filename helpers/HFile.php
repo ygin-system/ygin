@@ -112,13 +112,14 @@ class HFile extends CFileHelper {
    */
   public static function getFileNameByPath($path, $withOutExt = false) {
     $file = $path;
+    $path = self::normalizePath($path);
     if ($path != null) {
       $lastPos = mb_strrpos($path, "/");
-      if (!($lastPos === false)) {
+      if ($lastPos !== false) {
         $file = mb_substr($path, $lastPos+1);
       }
     }
-    
+
     if ($withOutExt === true || is_string($withOutExt)) {
       $ext = self::getExtension($file);
       $l = mb_strlen($ext);
@@ -150,7 +151,7 @@ class HFile extends CFileHelper {
    * @return string Нормализованный путь
    */
   public static function normalizePath($path) {
-    return str_replace('\\', '/', $path);
+    return str_replace(array('\\', '//'), '/', $path);
   }
   /**
    * Возвращает путь до последнего прямого слеша
