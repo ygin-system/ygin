@@ -278,6 +278,7 @@ function changeParameterField(paramType) {
  * @param string Новый заголовок для поля
  */
 function setAnimateFieldCaption(fieldId, caption) {
+  //точно не помню, то ли .parents('.b-object-property:first'), то ли  .parents('.b-object-property').first(), надо экспериментировать
   var cellObject  = $("*[name='<?php echo $modelName; ?>["+fieldId+"]']").parents('.b-object-property');
   var cellLabel   = cellObject.find('.control-label');
   if ((jQuery.trim(cellLabel.text()) == caption)) {
@@ -303,7 +304,7 @@ function setAnimateFieldHide(fieldId, showAll) {
   if (showAll) {
     $('.hiddenParameterField').show();
   } else {
-    var trObject  = $("*[name='<?php echo $modelName; ?>["+fieldId+"]']").parent().prev().parent();
+    var trObject  = $("*[name='<?php echo $modelName; ?>["+fieldId+"]']").parents('.b-object-property');
     trObject.hide();
     trObject.addClass('hiddenParameterField');
   }
