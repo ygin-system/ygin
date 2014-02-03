@@ -128,7 +128,7 @@ class ViewController extends DaObjectController {
       $visualElement = $event->visualElement;
 
       // Если свойство является группирующем, то пропускаем его.
-      if ($visualElement == null && HU::get(ObjectUrlRule::PARAM_GROUP_PARAMETER) == $objectParameter->getIdParameter()) {
+      /*if ($visualElement == null && HU::get(ObjectUrlRule::PARAM_GROUP_PARAMETER) == $objectParameter->getIdParameter()) {
         $visualElement = Yii::app()->controller->createWidget('backend.widgets.hiddenField.HiddenFieldWidget', array(
           'model' => $model,
           'attributeName' => $objectParameter->getFieldName(),
@@ -137,7 +137,7 @@ class ViewController extends DaObjectController {
         $visualElementArray[] = $visualElement;
         $model->{$objectParameter->getFieldName()} = HU::get(ObjectUrlRule::PARAM_GROUP_INSTANCE);
         continue;
-      }
+      }*/
 
       if ($visualElement == null) $visualElement = VisualElementFactory::getVisualElement($model, $objectParameter);
 
