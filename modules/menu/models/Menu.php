@@ -36,6 +36,10 @@ class Menu extends DaActiveRecord implements ISearchable {
   const GO_TO_FIRST_CHILD = 2;
   const GO_TO_FILE        = 3;
   const GO_TO_SHOW_BLANK  = 4;
+  const SHOW_INCLUDED_ITEMS_AFTER_CONTENT  = 5;
+  const SHOW_INCLUDED_ITEMS_BEFORE_CONTENT = 6;
+
+
   
   /**
    * Returns the static model of the specified AR class.
