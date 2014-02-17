@@ -140,6 +140,10 @@ class ViewController extends DaObjectController {
       }*/
 
       if ($visualElement == null) $visualElement = VisualElementFactory::getVisualElement($model, $objectParameter);
+      // Если свойство является группирующем, то пропускаем его.
+      if ($model->isNewRecord && HU::get(ObjectUrlRule::PARAM_GROUP_PARAMETER) == $objectParameter->getIdParameter()) {
+        $model->{$objectParameter->getFieldName()} = HU::get(ObjectUrlRule::PARAM_GROUP_INSTANCE);
+      }
 
       if ($visualElement == null) continue;
 
