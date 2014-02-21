@@ -8,12 +8,22 @@ class DefaultController extends CController {
   public $view404 = 'ygin.views.404';
   public $view403 = 'ygin.views.access_denied';
   public $viewError = 'ygin.views.error';
-  
+
   public function filters() {
     return array(
-      'check +importDump, createUser, migrate',
-      'postOnly + importDump, createUser, migrate',
+        'check +importDump, createUser, migrate',
+        'postOnly + importDump, createUser, migrate',
+        'checkDir +index'
     );
+  }
+
+  public function filtercheckDir($filterChain) {
+    Yii::import('ygin.ext.TransferData');
+    if (!TransferData::isResourceValid($_SERVER['HTTP_HOST'].$this->createUrl('step2'))) {
+      $this->pageTitle = 'Error';
+      throw new CHttpException(504, 'Система не смогла выполнить внутренние запросы.<br> Такое может произойти если система установлена в подпапку сайта (domain.ru/install_files/), либо при некорректной работе .htaccess файла');
+    }
+    $filterChain->run();
   }
   
   public function actionIndex() {
@@ -210,6 +220,7 @@ class DefaultController extends CController {
     $this->render('success');
   }
   public function actionError() {
+    $view = $this->view403;
     if ($error = Yii::app()->errorHandler->error) {
       if ($error['code'] == 404) { // Устанавливаем свой макет для отображения 404 ошибки
         $this->layout = 'ygin.views.layouts.404';
@@ -224,7 +235,6 @@ class DefaultController extends CController {
       }
     } else {
       $this->layout = 'ygin.views.layouts.404';
-      $view = $this->view404;
     }
     $this->render($view, $error);
   }
