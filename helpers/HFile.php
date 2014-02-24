@@ -151,7 +151,8 @@ class HFile extends CFileHelper {
    * @return string Нормализованный путь
    */
   public static function normalizePath($path) {
-    return str_replace(array('\\', '//'), '/', $path);
+    $str = str_replace('\\', '/', $path);
+    return str_replace('//', '/', $str);
   }
   /**
    * Возвращает путь до последнего прямого слеша

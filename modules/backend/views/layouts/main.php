@@ -14,6 +14,9 @@
   <meta name="copyright" content="&copy; ygin">
   <link href='http://fonts.googleapis.com/css?family=Russo+One&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 <?php
+  /**
+   * @var $this DaBackendController
+   */
   Yii::app()->clientScript->registerMetaTag('CMF, модули, редактирование контента, голосование, администрирование', 'keywords');
   Yii::app()->clientScript->registerMetaTag('CMF ygin', 'description');
 
@@ -98,11 +101,7 @@
   $topMenuWidget->run();
 
   Yii::endProfile('top menu', 'backend.layout.main');
-?>
 
-
-<?php
-  
   // Пользовательское меню (Профиль, Выход)
   if (Yii::app()->backend->userMenuWidget != null) {
     // TODO раскидать по расширениям
@@ -177,6 +176,7 @@
 <?php // Content ?>
       <div class="b-content-container col-md-9">
         <?php if ($this->caption != null) echo CHtml::tag('h1', array(), $this->caption); ?>
+        <?php if ($this->pageDescription != null) echo CHtml::tag('div', array('class'=>'alert alert-info'), $this->pageDescription); ?>
         <?php echo $content; ?>
       </div><!-- .b-content-container -->
     </div><!-- .row -->

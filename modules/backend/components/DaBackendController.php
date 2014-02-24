@@ -2,6 +2,7 @@
 abstract class DaBackendController extends DaWebController {
   
   public $layout = 'backend.views.layouts.main';
+  public $pageDescription = null;
 
   private $_counter = 0;
 

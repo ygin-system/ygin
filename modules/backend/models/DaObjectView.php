@@ -15,6 +15,7 @@
  * @property integer $count_data
  * @property string $icon_class
  * @property string $id_parent
+ * @property string $description
  */
 class DaObjectView extends DaActiveRecord {
   
@@ -68,6 +69,7 @@ class DaObjectView extends DaActiveRecord {
       array('id_object_view, id_object, name', 'required'),
       array('order_no, visible, count_data', 'numerical', 'integerOnly'=>true),
       array('id_object_view, id_object, name, sql_select, sql_from, sql_where, sql_order_by, icon_class', 'length', 'max'=>255),
+      array('description', 'safe'),
     );
   }
 
