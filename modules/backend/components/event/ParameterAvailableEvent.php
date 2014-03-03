@@ -3,6 +3,9 @@
 class ParameterAvailableEvent extends CEvent {
 
   public $model;
+  /**
+   * @var ObjectParameter
+   */
   public $objectParameter;
   public $status;
 
