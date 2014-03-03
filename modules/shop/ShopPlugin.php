@@ -91,6 +91,13 @@ class ShopPlugin extends PluginAbstract {
         'description' => null,
         'required' => false,
       ),
+      'useOnlinePayment' => array(
+        'type' => DataType::BOOLEAN,
+        'default' => false,
+        'label' => 'Использовать ли системы онлайн-оплаты (Робокасса, Монета)',
+        'description' => null,
+        'required' => false,
+      ),
     );
   }
   public function getConfigByParamsValue(array $paramsValue, $data) {

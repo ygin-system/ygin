@@ -2,8 +2,26 @@
 class OfferController extends Controller {
   
   protected $urlAlias = "catalog";
+
+  public function filters() {
+    return array(
+      'postOnly +processPayment',
+    );
+  }
+
+  public function init() {
+    parent::init();
+    if (!Yii::app()->daShop->useOnlinePayment) return;
+    $billing = Yii::app()->billing;
+    /**
+     * @var $billing BillingComponent
+     */
+    $billing->sMerchantLogin = Yii::app()->params[$billing->paramNameLogin];
+    $billing->sMerchantPass1 = Yii::app()->params[$billing->paramNamePass1];
+    $billing->sMerchantPass2 = Yii::app()->params[$billing->paramNamePass2];
+  }
   
-  protected  function getProducts() {
+  protected function getProducts() {
     $modelClass = get_class(BaseActiveRecord::model('Product'));
     $productItems = Yii::app()->request->getPost($modelClass, array());
     $ids = HArray::column($productItems, 'id_product');
@@ -75,6 +93,7 @@ class OfferController extends Controller {
           $offerProduct = BaseActiveRecord::newModel('OfferProduct'); //Модель-связь многие-ко-многим м/у заказом и товарами
           $offerProduct->id_product = $product->id_product;
           $offerProduct->amount = $product->countInCart;
+          $offer->amount += $product->countInCart * $product->retail_price;
           $offer->addRelatedRecord('offerProducts', $offerProduct, true);
         }
         $offer->offer_text = $this->renderPartial('/offerText', array('products' => $products), true);
@@ -82,6 +101,9 @@ class OfferController extends Controller {
         $offer->save();
         if ($transaction != null) {
           $transaction->commit();
+        }
+        if (Yii::app()->daShop->useOnlinePayment) {
+          $this->pay($offer);
         }
         Yii::app()->user->setFlash('offer-success', 'Спасибо, Ваш заказ успешно отправлен.');
         ShopModule::clearProductsFromCookie();
@@ -120,5 +142,87 @@ class OfferController extends Controller {
     $transaction->commit();
   }
   */
+
+  protected function pay($offer) {
+    $invoice = BaseActiveRecord::newModel('Invoice');
+    $invoice->amount = $offer->amount;
+    $invoice->id_offer = $offer->primaryKey;
+    $invoice->create_date = time();
+    if ($invoice->save()) {
+      $billing = Yii::app()->billing;
+      $sInvDesc = "Оплата заказа [ID = ".$offer->primaryKey."]";
+      $billing->pay($invoice->amount, $invoice->primaryKey, $sInvDesc);
+    } else {
+      throw new ErrorException('Не удалось сохранить счет errors: '.print_r($invoice->getErrors(), true));
+    }
+  }
+
+  public function actionProcessPayment() {
+    if (!Yii::app()->daShop->useOnlinePayment) return;
+    $billing = Yii::app()->billing;
+    $billing->onSuccess = array($this, 'onPaymentSuccess');
+    $billing->onFail = array($this, 'onPaymentFail');
+    $billing->result();
+  }
+
+  /** Обработчик успешной оплаты
+   * @param CEvent $event
+   */
+  public function onPaymentSuccess(CEvent $event) {
+    $transaction =  Yii::app()->db->beginTransaction();
+
+    $invoiceId = (int)Yii::app()->request->getParam(Yii::app()->billing->invoiceIdParamName);
+    $invoice = BaseActiveRecord::model('Invoice')->findByPk($invoiceId);
+    $offer = $invoice->offer;
+    $invoice->pay_date = time();
+    //Устанавливаем заказу id счета, по которому он оплачен
+    $offer->id_invoice = $invoiceId;
+    $invoice->save();
+    $offer->create_date = time();
+    $offer->status = Offer::STATUS_PAYD;
+    if (!$offer->save()) {
+      Yii::log('Ошибки при сохранении модели Offer: '.print_r($offer->getErrors(), true), CLogger::LEVEL_ERROR, 'robokassa');
+    } else {
+      //Yii::app()->getModule('messenger')->addMessage('Поступил новый заказ № '.$offer->id_offer.'.', Message::TYPE_ERROR, Offer::model()->getIdObject());
+    }
+    $transaction->commit();
+  }
+
+  /**
+   * Обработчик НЕ успешной оплаты
+   * @param CEvent $event
+   */
+  public function onPaymentFail(CEvent $event) {
+    $invoiceId = (int)Yii::app()->request->getParam(Yii::app()->billing->invoiceIdParamName);
+    $errorsTxt = "Оплата счета ID = $invoiceId, не удалась.\n";
+    $errorsTxt .= "Переданные параметры запроса: \n".print_r($_REQUEST, true)."\n";
+    $errorsTxt .= "Ошибка при валидации в компоненте RC: \n".$event->sender->params['reason']."\n";
+
+    Yii::log($errorsTxt, CLogger::LEVEL_ERROR, 'billing');
+    Yii::app()->end('FAIL');
+  }
+
+  private function loadOwnOfferByIdInvoice($id, $criteria = null) {
+    $offer = null;
+    if ($invoice = BaseActiveRecord::model('Invoice')->findByPk($id, $criteria)) {
+      $offer = $invoice->offer;
+    }
+    return $offer;
+  }
+
+  public function actionSuccess() {
+    if (!Yii::app()->daShop->useOnlinePayment) return;
+    $invoiceId = (int)Yii::app()->request->getParam( Yii::app()->billing->invoiceIdParamName );
+    $offer = $this->loadOwnOfferByIdInvoice($invoiceId, array('scopes' => 'done'));
+    $this->render('/success', array('offer' => $offer));
+  }
+
+  public function actionFail() {
+    if (!Yii::app()->daShop->useOnlinePayment) return;
+    $invoiceId = (int)Yii::app()->request->getParam( Yii::app()->billing->invoiceIdParamName );
+    $offer = $this->loadOwnOfferByIdInvoice($invoiceId);
+    $this->render('/fail', array('offer' => $offer));
+  }
+
 
 }
