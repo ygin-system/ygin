@@ -1,7 +1,7 @@
 <?php
 
 class BannerPlugin extends PluginAbstract {
-  const BANNER_PHP_SCRIPT_TYPE_ID = 300;
+  const BANNER_PHP_SCRIPT_TYPE_ID = 'ygin-banner-widget-base';
 
   public static function createPlugin(array $config) {
     return new BannerPlugin();
@@ -45,7 +45,7 @@ class BannerPlugin extends PluginAbstract {
     $idsPhpScript = Yii::app()->db->createCommand()
       ->select('id_php_script')
       ->from('da_php_script')
-      ->where('id_php_script_type = '.self::BANNER_PHP_SCRIPT_TYPE_ID)
+      ->where('id_php_script_type = "'.self::BANNER_PHP_SCRIPT_TYPE_ID.'"')
       ->queryAll();
 
     if($idsPhpScript) {
@@ -64,11 +64,11 @@ class BannerPlugin extends PluginAbstract {
     $this->uninstallAggregateViewStatisticJob();
     $this->deactivatePhpScript(self::BANNER_PHP_SCRIPT_TYPE_ID);
 
-    //выключаеи видимость SiteModule связанных с баннерами, если таковые имеются
+    //удаляем SiteModule связанных с баннерами, если таковые имеются
     $idsPhpScript = Yii::app()->db->createCommand()
       ->select('id_php_script')
       ->from('da_php_script')
-      ->where('id_php_script_type = '.self::BANNER_PHP_SCRIPT_TYPE_ID)
+      ->where('id_php_script_type = "'.self::BANNER_PHP_SCRIPT_TYPE_ID.'"')
       ->queryAll();
 
     if($idsPhpScript) {
@@ -76,7 +76,30 @@ class BannerPlugin extends PluginAbstract {
       foreach($idsPhpScript as $idPhpScript) {
         $idsPhpScriptArray[] = $idPhpScript['id_php_script'];
       }
-      Yii::app()->db->createCommand()->update('da_site_module',array('is_visible' => 0),array('in','id_php_script',$idsPhpScriptArray));
+      //отцепляем виджеты от наборов
+      $idsSiteModule = Yii::app()->db->createCommand()
+        ->select('id_module')
+        ->from('da_site_module')
+        ->where('id_php_script IN ('.implode(',',$idsPhpScriptArray).')')
+        ->queryAll();
+      $idsSiteModuleArray = array();
+      foreach($idsSiteModule as $idSiteModule) {
+        $idsSiteModuleArray[] = $idSiteModule['id_module'];
+      }
+      $criteria = new CDbCriteria();
+      $criteria->addInCondition('id_module',$idsSiteModuleArray);
+      Yii::app()->db->commandBuilder->createDeleteCommand('da_site_module_rel', $criteria)->execute();
+
+      //удаляем сами модули
+      $criteria = new CDbCriteria();
+      $criteria->addInCondition('id_php_script',$idsPhpScriptArray);
+      Yii::app()->db->commandBuilder->createDeleteCommand('da_site_module', $criteria)->execute();
+      //Yii::app()->db->createCommand()->update('da_site_module',array('is_visible' => 0),array('in','id_php_script',$idsPhpScriptArray));
+
+      //удаляем php_script
+      $criteria = new CDbCriteria();
+      $criteria->compare('id_php_script_type',self::BANNER_PHP_SCRIPT_TYPE_ID);
+      Yii::app()->db->commandBuilder->createDeleteCommand('da_php_script', $criteria)->execute();
     }
 
     $this->updateMenu = true;
