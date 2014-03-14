@@ -10,10 +10,11 @@ class LoginForm extends BaseFormModel {
   public $username;
   public $password;
   public $rememberMe;
+	public $verifyCode;
   private $_identity;
 
   public function rules() {
-    return array(
+    $rules = array(
         // username and password are required
         array('username, password', 'required'),
         // rememberMe needs to be a boolean
@@ -21,6 +22,12 @@ class LoginForm extends BaseFormModel {
         // password needs to be authenticated
         array('password', 'authenticate'),
     );
+    if (isset(Yii::app ()->request->cookies[ 'login_attempt' ]) && Yii::app ()->request->cookies[ 'login_attempt' ]->value >= 3) {
+      $rules = CMap::mergeArray($rules, array(
+        array('verifyCode', 'DaCaptchaValidator', 'caseSensitive' => true)
+      ));
+    }
+    return $rules;
   }
 
   /**
