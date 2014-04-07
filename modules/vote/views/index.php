@@ -4,20 +4,21 @@
 ?>
 
 <div class="b-vote">
-  <?php echo CHtml::form(Yii::app()->createUrl(VoteModule::ROUTE_VOTE), 'get'); ?>
+  <?php echo CHtml::form(Yii::app()->createUrl(VoteModule::ROUTE_VOTE), 'get', array(
+          'class' => 'form-horizontal')); ?>
   <fieldset>
-    <div class="control-group">
-      <label class="control-label" for="choose_vote">Выберите опрос:</label>
-      <div class="controls">
+    <div class="form-group">
+      <label class="control-label col-lg-3" for="choose_vote">Выберите опрос:</label>
+        <div class="col-lg-4">
         <?php echo CHtml::dropDownList('id_voting', $idVotingCurrent, $votingList, array(
-          'class' => 'inputbox',
+          'class' => 'form-control',
           'empty' => '',
           'id'    => 'choose_vote',
           'onchange' => 'window.location="'.Yii::app()->createUrl(VoteModule::ROUTE_VOTE).'"+this.value+"/";'
         //'onchange' => CHtml::ajax(array('update' => '.voteRes', 'url' => '/vote/voting/vote', 'type' => 'POST',)),
         ));
         ?>
-      </div>
+        </div>
     </div>
   </fieldset>
   <?php echo CHtml::endForm(); ?>

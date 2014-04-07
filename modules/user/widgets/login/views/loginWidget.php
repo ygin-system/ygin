@@ -21,19 +21,23 @@
       'validateOnChange' => false,
     ),
   	'action' => Yii::app()->createUrl(UserModule::ROUTE_LOGIN),
-    'errorMessageCssClass' => 'label label-important',
+    'errorMessageCssClass' => 'label label-danger',
   	'htmlOptions' => array(
-  	  'class' => 'authorization form-vertical'
+  	  'class' => 'authorization'
   	),
   ));
-  $idPrefix = 'login_widget_';
-  echo $form->textField($model, 'username', array('class'=>'span3', 'placeholder'=>'Логин', 'id' => $idPrefix.CHtml::activeId($model, 'username')));
-  echo $form->error($model, 'username', array('inputID' => $idPrefix.CHtml::activeId($model, 'username')));
-  echo $form->passwordField($model, 'password', array('class'=>'span3', 'placeholder'=>'Пароль', 'id' => $idPrefix.CHtml::activeId($model, 'password')));
-  echo $form->error($model, 'password', array('inputID' => $idPrefix.CHtml::activeId($model, 'password')));
- 	echo CHtml::submitButton('Войти', array('class'=>'btn'));
+  $idPrefix = 'login_widget_'; ?>
+ <div class="form-group">
+    <?php echo $form->textField($model, 'username', array('class'=>'form-control', 'placeholder'=>'Логин', 'id' => $idPrefix.CHtml::activeId($model, 'username'))); ?>
+    <?php echo $form->error($model, 'username', array('inputID' => $idPrefix.CHtml::activeId($model, 'username'))); ?>
+ </div>
+ <div class="form-group">
+     <?php echo $form->passwordField($model, 'password', array('class'=>'form-control', 'placeholder'=>'Пароль', 'id' => $idPrefix.CHtml::activeId($model, 'password')));?>
+    <?php echo $form->error($model, 'password', array('inputID' => $idPrefix.CHtml::activeId($model, 'password')));?>
+ </div>
+ <?php echo CHtml::submitButton('Войти', array('class'=>'btn btn-default'));?>
 		
-  $this->endWidget();?>
+ <?php $this->endWidget();?>
 
   <?php endif; ?>
 </div>

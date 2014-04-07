@@ -19,17 +19,21 @@
 <?php
   //Регистрируем файлы скриптов в <head>
   Yii::app()->clientScript->registerCoreScript('jquery');
-  $this->registerJsFile('bootstrap.min.js', 'application.assets.bootstrap.js');
+  //$this->registerJsFile('bootstrap.min.js', 'ygin.assets.bootstrap.js');
+  Yii::app()->clientScript->registerScriptFile('/themes/business/bootstrap/js/bootstrap.min.js', CClientScript::POS_HEAD);
   Yii::app()->clientScript->registerScriptFile('/themes/business/js/js.js', CClientScript::POS_HEAD);
 
-  $this->registerCssFile('bootstrap.min.css', 'application.assets.bootstrap.css');
-  $this->registerCssFile('bootstrap-responsive.min.css', 'application.assets.bootstrap.css');
-  $ass = Yii::getPathOfAlias('application.assets.bootstrap.img').DIRECTORY_SEPARATOR;
+  //$this->registerCssFile('bootstrap.min.css', 'ygin.assets.bootstrap.css');
+  Yii::app()->clientScript->registerCssFile('/themes/business/bootstrap/css/bootstrap.min.css');
+
+  //$this->registerCssFile('bootstrap-responsive.min.css', 'ygin.assets.bootstrap.css');
+  //$ass = Yii::getPathOfAlias('ygin.assets.bootstrap.fonts').DIRECTORY_SEPARATOR;
+  $ass = Yii::getPathOfAlias('webroot.themes.business.bootstrap.fonts') . DIRECTORY_SEPARATOR;
   Yii::app()->clientScript->addDependResource('bootstrap.min.css', array(
-    $ass.'glyphicons-halflings.png' => '../img/',
-    $ass.'glyphicons-halflings-white.png' => '../img/',
-    $ass.'glyphicons-halflings-red.png' => '../img/',
-    $ass.'glyphicons-halflings-green.png' => '../img/',
+    $ass.'glyphicons-halflings-regular.eot' => '../fonts/',
+    $ass.'glyphicons-halflings-regular.svg' => '../fonts/',
+    $ass.'glyphicons-halflings-regular.ttf' => '../fonts/',
+    $ass.'glyphicons-halflings-regular.woff' => '../fonts/',
   ));
   Yii::app()->clientScript->registerCssFile('/themes/business/css/content.css');
   Yii::app()->clientScript->registerCssFile('/themes/business/css/page.css');

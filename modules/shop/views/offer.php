@@ -31,7 +31,7 @@ $form = $this->beginWidget('CActiveForm', array(
   'enableClientValidation' => true,
   'focus' => array($offer, 'fio'),
   'htmlOptions' => array(
-    'class' => 'well form-horizontal b-offer-form',
+    'class' => 'b-offer-form',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
@@ -54,39 +54,31 @@ $currencyImage18 = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/a
   <?php echo Yii::app()->user->getFlash("offer-message"); ?>
   <fieldset>
     <legend>Контактная информация для получения заказа</legend>
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="fio">Представьтесь *</label>
-      <div class="controls">
-        <?php echo $form->textField($offer, 'fio', array('class' => 'input-xlarge')); ?>
+        <?php echo $form->textField($offer, 'fio', array('class' => 'form-control')); ?>
         <?php echo $form->error($offer, 'fio'); ?>
         <?php
         // тут и далее - yii генерит свои ид для элементов. Поэтому если нужны в верстке, надо поменять
         // <input id="fio" type="text" name="fio" value="" class="input-xlarge">
         ?>
-      </div>
     </div>
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="phone">Контактный телефон</label>
-      <div class="controls">
-        <?php echo $form->textField($offer, 'phone', array('class' => 'input-xlarge', 'placeholder' => '+7 999-999-9999')); ?>
+        <?php echo $form->textField($offer, 'phone', array('class' => 'form-control', 'placeholder' => '+7 999-999-9999')); ?>
         <?php echo $form->error($offer, 'phone'); ?>
-      </div>
     </div>
     <!-- +not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <label for="email" class="control-label">Электропочта *</label>
-      <div class="controls">
-        <?php echo $form->textField($offer, 'mail', array('class' => 'input-xlarge', 'placeholder' => 'email@email.ru')); ?>
+        <?php echo $form->textField($offer, 'mail', array('class' => 'form-control', 'placeholder' => 'email@email.ru')); ?>
         <?php echo $form->error($offer, 'mail'); ?>
-      </div>
     </div>
     <!-- -not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="add_info">Пожелания и прочая контактная информация</label>
-      <div class="controls">
-        <?php echo $form->textArea($offer, 'comment', array('class' => 'span6', 'style' => 'height:100px; width: 385px;')); ?>
+        <?php echo $form->textArea($offer, 'comment', array('class' => 'form-control', 'style' => 'height:100px; width: 385px;')); ?>
         <?php echo $form->error($offer, 'comment'); ?>
-      </div>
     </div>
   </fieldset>
 
@@ -131,8 +123,8 @@ $currencyImage18 = CHtml::asset(Yii::app()->getModule('shop')->getBasePath().'/a
             <?php endfor; ?>
             <tr class="itogo">
                 <th colspan="3">
-                  <button type="submit" class="btn btn-large btn-success"><i class="icon-ok icon-white"></i> Отправить заявку на покупку</button>
-                  <a href="<?php echo $backLink; ?>" class="btn btn-mini btn-danger"><i class="icon-share-alt icon-white"></i> Вернуться в каталог</a>
+                  <button type="submit" class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok"></i> Отправить заявку на покупку</button>
+                  <a href="<?php echo $backLink; ?>" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-share-alt"></i> Вернуться в каталог</a>
                 </th>
                 <td colspan="2">Итого:</td>
                 <td class="sum">
