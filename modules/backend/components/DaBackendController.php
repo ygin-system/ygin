@@ -25,13 +25,13 @@ abstract class DaBackendController extends DaWebController {
 
   protected function beforeAction($action) {
     if (parent::beforeAction($action)) {
-      //print_r(Yii::app()->authManager->checkObject('list', Yii::app()->user->id));
+     //print_r(Yii::app()->authManager->checkObject('list', Yii::app()->user->id));
       $loginPage = ($this->getModule() != null && $this->getModule()->getId() == 'user' && $this->getId() == 'user' && $action->getId() == 'login');
       if (!Yii::app()->user->checkAccess('showAdminPanel')) {
         if (!$loginPage) {
           $errorPage = ($this->getModule() == null && $this->getId() == 'static' && $action->getId() == 'error');
           $logoutPage = ($this->getModule() != null && $this->getModule()->getId() == 'user' && $this->getId() == 'user' && $action->getId() == 'logout');
-          if (Yii::app()->user->isGuest && !Yii::app()->request->isAjaxRequest) {
+          if (Yii::app()->user->isGuest && !Yii::app()->request->isAjaxRequest && $action->getId() != 'captcha') {
             Yii::app()->user->setReturnUrl(Yii::app()->request->url);
             Yii::app()->user->loginRequired();
           } else if (!$errorPage && !$logoutPage) {

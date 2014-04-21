@@ -8,6 +8,11 @@ class UserController extends Controller {
     return array(
       'login'  => 'LoginAction',
       'logout' => 'LogoutAction',
+      'captcha' => array(
+	      'class' => 'DaCaptchaAction',
+	      'maxLength' => 5,
+	      'minLength' => 4,
+      ),
     );
   }
   
@@ -20,7 +25,7 @@ class UserController extends Controller {
   public function accessRules(){
     return array(
       array('allow',
-        'actions'=>array('login'),
+        'actions'=>array('login', 'captcha'),
         'users'=>array('?'),
       ),
       array('allow',
