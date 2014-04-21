@@ -2,15 +2,22 @@
 
 abstract class BillingComponent extends CApplicationComponent {
 
-	public $sMerchantLogin;
+  /**
+    Например, так могут быть заданы настройки компоненты в конфиг-файле. Также должны быть заданы платежные пароли в настройках сайта.
+    'billing' => array(
+      'class' => 'shop.components.Moneta',
+      'isTest' => false,
+    ),
+   */
+  public $sMerchantLogin;
 	public $sMerchantPass1;
 	public $sMerchantPass2;
 	public $sCulture = 'ru';
 
 	public $resultMethod = 'post';
 	public $sIncCurrLabel;
-	public $orderModel;
-	public $priceField;
+	public $orderModel = 'Invoice';
+	public $priceField = 'amount';
 	public $isTest = false;
 
 	public $params;

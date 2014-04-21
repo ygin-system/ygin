@@ -48,6 +48,7 @@ class ShopModule extends DaWebModuleAbstract implements IApplicationComponent {
   public $showToolbar = false;
   /**
    * Использовать ли онлайн-оплату через агрегаторов платежей (робокасса, монета.ру)
+   * Для настройки
    * @var boolean
    */
   public $useOnlinePayment = false;
