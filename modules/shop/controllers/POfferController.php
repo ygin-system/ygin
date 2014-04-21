@@ -1,17 +1,15 @@
 <?php
-class OfferController extends Controller {
-  
-  protected $urlAlias = "catalog";
+
+class POfferController extends OfferController {
 
   public function filters() {
-    return array(
+    return CMap::mergeArray(parent::filters(), array(
       'postOnly +processPayment',
-    );
+    ));
   }
 
   public function init() {
     parent::init();
-    if (!Yii::app()->daShop->useOnlinePayment) return;
     $billing = Yii::app()->billing;
     /**
      * @var $billing BillingComponent
@@ -19,35 +17,9 @@ class OfferController extends Controller {
     $billing->sMerchantLogin = Yii::app()->params[$billing->paramNameLogin];
     $billing->sMerchantPass1 = Yii::app()->params[$billing->paramNamePass1];
     $billing->sMerchantPass2 = Yii::app()->params[$billing->paramNamePass2];
+    // $this->module->clearOffer();
   }
-  
-  protected function getProducts() {
-    $modelClass = get_class(BaseActiveRecord::model('Product'));
-    $productItems = Yii::app()->request->getPost($modelClass, array());
-    $ids = HArray::column($productItems, 'id_product');
-    if (empty($ids)) {
-      return array();
-    }
-    $result = array();
-    $products = BaseActiveRecord::model('Product')->with('category')->findAllByPk($ids);
-    foreach ($productItems as $item) {
-      foreach ($products as $product) {
-        if ($product->getPrimaryKey() == (int)HArray::val($item, 'id_product')) {
-          //чтобы появилась возможность заполнять кастомные поля (поля, определенные прикладным программистом)
-          //делаем массовое присваивание
-          unset($item['id_product']);
-          $product->scenario = 'offer';
-          $product->attributes = $item;
-          if (floatval($product->countInCart) > 0) {
-            $result[] = $product;
-          }
-          break;
-        }
-      }
-    }
-    return $result;
-  }
-  
+
   public function actionIndex() {
     $offer = BaseActiveRecord::newModel('Offer');
     $offerModelClass = get_class($offer);
@@ -58,12 +30,12 @@ class OfferController extends Controller {
       $offer->attributes = $_POST[$offerModelClass];
       //если данные пришли не аяксом, то стартуем транзакцию
       if (!isset($_POST['ajax'])) {
-        Yii::app()->db->setAutoCommit(false);
+        //Yii::app()->db->setAutoCommit(false);
         $transaction = Yii::app()->db->beginTransaction();
       }
       $products = $this->getProducts();
     }
-   
+
     // валидация формы ajax
     if (isset($_POST['ajax']) && $_POST['ajax'] === 'offerForm') {
       $validateResult = CActiveForm::validate($offer, null, false);
@@ -75,7 +47,7 @@ class OfferController extends Controller {
       }
       Yii::app()->end();
     }
-    
+
     // сохраняем
     if (isset($_POST[$offerModelClass])) {
       $valid = true;
@@ -102,9 +74,7 @@ class OfferController extends Controller {
         if ($transaction != null) {
           $transaction->commit();
         }
-        if (Yii::app()->daShop->useOnlinePayment) {
-          $this->pay($offer);
-        }
+        $this->pay($offer);
         Yii::app()->user->setFlash('offer-success', 'Спасибо, Ваш заказ успешно отправлен.');
         ShopModule::clearProductsFromCookie();
         $this->redirect(Yii::app()->createUrl(ShopModule::ROUTE_MAIN));
@@ -122,26 +92,6 @@ class OfferController extends Controller {
       'showPrice' => Yii::app()->getModule('shop')->showPrice,
     ));
   }
-  
-  public function sendMessage(CEvent $event) {
-    Yii::app()->notifier->addNewEvent(
-      $this->module->idEventTypeNewOffer,
-      $this->renderPartial('/offerMessage', array('model' => $event->sender), true)
-    );
-  }
-  /**
-   * Отмена завки
-   */
-  /*
-  public function actionCancel($id) {
-    Yii::app()->db->setAutocommit(false);
-    $transaction = Yii::app()->db->beginTransaction();
-    $offer = Offer::model()->findByPk($id);
-    $offer->status = Offer::STATUS_CANCELED;
-    $offer->save();
-    $transaction->commit();
-  }
-  */
 
   protected function pay($offer) {
     $invoice = BaseActiveRecord::newModel('Invoice');
@@ -158,7 +108,6 @@ class OfferController extends Controller {
   }
 
   public function actionProcessPayment() {
-    if (!Yii::app()->daShop->useOnlinePayment) return;
     $billing = Yii::app()->billing;
     $billing->onSuccess = array($this, 'onPaymentSuccess');
     $billing->onFail = array($this, 'onPaymentFail');
@@ -174,7 +123,7 @@ class OfferController extends Controller {
     $invoiceId = (int)Yii::app()->request->getParam(Yii::app()->billing->invoiceIdParamName);
     $invoice = BaseActiveRecord::model('Invoice')->findByPk($invoiceId);
     $offer = $invoice->offer;
-    $invoice->pay_date = time();
+    $invoice->payd = time();
     //Устанавливаем заказу id счета, по которому он оплачен
     $offer->id_invoice = $invoiceId;
     $invoice->save();
@@ -211,18 +160,15 @@ class OfferController extends Controller {
   }
 
   public function actionSuccess() {
-    if (!Yii::app()->daShop->useOnlinePayment) return;
     $invoiceId = (int)Yii::app()->request->getParam( Yii::app()->billing->invoiceIdParamName );
     $offer = $this->loadOwnOfferByIdInvoice($invoiceId, array('scopes' => 'done'));
     $this->render('/success', array('offer' => $offer));
   }
 
   public function actionFail() {
-    if (!Yii::app()->daShop->useOnlinePayment) return;
     $invoiceId = (int)Yii::app()->request->getParam( Yii::app()->billing->invoiceIdParamName );
     $offer = $this->loadOwnOfferByIdInvoice($invoiceId);
     $this->render('/fail', array('offer' => $offer));
   }
-
 
 }
