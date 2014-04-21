@@ -28,8 +28,8 @@
   Yii::app()->clientScript->addDependResource('bootstrap.min.css', array(
     $ass.'glyphicons-halflings.png' => '../img/',
     $ass.'glyphicons-halflings-white.png' => '../img/',
-    $ass.'glyphicons-halflings-red.png' => '../img/',
-    $ass.'glyphicons-halflings-green.png' => '../img/',
+    //$ass.'glyphicons-halflings-red.png' => '../img/',
+    //$ass.'glyphicons-halflings-green.png' => '../img/',
   ));
   Yii::app()->clientScript->registerCssFile('/themes/business/css/content.css');
   Yii::app()->clientScript->registerCssFile('/themes/business/css/page.css');
