@@ -397,8 +397,8 @@ class SearchComponent extends CApplicationComponent {
     if (intval($searchDataPortion) < 1) $searchDataPortion = 1000;
     foreach($ids AS $idObject) {
       $obj = DaObject::getById($idObject);
-      $model = $obj->getModel();
-      $startRecord = 0;
+	    $model = DaInstance::forObject ($obj);
+	    $startRecord = 0;
       while (true) {
         $data = $model->findAll(array('limit' => $searchDataPortion, 'offset' => $startRecord));
         foreach($data AS $instance)
