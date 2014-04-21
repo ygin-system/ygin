@@ -121,6 +121,7 @@ class ShopPlugin extends PluginAbstract {
       'id_object_offer' => 519,
       'id_object_brand' => 525,
       'id_object_remain_status' => 529,
+      'id_object_invoice' => 'ygin-invoice',
     );
     $plugin->setData($data);
   }
@@ -187,7 +188,9 @@ class ShopPlugin extends PluginAbstract {
       $this->createPermission($data['id_object_brand'], 'Просмотр списка данных объекта Брэнды продукции');
       if (!isset($data['id_object_remain_status'])) $data['id_object_remain_status'] = 529;
       $this->createPermission($data['id_object_remain_status'], 'Просмотр списка данных объекта Статусы остатков продукции');
-      
+      if (!isset($data['id_object_invoice'])) $data['id_object_invoice'] = 'id_object_invoice';
+      $this->createPermission($data['id_object_invoice'], 'Просмотр списка данных объекта Счета');
+
       $this->updateMenu = true;
       $data['id_menu'] = $menu->id;
     }
@@ -216,6 +219,8 @@ class ShopPlugin extends PluginAbstract {
     Yii::app()->authManager->removeAuthItemObject('list', $data['id_object_brand']);
     if (!isset($data['id_object_remain_status'])) $data['id_object_remain_status'] = 529;
     Yii::app()->authManager->removeAuthItemObject('list', $data['id_object_remain_status']);
+    if (!isset($data['id_object_invoice'])) $data['id_object_invoice'] = 'id_object_invoice';
+    Yii::app()->authManager->removeAuthItemObject('list', $data['id_object_invoice']);
     $this->updateMenu = true;
     
     unset($data['id_menu'], $data['id_site_module_category'], $data['id_site_module_cart'], $data['id_site_module_brand']);
