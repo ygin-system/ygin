@@ -7,6 +7,7 @@ $modules = array(
   'ygin.menu',
   'ygin.user',
   'ygin.mail',
+  'ygin.viewGenerator',
 );
 if (YII_DEBUG) {
   $modules['gii'] = array(
