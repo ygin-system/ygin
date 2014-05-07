@@ -5,7 +5,7 @@ class OfferController extends Controller {
 
   public function filters() {
     return array(
-      'postOnly +processPayment',
+      //'postOnly +processPayment',
     );
   }
 
@@ -181,7 +181,7 @@ class OfferController extends Controller {
     $offer->create_date = time();
     $offer->status = Offer::STATUS_PAYD;
     if (!$offer->save()) {
-      Yii::log('Ошибки при сохранении модели Offer: '.print_r($offer->getErrors(), true), CLogger::LEVEL_ERROR, 'robokassa');
+      Yii::log('Ошибки при сохранении модели Offer: '.print_r($offer->getErrors(), true), CLogger::LEVEL_ERROR, 'billing');
     } else {
       //Yii::app()->getModule('messenger')->addMessage('Поступил новый заказ № '.$offer->id_offer.'.', Message::TYPE_ERROR, Offer::model()->getIdObject());
     }
@@ -199,7 +199,6 @@ class OfferController extends Controller {
     $errorsTxt .= "Ошибка при валидации в компоненте RC: \n".$event->sender->params['reason']."\n";
 
     Yii::log($errorsTxt, CLogger::LEVEL_ERROR, 'billing');
-    Yii::app()->end('FAIL');
   }
 
   private function loadOwnOfferByIdInvoice($id, $criteria = null) {
@@ -223,6 +222,5 @@ class OfferController extends Controller {
     $offer = $this->loadOwnOfferByIdInvoice($invoiceId);
     $this->render('/fail', array('offer' => $offer));
   }
-
 
 }

@@ -77,7 +77,8 @@ class Robokassa extends BillingComponent {
 			}
 		}else{
 			if($this->hasEventHandler('onFail')){
-				return $this->onFail($event);
+				$this->onFail($event);
+        Yii::app()->end('FAIL');
 			}
 		}
 
