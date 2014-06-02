@@ -20,17 +20,17 @@
                   <?php
                   
                     if ($this->allowSubcommenting === true && ($this->registeredOnly === false || Yii::app()->user->isGuest === false)) {
-                      echo '<button class="btn btn-mini minimize" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Свернуть').'"><i class="icon-minus"></i></button>';
+                      echo '<button class="btn btn-xs minimize" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Свернуть').'"><span class="glyphicon glyphicon-minus"></span></button>';
                       /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Свернуть'), '#',
                         array('rel'=>$comment->id_comment, 'class'=>'minimize')) . "] ";*/
                       if ($this->disableAddComments == false) {
-                        echo '<button class="btn btn-mini add-comment" rel="'.$comment->id_comment.'"><i class="icon-share-alt" title="'.Yii::t('CommentsModule.msg', 'Ответить').'"></i></button>';
+                        echo '<button class="btn btn-xs add-comment" rel="'.$comment->id_comment.'"><span class="glyphicon glyphicon-share" title="'.Yii::t('CommentsModule.msg', 'Ответить').'"></span></button>';
                         /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Ответить'), '#',
                           array('rel'=>$comment->id_comment, 'class'=>'add-comment')) . "]";*/
                       }
                       //Удаление коммента разрешено либо владельцу поста либо владельцу этого коммента
                       if (($this->isObjectBlog == true && $this->isOwnerBlog == true) || $comment->isOwnerComment() == true) {
-                        echo '<a href="/comments/comment/setStatusDeleteComment/" class="btn btn-mini delete-comment" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Удалить').'"><i class="icon-remove"></i></a>';
+                        echo '<a href="/comments/comment/setStatusDeleteComment" class="btn btn-xs delete-comment" rel="'.$comment->id_comment.'" title="'.Yii::t('CommentsModule.msg', 'Удалить').'"><span class="glyphicon glyphicon-remove"></span></a>';
                         /*echo "[" . CHtml::link(Yii::t('CommentsModule.msg', 'Удалить'), '/comments/comment/setStatusDeleteComment',
                           array('rel'=>$comment->id_comment, 'class'=>'delete-comment')) . "]";*/
                       }
@@ -39,7 +39,7 @@
 
                   ?>
                   </div>
-                  <div class="author label">
+                  <div class="author label label-default">
                   <?php
                   if (isset($comment->user)) {
                     echo CHtml::encode($comment->user->full_name);

@@ -14,7 +14,7 @@ $form = $this->beginWidget('CActiveForm', array(
   'enableClientValidation' => true,
   'focus' => array($model, 'name'),
   'htmlOptions' => array(
-    'class' => 'form-horizontal',
+    'class' => '',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
@@ -25,50 +25,44 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
   <?php echo $form->errorSummary($model, false); ?>
   <fieldset>
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'name', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'name', array('class' => 'input-xlarge')); ?>
+        <?php echo $form->textField($model, 'name', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'name'); ?>
-      </div>
     </div>
 <!-- +not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'mail', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'mail', array('class' => 'input-xlarge', 'type' => 'email')); ?>
+        <?php echo $form->textField($model, 'mail', array('class' => 'form-control', 'type' => 'email')); ?>
         <?php echo $form->error($model, 'mail'); ?>
-      </div>
     </div>
 <!-- -not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'user_password', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->passwordField($model, 'user_password', array('class' => 'input-xlarge')); ?>
+        <?php echo $form->passwordField($model, 'user_password', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'user_password'); ?>
-        <label for="showPass" class="checkbox">
+        <div class="checkbox">
+        <label for="showPass">
           <input type="checkbox" id="showPass">
           Показать пароль
         </label>
-      </div>
+        </div>
     </div>
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'full_name', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'full_name', array('class'=>'input-xlarge', 'rows' => '8')); ?>
+        <?php echo $form->textField($model, 'full_name', array('class'=>'form-control', 'rows' => '8')); ?>
         <?php echo $form->error($model, 'full_name'); ?>
-      </div>
     </div>
-    <div class="control-group">
-      <?php echo $form->labelEx($model, 'verifyCode', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'verifyCode', array('class'=>'input-mini', 'title' => 'Укажите код с картинки', 'autocomplete' => 'off')); ?>
-        <?php $this->widget('CCaptcha', array('clickableImage' => true, 'captchaAction' => $this->createUrl('captcha'))); ?>
+    <div class="form-group row">
+      <?php echo $form->labelEx($model, 'verifyCode', array('class'=>'control-label col-lg-12')); ?>
+        <div class="col-lg-4">
+            <?php echo $form->textField($model, 'verifyCode', array('class'=>'form-control', 'title' => 'Укажите код с картинки', 'autocomplete' => 'off')); ?>
+        </div>
+        <div class="col-lg-3">
+            <?php $this->widget('CCaptcha', array('clickableImage' => true, 'captchaAction' => $this->createUrl('captcha'))); ?>
+        </div>
         <?php echo $form->error($model, 'verifyCode', array(), true, false);?>
-      </div>
     </div>
-    <div class="form-actions">
     <?php echo CHtml::submitButton('Зарегистрироваться', array('class' => 'btn btn-success')); ?>
-    </div>
   </fieldset>
 <?php $this->endWidget(); ?>

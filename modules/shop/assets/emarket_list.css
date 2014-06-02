@@ -31,15 +31,15 @@
 .b-emarket_list__picaside .preview_picture {float: right; margin-left: 5px;}
 .b-emarket_list__picaside .elem {float: left; width: 135px;}
 
-/* Ширина товара - 2 ячейки */
+/* Ширина товара - 2 ячейки */ /*на третьем бутстрапе не имеет смысла располагать товар в две ячейки.*/
 .b-emarket_list__picaside__2 h3 {max-height:55px; overflow:hidden}
 .b-emarket_list__picaside__2 .elem {width:105px}
 .b-emarket_list__picaside__2 .preview_picture {width:60px}
 
 /* Ширина товара - 3 ячейки */
-.b-emarket_list__picaside__3 .elem {width:165px}
-.b-emarket_list__picaside__3 .preview_picture {width:100px}
+.b-emarket_list__picaside__3 .elem {/*width:165px;*/width: 90px;}
+.b-emarket_list__picaside__3 .preview_picture {/*width:100px*/width: 70px;}
 
 /* Ширина товара - 4 ячейки */
-.b-emarket_list__picaside__4 .elem {width:235px}
-.b-emarket_list__picaside__4 .preview_picture {width:130px}
+.b-emarket_list__picaside__4 .elem {/*width:235px;*/ width: 122px;}
+.b-emarket_list__picaside__4 .preview_picture {/*width:130px;*/ width: 100px;}

@@ -8,7 +8,7 @@ $form=$this->beginWidget('CActiveForm', array(
   'enableAjaxValidation' => false,
   'enableClientValidation' => true,
   'htmlOptions' => array(
-    'class' => 'b-comment-form form-horizontal',
+    'class' => 'b-comment-form',
     'name' => 'commentform',
   ),
   'clientOptions' => array(
@@ -26,14 +26,13 @@ $form=$this->beginWidget('CActiveForm', array(
     echo $form->hiddenField($newComment, 'id_instance'); 
     echo $form->hiddenField($newComment, 'id_parent', array('class'=>'parent_comment_id'));
   ?>
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($newComment, 'comment_name', array('class'=>'control-label')); ?>
-      <div class="controls">
        <?php if(Yii::app()->user->isGuest === true):?>
        <?php 
          echo $form->textField($newComment,'comment_name', array(
            'size' => 40,
-           'class' => 'input-xlarge',
+           'class' => 'form-control',
            'title' => 'Ваше имя',
            'autocomplete' => 'off',
          )); 
@@ -49,46 +48,40 @@ $form=$this->beginWidget('CActiveForm', array(
        <?php echo $curUser->full_name;?>
        */?>
        <?php endif; ?>
-      </div>
     </div>
-    
-    <div class="control-group">
+
+    <div class="form-group">
       <?php echo $form->labelEx($newComment, 'comment_theme', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php 
+        <?php
           echo $form->textField($newComment, 'comment_theme', array(
             'size' => 40,            
-            'class' => 'input-xlarge',
+            'class' => 'form-control',
             'title' => 'Тема',
             'autocomplete' => 'off',
          )); 
         ?>
         <?php echo $form->error($newComment, 'comment_theme'); ?>
-      </div>
     </div>
-    
-    <div class="control-group">
+
+    <div class="form-group">
       <?php echo $form->labelEx($newComment, 'comment_text', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php 
+        <?php
           echo $form->textArea($newComment, 'comment_text', array(
             'rows' => 8,
             'style' => 'width:380px',
-            'class' => 'input-xlarge',
+            'class' => 'form-control',
             'title' => 'Комментарий',
             'placeholder' => 'Комментарий',
             'autocomplete' => 'off',
           ));
         ?>
         <?php echo $form->error($newComment, 'comment_text'); ?>
-      </div>
     </div>
 
     <?php  if($this->useCaptcha === true && extension_loaded('gd')): ?>
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($newComment, 'verifyCode', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($newComment, 'verifyCode', array('title' => 'Укажите код с картинки', 'autocomplete' => 'off', 'class' => 'input-mini')); ?>
+        <?php echo $form->textField($newComment, 'verifyCode', array('title' => 'Укажите код с картинки', 'autocomplete' => 'off', 'class' => 'form-control')); ?>
         <?php echo $form->error($newComment, 'verifyCode', array(), true, false); ?>
         <div class="captcha">
         <?php $this->widget('CCaptcha', array(
@@ -96,17 +89,14 @@ $form=$this->beginWidget('CActiveForm', array(
                 'captchaAction'  => CommentsModule::CAPTCHA_ACTION_ROUTE,
               )); ?>
         </div>
-      </div>
     </div>
     <?php endif; ?>
     
-    <div class="form-actions">
       <?php echo CHtml::htmlButton('Отправить', array(
         'name' => 'btn',
         'type' => 'submit',
-        'class' => 'btn submit',
+        'class' => 'btn btn-default',
         'data-loading-text' => 'Отправляется...',
       )); ?>
-    </div>
   </fieldset>
 <?php $this->endWidget(); ?>

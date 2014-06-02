@@ -1,4 +1,6 @@
-<form action="<?=Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW)?>" class="pull-right input-append">
-  <input type="text" id="query" name="query" class="span2" placeholder="Найти">
-  <button class="btn btn-inverse" type="submit"><i class="icon-search icon-white"></i></button>
+<form action="<?=Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW)?>" class="navbar-form navbar-left pull-right" role="search">
+    <div class="form-group">
+      <input type="text" id="query" name="query" class="form-control query-input" placeholder="Найти">
+    </div>
+    <button class="btn btn-default button-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 </form>

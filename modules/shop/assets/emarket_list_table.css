@@ -1,3 +1,4 @@
-.b-emarket_list_table .price_m {white-space:nowrap; text-align:right}
-.b-emarket_list_table .buttons {width:115px}
+.b-emarket_list_table .price_m {white-space:nowrap; text-align:right; vertical-align: middle;}
+.b-emarket_list_table .buttons {width:115px; vertical-align: middle;}
+.b-emarket_list_table .remain_status {vertical-align: middle;}
 .b-emarket_list_table h4 {margin:0} 

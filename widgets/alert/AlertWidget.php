@@ -22,7 +22,7 @@ class AlertWidget extends DaWidget {
   public function run() {
     $msgType = array(
       'success' => 'alert-success',
-      'error' => 'alert-error',
+      'error' => 'alert-danger',
       'warning' => 'alert-info',
     );
     $type = HArray::val($msgType, $this->type, 'alert-info');
