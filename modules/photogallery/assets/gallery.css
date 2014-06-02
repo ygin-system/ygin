@@ -21,14 +21,19 @@ body {
 }
 
 .image_stack { /* css style for photo stack */
-	width: 180px;
-	position: relative;
+	width: 185px;
+	/*position: relative;*/
 	margin:10px 10px 10px 0px;
-	height:215px;
-	float:left;
+	height:230px;
+    display:inline-block;
+    vertical-align: top;
 }
 
-.image_stack .info, .single_photo .info {position:absolute; top:180px; left:8px; font-size:11px}
+.image_stack .info {
+    margin-top: 180px;
+}
+
+.image_stack .info, .single_photo .info {/*position:absolute;*/ /*top:180px; left:8px;*/ font-size:11px;}
 
 .image_stack img { /* css style for photo stack */
 	text-decoration: none;
@@ -51,17 +56,20 @@ body {
 	transition: all 0.2s ease;
 }
 .image_stack .photo1 {  /* position of last photo in the stack */
-	top: 8px;
-	left: 8px;
+	/*top: 8px;
+	left: 8px;*/
+    margin-left: 8px;
 }
 .image_stack .photo2 {/* position of middle photo in the stack */
-	top: 6px;
-	left: 4px;
+	/*top: 6px;
+	left: 4px;*/
+    margin-left: 4px;
 }
 .image_stack .photo3 {/* position of first photo at the top in the stack */
-	top: 4px;
+	/*top: 4px;
 	left: 0px;
-	right: 100px;
+	right: 100px;*/
+    margin-left: 0px;
 }
 .image_stack .rotate1 {/* rotate last image 15 degrees to the right */
 	-webkit-transform: rotate(15deg); /* safari and chrome */
@@ -103,8 +111,9 @@ ul#pics li img {/*css style for the single photo only **/
 	width: 158px;
 	height:158px;
 	display: block;
+    margin:3px auto;
 }
-ul#pics li a {margin:5px 0 0 5px; display:block}
+ul#pics li a {/*margin:5px 0 0 5px;*/ display:block; margin:0;}
 ul#pics li:hover {/*css style for the single photo only **/
 	-moz-transform: scale(1.1) rotate(0deg);
 	-webkit-transform: scale(1.1) rotate(0deg);
@@ -112,11 +121,12 @@ ul#pics li:hover {/*css style for the single photo only **/
 	-ms-transform: scale(1.1) rotate(0deg);
 	transform: scale(1.1) rotate(0deg);
 }
-ul#pics {margin:4px 0 0 5px; padding:0}
+ul#pics {/*margin:4px 0 0 5px;*/ padding:0; min-height: 180px; margin: 0;}
 .single_photo {/*css style for the single photo only **/
 	width: 185px;
 	position: relative;
 	margin:10px 10px 10px 0;
-	height:215px;
-	float:left;
+	height:230px;
+    display:inline-block;
+    vertical-align: top;
 }

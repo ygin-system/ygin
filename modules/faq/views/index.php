@@ -16,7 +16,7 @@ if (Yii::app()->user->hasFlash('questionAdd')) {
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'htmlOptions' => array(
-        'class' => 'form-horizontal ask-form',
+        'class' => 'ask-form',
         //'autocomplete' => 'off',
     ),
     'enableAjaxValidation' => true,
@@ -27,62 +27,46 @@ $form = $this->beginWidget('CActiveForm', array(
     //'focus' => array($model, 'name')
   ));
 ?>
-<fieldset>
-    <legend style='border: 0'>
-        Задать вопрос
-    </legend>
+    <h3>Задать вопрос</h3>
     <?php if ($model->hasErrors()):
         ?>
-        <div class="alert alert-error input-xxlarge">
+            <div class="alert alert-danger form-control">
             <?php echo CHtml::errorSummary($model); ?>
         </div>
     <?php endif; ?>
-    <div class="control-group">
-        <?php echo $form->labelEx($model, 'name', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textField($model, 'name', array('class' => 'input-xlarge')); ?>
+    <div class="form-group">
+        <?php echo $form->labelEx($model, 'name'); ?>
+            <?php echo $form->textField($model, 'name', array('class' => 'form-control')); ?>
             <?php echo $form->error($model, 'name'); ?>
-        </div>
     </div>
-    <div class="control-group">
-        <?php echo $form->labelEx($model, 'email', array('class' => 'control-label')); ?>
-        <div class="controls">
+    <div class="form-group">
+        <?php echo $form->labelEx($model, 'email'); ?>
             <!-- +not-encode-mail -->
-            <?php echo $form->textField($model, 'email', array('class' => 'input-xlarge')); ?>
+            <?php echo $form->textField($model, 'email', array('class' => 'form-control')); ?>
             <!-- -not-encode-mail -->
             <?php echo $form->error($model, 'email'); ?>
-        </div>
     </div>
     <?php if (Yii::app()->getModule('faq')->useCategories == true): ?>
-    <div class="control-group">
-        <?php echo $form->labelEx($model, 'category', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->dropDownList($model, 'category', $model->categoriesList(), array('class' => 'input-xlarge')); ?>
+    <div class="form-group">
+        <?php echo $form->labelEx($model, 'category'); ?>
+            <?php echo $form->dropDownList($model, 'category', $model->categoriesList(), array('class' => 'form-control')); ?>
             <?php echo $form->error($model, 'category'); ?>
-        </div>
     </div>
     <?php endif; ?>
-    <div class="control-group">
-        <?php echo $form->labelEx($model, 'question', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textArea($model, 'question', array('class' => 'input-xlarge', 'style' => 'height: 70px; width: 420px;')); ?>
+    <div class="form-group">
+        <?php echo $form->labelEx($model, 'question'); ?>
+            <?php echo $form->textArea($model, 'question', array('class' => 'form-control', /*'style' => 'height: 70px; width: 420px;'*/)); ?>
             <?php echo $form->error($model, 'question'); ?>
-        </div>
     </div>
     <?php if(extension_loaded('gd') && Yii::app()->user->isGuest): ?>
-        <div class="control-group">
-            <?php echo CHtml::activeLabelEx($model, 'verifyCode', array('class' => 'control-label')); ?>
-            <div class="controls">
+        <div class="form-group">
+            <?php echo CHtml::activeLabelEx($model, 'verifyCode'); ?>
                 <?php $this->widget('CCaptcha', array('clickableImage'=>true, 'showRefreshButton'=>false)); ?>
                 <?php echo CHtml::activeTextField($model, 'verifyCode', array('autocomplete' => 'off')); ?>
                 <?php echo $form->error($model, 'verifyCode'); ?>
-            </div>
         </div>
     <?php endif; ?>
-    <div class="form-actions">
         <?php echo CHtml::submitButton('Отправить', array('class' => 'btn btn-success')); ?>
-    </div>
-</fieldset>
 <?php $this->endWidget('CActiveForm'); ?>
 
 <?php
