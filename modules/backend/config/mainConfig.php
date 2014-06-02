@@ -38,6 +38,7 @@ $mainConfig = array(
     'ygin.user',
     'ygin.mail',
     'ygin.menu',
+    'ygin.viewGenerator',
   ),
   
   // application components

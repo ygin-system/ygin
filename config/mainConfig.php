@@ -7,7 +7,6 @@ $modules = array(
   'ygin.menu',
   'ygin.user',
   'ygin.mail',
-  'ygin.viewGenerator',
 );
 if (YII_DEBUG) {
   $modules['gii'] = array(
@@ -23,6 +22,7 @@ if (YII_DEBUG) {
       'ipFilters'=>array('192.168.0.*','127.0.0.1'),
   );
   $modules[] = 'ygin.override';
+  $modules[] = 'ygin.viewGenerator';
 }
 
 $mainConfig = array(

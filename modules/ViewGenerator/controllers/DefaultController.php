@@ -41,7 +41,7 @@
         if (file_exists($path)) {
           $f = fopen($path . $filename . $ext, 'w+');
 
-          //генерим htmlдля файла
+          //генерим html для файла
           $html = '<?php $this->caption = "'.$caption.'";?>';
           $html .= "<div class='alert alert-success'> Файл для редактирования данного представления создан и находится по адресу: <code>{$path}{$filename}{$ext}</code></div>";
           fwrite($f, $html);
