@@ -37,15 +37,20 @@ class SchedulerCommand extends CConsoleCommand {
     //Чтобы увидеть дату начала запуска задачи используем грязное чтение данных
     $this->setIsolationLevel('READ UNCOMMITTED');
     $jobs = Job::model()->longExecuted()->findAll();
-    $msg = "Планировщик {webroot} с задачей {name}(id: {id}) завис. Время запуска {time}. Ошибок {failures}";
+    $msg = "Планировщик {webroot} с задачей {name}(id: {id}) завис. Время запуска {time}. Ошибок {failures}. Будет сделана попытка перезапустить задачу.";
     foreach ($jobs as $job) {
+      /**
+       * @var Job $job
+       */
       Yii::log(strtr($msg, array(
         '{webroot}' => Yii::getPathOfAlias('webroot'),
         '{name}' => $job->name,
         '{id}' => $job->id_job,
         '{time}' => date('d.m.Y H:i:s', $job->start_date),
         '{failures}' => $job->failures,
-      )), CLogger::LEVEL_WARNING, 'PlanCommand');
+      )), CLogger::LEVEL_ERROR, 'PlanCommand');
+      $job->start_date = null;
+      $job->update(array('start_date'));
     }
   }
   
@@ -99,11 +104,11 @@ class SchedulerCommand extends CConsoleCommand {
       //Увеличиваем счетчик ошибок и сохраняем
       //для того чтобы, если скрипт задачи упадет,
       //то при следующем запуске планировщика мы об этом узнаем
-      if ($curJob->is_null_start_date) {
+      /*if ($curJob->is_null_start_date) {
         $curJob->start_date = null;
       } else {
         $curJob->start_date = time();
-      }
+      }*/
       $curJob->failures++;
       $curJob->save(false);
       $transaction->commit();
