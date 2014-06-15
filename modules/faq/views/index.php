@@ -66,7 +66,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <?php echo $form->error($model, 'verifyCode'); ?>
         </div>
     <?php endif; ?>
-        <?php echo CHtml::submitButton('Отправить', array('class' => 'btn btn-success')); ?>
+        <?php echo CHtml::submitButton('Отправить', array('class' => 'btn btn-default')); ?>
 <?php $this->endWidget('CActiveForm'); ?>
 
 <?php
