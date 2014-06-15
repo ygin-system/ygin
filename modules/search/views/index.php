@@ -7,14 +7,15 @@ $this->registerCssFile("search.css");
 ?>
 
 <div class="b-search">
-<div class="navbar navbar-default">
-  <form class="navbar-form" action="<?php echo Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW); ?>" method="get">
-      <div class="form-group col-lg-10">
+  <form class="panel panel-warning search-form" action="<?php echo Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW); ?>" method="get">
+    <div class="panel-heading">
+      <div class="form-group col-sm-10">
         <input class="form-control" placeholder="Поиск" value="<?php echo CHtml::encode($query) ?>" name="query" autocomplete="off">
       </div>
       <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search"></span></i> Найти</button>
+    </div>
   </form>
-</div>
+
 <?php
   if ($error != null) {
     echo '<div class="alert alert-danger"><b>Ошибка:</b> '.$error.'</div></div>';
