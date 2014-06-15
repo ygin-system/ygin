@@ -106,6 +106,7 @@ class BannerPlugin extends PluginAbstract {
   }
 
   public function installAggregateViewsStatisticJob() {
+    $this->uninstallAggregateViewStatisticJob();  // перед установкой на всякий случай сделаем попытку удалить запись
     Yii::app()->db->commandBuilder->createInsertCommand('da_job', array(
       'id_job' => 'job-aggregate-views-statistic',
       'interval_value' => 3600,
