@@ -6,7 +6,7 @@
 
 /* News */
 .b-news-list .item {margin:-5px 0 30px -5px; padding:5px; overflow: hidden;}
-.b-news-list .date, .cNewsSingle .date {clear:both; font:12px 'Trebuchet MS',Arial,sans-serif; color:green; margin:6px 0}
+.b-news-list .date {clear:both; font:12px 'Trebuchet MS',Arial,sans-serif; color:green; margin:6px 0}
 .b-news-list h3 {margin:0; padding:0; text-shadow:none; font:16px/18px 'Trebuchet MS',Arial,sans-serif}
 .b-news-list h3:first-letter {text-transform:uppercase}
 .b-news-list h3 a {margin:0 10px 0 0}
@@ -20,6 +20,7 @@
 .b-news-single .print {float:right; width:13px; height:13px; display:block; margin:-2px 0 0 0}
 
 .b-news-single {position:relative}
+.b-news-single .date {clear:both; font:12px 'Trebuchet MS',Arial,sans-serif; color:green; margin:6px 0}
 .b-news-single .prev, .b-news-single .next {position:absolute; top:-40px; display:none}
 .b-news-single .prev a:link, .b-news-single .prev a:visited, .b-news-single .next a:link, .b-news-single .next a:visited {background-image:url(/gfx/arrowSprite.png); text-decoration:none; display: block; width: 20px; height: 26px;}
 .b-news-single .prev {left:-40px}
