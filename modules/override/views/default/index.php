@@ -46,29 +46,26 @@ if (Yii::app()->user->hasFlash('override-success')) {
 ?>
     <form class="form-horizontal well" method="post">
  
-    <div class="control-group">
-      <label class="control-label">Тема</label>
-      <div class="controls">
-      <input type="text" id="theme" readonly="readonly" value="<?= $model->theme; ?>">
+    <div class="form-group">
+      <label class="control-label col-lg-3">Тема</label>
+      <div class="col-lg-4">
+        <input type="text" class="form-control" id="theme" readonly="readonly" value="<?= $model->theme; ?>">
       </div>
     </div>
-    <div class="control-group">
-      <label class="control-label">Если файл существует, то </label>
-      <div class="controls">
-      <?php echo CHtml::activeDropDownList(
+    <div class="form-group">
+      <label class="control-label col-lg-3">Если файл существует, то </label>
+      <div class="col-lg-4">
+        <?php echo CHtml::activeDropDownList(
         $model,
         'rewriteType',
-        $model->getRewriteTypes()
+        $model->getRewriteTypes(),
+        array('class' => 'form-control')
       ); ?>
       </div>
     </div>
-    <div class="control-group">
+    <div class="form-group">
     <label class="control-label">Представления для переопределения</label>
-    <div class="controls">
     <?php $this->renderRecursive($model->overrideDataItemTree, $model->data); ?>
     </div>
-    </div>
-    <div class="form-actions">
       <button type="submit" class="btn btn-primary">Переопределить</button>
-    </div>
     </form>

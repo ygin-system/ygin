@@ -7,16 +7,18 @@ $this->registerCssFile("search.css");
 ?>
 
 <div class="b-search">
-
-  <form class="form-search well" action="<?php echo Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW); ?>" method="get">
-    <div class="input-append">
-      <input class="search-query span4" placeholder="Поиск" value="<?php echo CHtml::encode($query) ?>" name="query" autocomplete="off">
-      <button class="btn btn-inverse" type="submit"><i class="icon-search icon-white"></i> Найти</button>
+  <form class="panel panel-warning search-form" action="<?php echo Yii::app()->createUrl(SearchModule::ROUTE_SEARCH_VIEW); ?>" method="get">
+    <div class="panel-heading">
+      <div class="form-group col-sm-10">
+        <input class="form-control" placeholder="Поиск" value="<?php echo CHtml::encode($query) ?>" name="query" autocomplete="off">
+      </div>
+      <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search"></span></i> Найти</button>
     </div>
   </form>
+
 <?php
   if ($error != null) {
-    echo '<div class="alert alert-error"><b>Ошибка:</b> '.$error.'</div></div>';
+    echo '<div class="alert alert-danger"><b>Ошибка:</b> '.$error.'</div></div>';
     return;
   }
   $inc = $paginator->getCurrentPage() * $paginator->getPageSize();

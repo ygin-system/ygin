@@ -7,7 +7,7 @@
 ?>
 <div class="b-emarket-category-list row">
 <?php foreach ($allCategory AS $category): ?>
-  <div class="item span2">
+  <div class="item col-lg-3">
     <?php if ($this->module->imageCategoryOnMain && $category->photo != null): ?>
     <?php $preview=$category->getImagePreview('_sm'); if ($preview != null): ?>
     <a class="photo" href="<?php echo $category->getUrl(); ?>"><?php echo CHtml::image($preview->getUrlPath(), $category->name); ?></a>

@@ -10,7 +10,7 @@ class DbSettings extends CFormModel {
   
   public function rules() {
     return array(
-      array('host, dbname, user, password', 'required'),
+      array('host, dbname, user', 'required'),
       array('host, dbname, user, password', 'length', 'max' => 255),
       array('port', 'numerical'),
       array('createDb', 'boolean'),

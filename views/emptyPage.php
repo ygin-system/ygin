@@ -1,3 +1,3 @@
-<div class="alert">
-  <i class="icon-hand-right"></i> Когда-нибудь на этой странице появится текст
+<div class="alert alert-warning">
+  <span class="glyphicon glyphicon-hand-right"></span> Когда-нибудь на этой странице появится текст
 </div>

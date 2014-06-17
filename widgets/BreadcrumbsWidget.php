@@ -23,7 +23,7 @@ class BreadcrumbsWidget extends CBreadcrumbs {
       if ($i == $count) break;
       
       $text = CHtml::link($this->encodeLabel ? CHtml::encode($label) : $label, $url);
-      if ($i != ($count-1)) $text .= $this->separator;
+      //if ($i != ($count-1)) $text .= $this->separator;
       if ($this->tagName == 'ul') $text = '<li>' . $text . '</li>';
       
       /*

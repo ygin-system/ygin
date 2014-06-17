@@ -1,21 +1,54 @@
-<div class="tabbable tabs-below">
-  <div class="tab-content">
+<?php $this->registerCssFile('vitrine.css');?>
+
+<div id="ygin-vitrine-carousel" class="b-vitrine carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+<?php 
+$i = 0;
+foreach ($models AS $model) {
+  $activeClass = ($i == 0) ? ' class="active"' : '';
+
+?>
+  <li data-target="#ygin-vitrine-carousel" data-slide-to="<?php echo $i ?>"<?php echo $activeClass ?>></li>
 <?php
-$html = '';
+  $i++;
+}
+?>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+<?php
+$i = 0;
 foreach ($models AS $model) {
   $id    = $model->id_vitrine;
-  $class = ($html == '') ? 'tab-pane hero-unit active' : 'tab-pane hero-unit';
+  $class = ($i == 0) ? 'item active' : 'item';
   $link  = $model->link;
-  $activeClass = ($html == '') ? ' class="active"' : '';
+  $imgHTML = '';
+  if ($model->file) {
+    $imgHTML = '<img src="'.$model->file->getUrlPath().'" alt="'.$model->title.'">';
+  } else {
+    $imgHTML = '<div class="img"></div>';
+  }
 ?>
-    <div id="<? echo 'id-'.$id ?>" class="<? echo $class ?>">
-      <div><?php echo $model->text; ?></div>
-      <p><a href="<?php echo $link; ?>" class="btn btn-info btn-large">Узнать больше »</a></p>
+    <div class="<? echo $class ?>">
+      <?php echo $imgHTML ?>
+      <div class="carousel-caption">
+        <h3 class="title"><a href="<?php echo $link; ?>"><?php echo $model->title; ?></a></h3>
+        <div class="text"><?php echo $model->text; ?></div>
+      </div>
     </div>
 <?php
-  $html .= '<li'.$activeClass.'><a href="#id-'.$id.'" data-toggle="tab">'.$model->title.'</a></li>';
+  $i++;
 }
 ?>
   </div>
-  <ul class="nav nav-pills"><?php echo $html; ?></ul>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#ygin-vitrine-carousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#ygin-vitrine-carousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
 </div>

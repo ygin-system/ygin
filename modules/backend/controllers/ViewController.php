@@ -99,13 +99,10 @@ class ViewController extends DaObjectController {
        * @var $objectParameter ObjectParameter
        */
       // Детальная обработка:
-      if (!$objectParameter->isVisible()) continue;
-      $event = new ParameterAvailableEvent($this, $model, $objectParameter);
-      $this->raiseEvent(ViewController::EVENT_ON_PARAMETER_AVAILABLE, $event);
-      $availableStatus = $event->status;
 
-      if ($availableStatus == ViewController::ENTITY_STATUS_NOT_VISIBLE) {  //Невидим
-        continue;
+      // Если свойство является группирующем, то устанавливаем значение по умолчанию
+      if ($model->isNewRecord && HU::get(ObjectUrlRule::PARAM_GROUP_PARAMETER) == $objectParameter->getIdParameter()) {
+        $model->{$objectParameter->getFieldName()} = HU::get(ObjectUrlRule::PARAM_GROUP_INSTANCE);
       }
 
       // Установка значений свойств экземпляра по умолчанию
@@ -121,6 +118,15 @@ class ViewController extends DaObjectController {
         if ($objectParameter->getAdditionalParameter() != 1) {
           continue;
         }
+      }
+
+      if (!$objectParameter->isVisible()) continue;
+      $event = new ParameterAvailableEvent($this, $model, $objectParameter);
+      $this->raiseEvent(ViewController::EVENT_ON_PARAMETER_AVAILABLE, $event);
+      $availableStatus = $event->status;
+
+      if ($availableStatus == ViewController::ENTITY_STATUS_NOT_VISIBLE) {  //Невидим
+        continue;
       }
 
       $event = new CreateVisualElementEvent($this, $model, $objectParameter);
@@ -140,10 +146,6 @@ class ViewController extends DaObjectController {
       }*/
 
       if ($visualElement == null) $visualElement = VisualElementFactory::getVisualElement($model, $objectParameter);
-      // Если свойство является группирующем, то пропускаем его.
-      if ($model->isNewRecord && HU::get(ObjectUrlRule::PARAM_GROUP_PARAMETER) == $objectParameter->getIdParameter()) {
-        $model->{$objectParameter->getFieldName()} = HU::get(ObjectUrlRule::PARAM_GROUP_INSTANCE);
-      }
 
       if ($visualElement == null) continue;
 

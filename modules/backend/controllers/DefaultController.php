@@ -33,12 +33,15 @@ class DefaultController extends DaObjectController {
     /**
      * @var $model DaActiveRecord
      * @var $object DaObject
+     * @var $view DaObjectView
      */
     $object = Yii::app()->backend->object;
     $view = Yii::app()->backend->objectView;
     $model = $object->getModel();
     $idObject = $object->id_object;
     $idView = $view->id_object_view;
+
+    $this->pageDescription = $view->description;
 
     if ($this->_groupInstance != null) {
       $linkObject = Yii::app()->createUrl(BackendModule::ROUTE_INSTANCE_LIST, array(
@@ -321,7 +324,7 @@ class DefaultController extends DaObjectController {
       }
       $gridColumns[] = $columnConfig;
     }
-    $select = $pk.', '.implode(',', $selectFields);
+    $select = $pk.(count($selectFields) > 0 ? ', '.implode(',', $selectFields) : '');
     if ($view->getSelect() != null) $select .= ', '.$view->getSelect();
     if ($view->id_parent != null) $select .= ','.$view->id_parent;
     $criteria->select = $select;

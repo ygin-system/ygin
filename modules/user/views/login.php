@@ -14,7 +14,8 @@ $form = $this->beginWidget('CActiveForm', array(
   'enableClientValidation' => true,
   'focus' => array($model, 'username'),
   'htmlOptions' => array(
-    'class' => 'form-horizontal',
+    'class' => '',
+    'role' => 'form',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
@@ -26,32 +27,24 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php echo $form->errorSummary($model, false); ?>
   <fieldset>
   <!-- +not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'username', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'username', array('class' => 'input-xlarge')); ?>
+        <?php echo $form->textField($model, 'username', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'username'); ?>
-      </div>
     </div>
   <!-- -not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'password', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->passwordField($model, 'password', array('class' => 'input-xlarge')); ?>
-        <?php echo $form->error($model, 'password'); ?>
-      </div>
+            <?php echo $form->passwordField($model, 'password', array('class' => 'form-control')); ?>
+            <?php echo $form->error($model, 'password'); ?>
     </div>
-    <div class="control-group">
-      <div class="controls">
-        <label class="checkbox">
+    <div class="checkbox">
+        <label>
         <?php echo $form->checkBox($model, 'rememberMe');?>
         <?php echo $model->getAttributeLabel('rememberMe'); ?>
         </label>
         <?php echo $form->error($model, 'rememberMe'); ?>
-      </div>
     </div>
-    <div class="form-actions">
     <?php echo CHtml::submitButton('Войти', array('class' => 'btn btn-success')); ?>
-    </div>
   </fieldset>
 <?php $this->endWidget(); ?>

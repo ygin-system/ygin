@@ -19,7 +19,7 @@ Yii::app()->clientScript->registerCss('wizard.css', '
 ');
 ?>
 <?php if (file_exists($this->getLocalConfigFile())): ?>
-<div class="alert alert-error">
+<div class="alert alert-danger">
 Файл с конфигурацией <?php echo $this->getLocalConfigFile(); ?> уже существует.
 Возможно, вы произвели установку ранее.
 После установки файл будет перезаписан.
@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerCss('wizard.css', '
 <?php endif; ?>
 
 <?php if (empty($this->dumpFiles)): ?>
-  <div class="alert alert-error">
+  <div class="alert alert-danger">
     Файл <?php echo $this->getDumpFile(); ?> с дампом базы отсутствует.
     Установка невозможна.
   </div>
