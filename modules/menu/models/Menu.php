@@ -245,7 +245,7 @@ class Menu extends DaActiveRecord implements ISearchable {
       return $this->uri;
     }
     
-    if ($this->go_to_type == Menu::GO_TO_FILE) {
+    if ($this->go_to_type == Menu::GO_TO_FILE && $this->content == null) {
       // Если в типе раздела указано, что нужно возвращать файл, то формируем ссылку на файл:
       // Если у раздела есть контент, то возвращаем ссылку на раздел, не смотря на то, что указан файл.
       $file = $this->firstFile;
