@@ -131,6 +131,9 @@ function checkPrefix(n) {
 
 	if (/^\s*www\./i.test(n.value) && confirm(tinyMCEPopup.getLang('advlink_dlg.is_external')))
 		n.value = 'http://' + n.value;
+
+	if (n.value.indexOf('http') == -1 && n.value.indexOf('/') == -1)
+		n.value = '/' + n.value;
 }
 
 function setFormValue(name, value) {
