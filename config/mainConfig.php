@@ -22,6 +22,7 @@ if (YII_DEBUG) {
       'ipFilters'=>array('192.168.0.*','127.0.0.1'),
   );
   $modules[] = 'ygin.override';
+  $modules[] = 'ygin.viewGenerator';
 }
 
 $mainConfig = array(

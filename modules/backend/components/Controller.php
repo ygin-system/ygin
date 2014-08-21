@@ -3,4 +3,3 @@
 class Controller extends DaBackendController {
 }
 
-?>

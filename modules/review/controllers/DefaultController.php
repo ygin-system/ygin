@@ -14,7 +14,7 @@ class DefaultController extends Controller {
 
     if (isset($_POST[$modelClass])) {
       $model->attributes = $_POST[$modelClass];
-      $model->visible = (int)($this->module->moderate);
+      $model->visible = $this->module->moderate ? 0 : 1;
       $model->onAfterSave = array($this, 'sendMessage');
       if ($model->save()) {
         Yii::app()->user->setFlash('reviewAdd', 'Спасибо, ваш отзыв отправлен.');

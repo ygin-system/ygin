@@ -26,7 +26,7 @@
       <?php }
     }
     // выводим имя галереи и кол-во фоток
-    echo '<div class="info">'.$gallery->name." (".$gallery->countPhoto.')</div>';
+    echo '<div class="info">'.HText::smartCrop($gallery->name, 85)." (".$gallery->countPhoto.')</div>';
     ?>
     </div>
   <?php } ?>

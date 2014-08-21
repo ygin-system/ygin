@@ -14,7 +14,7 @@ if (Yii::app()->user->hasFlash('reviewAdd')) {
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'htmlOptions' => array(
-        'class' => 'form-horizontal ask-form',
+        'class' => 'ask-form',
         //'autocomplete' => 'off',
     ),
     'enableClientValidation' => true,
@@ -26,51 +26,47 @@ $form = $this->beginWidget('CActiveForm', array(
     //'focus' => array($model, 'name')
   ));
 ?>
-<fieldset>
-    <legend style='border: 0'>
-        Отправить отзыв
-    </legend>
+    <h3>Отправить отзыв</h3>
     <?php if ($model->hasErrors()):
         ?>
-        <div class="alert alert-error input-xxlarge">
+        <div class="alert alert-danger input-xxlarge">
             <?php echo CHtml::errorSummary($model); ?>
         </div>
     <?php endif; ?>
-    <div class="control-group">
+    <div class="form-group">
         <?php echo $form->labelEx($model, 'name', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textField($model, 'name', array('class' => 'input-xlarge')); ?>
-            <?php echo $form->error($model, 'name'); ?>
-        </div>
+            <div>
+                <?php echo $form->textField($model, 'name', array('class' => 'form-control')); ?>
+                <?php echo $form->error($model, 'name'); ?>
+            </div>
     </div>
-    <div class="control-group">
+    <div class="form-group">
         <?php echo $form->labelEx($model, 'contact', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textField($model, 'contact', array('class' => 'input-xlarge')); ?>
+        <div>
+            <?php echo $form->textField($model, 'contact', array('class' => 'form-control')); ?>
             <?php echo $form->error($model, 'contact'); ?>
         </div>
     </div>
-    <div class="control-group">
+    <div class="form-group">
         <?php echo $form->labelEx($model, 'review', array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo $form->textArea($model, 'review', array('class' => 'input-xlarge', 'style' => 'height: 70px; width: 420px;')); ?>
+        <div>
+            <?php echo $form->textArea($model, 'review', array('class' => 'form-control')); ?>
             <?php echo $form->error($model, 'review'); ?>
         </div>
     </div>
     <?php if(extension_loaded('gd') && Yii::app()->user->isGuest): ?>
-        <div class="control-group">
+        <div class="form-group">
             <?php echo CHtml::activeLabelEx($model, 'verifyCode', array('class' => 'control-label')); ?>
-            <div class="controls">
+            <div>
                 <?php $this->widget('CCaptcha', array('clickableImage'=>true, 'showRefreshButton'=>false)); ?>
                 <?php echo CHtml::activeTextField($model, 'verifyCode', array('autocomplete' => 'off')); ?>
                 <?php echo $form->error($model, 'verifyCode'); ?>
             </div>
         </div>
     <?php endif; ?>
-    <div class="form-actions">
-        <?php echo CHtml::submitButton('Отправить', array('class' => 'btn btn-success')); ?>
+    <div class="form-group">
+        <?php echo CHtml::submitButton('Отправить', array('class' => 'btn btn-default')); ?>
     </div>
-</fieldset>
 <?php $this->endWidget('CActiveForm'); ?>
 
 <?php

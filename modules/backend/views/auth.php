@@ -51,6 +51,23 @@
     <label for="LoginForm_password">Пароль:</label>
     <?php echo $form->passwordField($model, 'password', array('class'=>'form-control nullField', 'size'=>15)); ?>
   </div>
+	<?php if (isset(Yii::app ()->request->cookies[ 'login_attempt' ]) && Yii::app ()->request->cookies[ 'login_attempt' ]->value >= 3): ?>
+		<div class="form-group b-auth-captcha">
+			<label for="LoginForm_verifyCode">Введите код:</label>
+			<?php echo $form->textField ($model,'verifyCode',array(
+				'class' => 'form-control nullField',
+				'size' => 15
+			)); ?>
+			<?php 
+			Yii::app()->urlManager->frontendMode = true;
+			$this->widget ('CCaptcha',array(
+				'clickableImage' => true,
+				'captchaAction' => Yii::app()->createUrl('/user/user/captcha')
+			)); 
+			Yii::app()->urlManager->frontendMode = false;
+			?>
+		</div>
+	<?php endif; ?>
   <div>
     <table><tr>
     <td>

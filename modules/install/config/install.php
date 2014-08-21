@@ -6,6 +6,7 @@ require_once dirname(__FILE__).'/../components/DirectoryChecker.php';
 DirectoryChecker::check();
 
 $installConfig = array(
+  'name'=>'Ygin Installer',
   'language' => 'ru',
   'sourceLanguage' => 'ru_RU',
   'import' => array(
@@ -63,4 +64,4 @@ $installConfig = array(
 );
 $coreConfig = require(dirname(__FILE__) . '/../../../config/core.php');
 
-return CMap::mergeArray($coreConfig, $installConfig); 
+return CMap::mergeArray($coreConfig, $installConfig);

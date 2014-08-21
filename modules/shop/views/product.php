@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerCssFile('/themes/business/css/jqzoom.css');
   <div class="details">
 <?php if ($preview != null): ?>
     <a href="<?php echo $product->mainPhoto->getUrlPath(); ?>" class="to_zoom">
-      <img class="image" src="<?php echo $preview->getUrlPath(); ?>" alt="<?php echo CHtml::encode($product->name); ?> title="IMAGE TITLE"">
+      <img class="image" src="<?php echo $preview->getUrlPath(); ?>" alt="<?php echo CHtml::encode($product->name); ?>" title="">
     </a>
 <?php endif; ?>
     <div class="info-bar">
@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerCssFile('/themes/business/css/jqzoom.css');
         <br><?php echo Product::price2str($price); ?> руб.
       </div>
       <div class="buttons">
-        <button class="btn btn-success buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><i class="icon-shopping-cart icon-white"></i> Купить</button>
+        <button class="btn btn-success buy" data-price="<?php echo $price; ?>" data-id="<?php echo $product->id_product; ?>" data-name="<?php echo CHtml::encode($product->name); ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Купить</button>
       </div>
       <div style="clear:both;"></div>
     </div>
@@ -64,7 +64,7 @@ Yii::app()->clientScript->registerCssFile('/themes/business/css/jqzoom.css');
 <?php echo $product->description; ?>
     </div>
     <div class="slider">
-      <button class="btn btn-mini" onfocus="this.blur();">Подробнее</button>
+      <button class="btn btn-xs" onfocus="this.blur();">Подробнее</button>
     </div>
 <?php
   $tabs = array(

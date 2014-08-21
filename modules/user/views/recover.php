@@ -25,7 +25,7 @@ $form = $this->beginWidget('CActiveForm', array(
   'enableClientValidation' => true,
   'focus' => array($model, 'name'),
   'htmlOptions' => array(
-    'class' => 'form-horizontal',
+    'class' => '',
   ),
   'clientOptions' => array(
     'validateOnSubmit' => true,
@@ -37,16 +37,12 @@ $form = $this->beginWidget('CActiveForm', array(
   <?php echo $form->errorSummary($model, false); ?>
   <fieldset>
 <!-- +not-encode-mail -->
-    <div class="control-group">
+    <div class="form-group">
       <?php echo $form->labelEx($model, 'login', array('class'=>'control-label')); ?>
-      <div class="controls">
-        <?php echo $form->textField($model, 'login', array('class' => 'input-xlarge')); ?>
+        <?php echo $form->textField($model, 'login', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'login'); ?>
-      </div>
     </div>
 <!-- -not-encode-mail -->
-    <div class="form-actions">
     <?php echo CHtml::submitButton('Восстановить', array('class' => 'btn btn-success')); ?>
-    </div>
   </fieldset>
 <?php $this->endWidget(); ?>

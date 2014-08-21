@@ -25,3 +25,8 @@ background-size: 160px,20px 100%;}
 .ygin-copy {font:10px Tahoma, Arial, Helvetica, sans-serif; color:#bbb; text-align:right !important; margin:5px 0 0 0}
 .ygin-copy a:link, .ygin-copy a:visited {color:#bbb; text-decoration:none}
 .ygin-copy a:hover {text-decoration:underline}
+
+.b-auth-captcha{margin-bottom:20px}
+.b-auth-captcha input[type="text"]{margin-bottom:10px}
+.b-auth-captcha a, .b-auth-captcha a:link, .b-auth-captcha a:visited{color:#fff; font-size:12px; margin-left:5px; text-decoration:underline}
+.b-auth-captcha a:hover{text-decoration:none}

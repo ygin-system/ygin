@@ -15,8 +15,14 @@ class PhotogalleryPhotoEventHandler extends BackendEventHandler {
   }
   public function onProcessPermissionWhere(PermissionWhereEvent $event) {
     $where = $event->where;
-    if ($idObject = intval(HU::get(PhotogalleryPhoto::URL_PARAM_OBJECT))) $where = HText::addCondition($where, "id_photogallery_object = ".$idObject);
-    if ($idInstance = intval(HU::get(PhotogalleryPhoto::URL_PARAM_INSTANCE))) $where = HText::addCondition($where, "id_photogallery_instance = ".$idInstance);
+    $idObject = HU::get(PhotogalleryPhoto::URL_PARAM_OBJECT);
+    $idInstance = intval(HU::get(PhotogalleryPhoto::URL_PARAM_INSTANCE));
+    if ($idObject && $idInstance) {
+      $where = HText::addCondition($where, 'id_photogallery_object = :id_object_gallery');
+      $where = HText::addCondition($where, 'id_photogallery_instance = :id_instance_gallery');
+      $event->params[':id_object_gallery'] = $idObject;
+      $event->params[':id_instance_gallery'] = $idInstance;
+    }
     $event->where = $where;
   }
   public function onBeforeGrid(BeforeGridEvent $event) {

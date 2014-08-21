@@ -2,6 +2,7 @@
 abstract class DaBackendController extends DaWebController {
   
   public $layout = 'backend.views.layouts.main';
+  public $pageDescription = null;
 
   private $_counter = 0;
 
@@ -24,17 +25,18 @@ abstract class DaBackendController extends DaWebController {
 
   protected function beforeAction($action) {
     if (parent::beforeAction($action)) {
-      //print_r(Yii::app()->authManager->checkObject('list', Yii::app()->user->id));
+     //print_r(Yii::app()->authManager->checkObject('list', Yii::app()->user->id));
       $loginPage = ($this->getModule() != null && $this->getModule()->getId() == 'user' && $this->getId() == 'user' && $action->getId() == 'login');
       if (!Yii::app()->user->checkAccess('showAdminPanel')) {
         if (!$loginPage) {
           $errorPage = ($this->getModule() == null && $this->getId() == 'static' && $action->getId() == 'error');
           $logoutPage = ($this->getModule() != null && $this->getModule()->getId() == 'user' && $this->getId() == 'user' && $action->getId() == 'logout');
-          if (Yii::app()->user->isGuest && !Yii::app()->request->isAjaxRequest) {
+          if (Yii::app()->user->isGuest && !Yii::app()->request->isAjaxRequest && $action->getId() != 'captcha') {
             Yii::app()->user->setReturnUrl(Yii::app()->request->url);
             Yii::app()->user->loginRequired();
           } else if (!$errorPage && !$logoutPage) {
-            throw new CHttpException(403, 'Доступ к странице запрещен, попробуйте перелогиниться.');
+            $link = CHtml::link('авторизоваться заново',Yii::app()->createUrl('logout'));
+            throw new CHttpException(403, '<div style="text-align: center;" class="alert alert-danger col-lg-7">Доступ к странице запрещен, попробуйте '.$link.'.</div>');
           }
         } else {
           if (Yii::app()->user->returnUrl == '/') Yii::app()->user->returnUrl = Yii::app()->createUrl('');

@@ -29,8 +29,8 @@ class ActionDeleteColumn extends ActionColumn {
         $this->_unavailableInfo[$id] = implode(', ', $availableInfo['info']);
       }
     }
-    if (count($this->_availableIdInstance) > 0) {
-      $js = 'function da_deleteRecord(idObject, idInstance) {
+
+    $js = 'function da_deleteRecord(idObject, idInstance) {
   '.CHtml::ajax(array(
         'type' => 'POST',
         'dataType' => 'json',
@@ -44,8 +44,7 @@ class ActionDeleteColumn extends ActionColumn {
 }',
       )).'
 }';
-      Yii::app()->clientScript->registerScript('admin.delete-record-ajax', $js, CClientScript::POS_HEAD);
-    }
+    Yii::app()->clientScript->registerScript('admin.delete-record-ajax', $js, CClientScript::POS_HEAD);
   }
 
   public function renderDataCell($row) {

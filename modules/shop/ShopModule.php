@@ -24,7 +24,7 @@ class ShopModule extends DaWebModuleAbstract implements IApplicationComponent {
   public $viewProductList = '_product_list_table';
   public $pageSize = 10;
   public $displayTypeElements = self::DISPAY_TYPE_ALL; // 'all', 'product', 'category'
-  
+
   /**
    * Доступна ли возможность делать заявки на заказ
    * (т.е. когда продукции на складе меньше, чем указано в заявке)
@@ -46,7 +46,13 @@ class ShopModule extends DaWebModuleAbstract implements IApplicationComponent {
    * @var boolean
    */
   public $showToolbar = false;
-  
+  /**
+   * Использовать ли онлайн-оплату через агрегаторов платежей (робокасса, монета.ру)
+   * Для настройки
+   * @var boolean
+   */
+  public $useOnlinePayment = false;
+
   private $_currentIdCategory = null;
   
   private static $_productsCookie = null;
@@ -115,6 +121,7 @@ class ShopModule extends DaWebModuleAbstract implements IApplicationComponent {
     $this->setImport(array(
       'shop.models.*',
       'shop.controllers.*',
+      'shop.components.*',
       'zii.behaviors.CTimestampBehavior',
     ));
 
