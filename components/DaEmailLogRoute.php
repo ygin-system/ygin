@@ -95,6 +95,8 @@ class DaEmailLogRoute extends CEmailLogRoute {
       'transportType' => $this->getMailMethod(),
       'transportOptions' => array(
         'host' => $this->getHost(),
+        'port' => 465,
+        'encryption' => 'ssl'
       ),
       'logging' => false,
     ));
