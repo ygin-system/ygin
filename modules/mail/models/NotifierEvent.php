@@ -34,8 +34,7 @@ class NotifierEvent extends DaActiveRecord
    * @var boolean
    */
   private static $_cacheSubscribersEmails = false;
-  
-  
+
   /**
    * Returns the static model of the specified AR class.
    * @param string $className active record class name.
@@ -83,7 +82,7 @@ class NotifierEvent extends DaActiveRecord
       }
     }
   }
-  
+
   public function getEventsProcess() {
     if ($this->_eventsProcess === null) {
       $this->_eventsProcess = NotifierEventProcess::model()->scForSend()->findAll(
@@ -122,6 +121,7 @@ class NotifierEvent extends DaActiveRecord
     return array(
       array('id_instance, id_event, id_event_type, event_create', 'numerical', 'integerOnly'=>true),
       array('event_message', 'safe'),
+      array('subject', 'length', 'max' => 255)
     );
   }
 
@@ -158,6 +158,7 @@ class NotifierEvent extends DaActiveRecord
       'id_event_type' => 'Id Event Type',
       'event_message' => 'Event Message',
       'event_create' => 'Event Create',
+      'subject' => 'Subject'
     );
   }
 
