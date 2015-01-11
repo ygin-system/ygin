@@ -24,14 +24,14 @@
  * @property integer $image
  */
 class Menu extends DaActiveRecord implements ISearchable {
-  
+
   const ID_OBJECT = 'ygin-menu';
-  
+
   private $_modules = null;
   protected $idObject = self::ID_OBJECT;
 
   const SEPARATOR = '.';
-  
+
   const GO_TO_LIST_CHILD  = 1;
   const GO_TO_FIRST_CHILD = 2;
   const GO_TO_FILE        = 3;
@@ -40,7 +40,7 @@ class Menu extends DaActiveRecord implements ISearchable {
   const SHOW_INCLUDED_ITEMS_BEFORE_CONTENT = 6;
 
 
-  
+
   /**
    * Returns the static model of the specified AR class.
    * @param string $className active record class name.
@@ -73,7 +73,7 @@ class Menu extends DaActiveRecord implements ISearchable {
       array('content', 'safe'),
     );
   }
-  
+
   public function behaviors() {
     return array(
       'tree' => array(
@@ -101,7 +101,7 @@ class Menu extends DaActiveRecord implements ISearchable {
     }
     return null;
   }
-  
+
   /**
    * @return array customized attribute labels (name=>label)
    */
@@ -136,11 +136,11 @@ class Menu extends DaActiveRecord implements ISearchable {
   public function setCaption($caption) {
     $this->caption = $caption;
   }
-  
+
   public function getCaption() {
     return $this->caption;
   }
-  
+
   public function getIsVisible() {
     return $this->visible == 1;
   }
@@ -165,11 +165,11 @@ class Menu extends DaActiveRecord implements ISearchable {
   public function setRemovable($value) {
     $this->removable = ($value ? 1 : 0);
   }
-  
+
   public static function getAll() {
     return self::model()->getTree();
   }
-  
+
   protected function isStaticMenu() {
     return empty($this->uri) && empty($this->external_link);
   }
@@ -179,13 +179,13 @@ class Menu extends DaActiveRecord implements ISearchable {
   public function getExternalLink() {
     return $this->external_link;
   }
-  
-  
+
+
   public function getByAlias($alias) {
     if ($this->alias == $alias) {
       return $this;
     }
-    
+
     $child = $this->getChild();
     $childCount = $this->getChildCount();
     for ($i = 0; $i < $childCount; $i++) {
@@ -194,15 +194,15 @@ class Menu extends DaActiveRecord implements ISearchable {
         return $findMenu;
       }
     }
-    
+
     return null;
   }
-  
+
   public function getByUri($link) {
     if ($this->uri == $link) {
       return $this;
     }
-    
+
     $child = $this->getChild();
     $childCount = $this->getChildCount();
     for ($i = 0; $i < $childCount; $i++) {
@@ -211,10 +211,10 @@ class Menu extends DaActiveRecord implements ISearchable {
         return $findMenu;
       }
     }
-    
+
     return null;
   }
-  
+
   /**
    * возвращает урл для статического раздела ввиде
    * menu.submenu.submenu_submenu
@@ -225,7 +225,7 @@ class Menu extends DaActiveRecord implements ISearchable {
     if ($parentMenu !== null && $parentMenu->isStaticMenu()) {
       $url = $parentMenu->getStaticUrl();
     }
-    
+
     if (!empty($url)) {
       $url .= self::SEPARATOR.$this->alias;
     } else {
@@ -233,19 +233,19 @@ class Menu extends DaActiveRecord implements ISearchable {
     }
     return $url;
   }
-  
+
   public function getUrl() {
     //Ссылка на другю страницу
     if (!empty($this->external_link)) {
       return $this->external_link;
     }
-    
+
     //Динамический раздел
     if (!empty($this->uri)) {
       return $this->uri;
     }
-    
-    if ($this->go_to_type == Menu::GO_TO_FILE && $this->content == null) {
+
+    if ($this->go_to_type == Menu::GO_TO_FILE) {
       // Если в типе раздела указано, что нужно возвращать файл, то формируем ссылку на файл:
       // Если у раздела есть контент, то возвращаем ссылку на раздел, не смотря на то, что указан файл.
       $file = $this->firstFile;
@@ -259,7 +259,7 @@ class Menu extends DaActiveRecord implements ISearchable {
         return $res;
       }
     }
-    
+
     //Статический раздел
     $url = $this->getStaticUrl();
     if ($url == '') $url = '/';
@@ -267,7 +267,7 @@ class Menu extends DaActiveRecord implements ISearchable {
     $result = Yii::app()->createUrl(MenuModule::ROUTE_STATIC_MENU, array(MenuModule::ROUTE_STATIC_MENU_PARAM => $url));
     return $result;
   }
-  
+
   public function getByRoute($controller, $action) {
     if (!empty($this->controller)) {
       if ($this->controller == $controller) {
@@ -283,7 +283,7 @@ class Menu extends DaActiveRecord implements ISearchable {
         }
       }
     }
-    
+
     $childCount = $this->getChildCount();
     for ($i = 0; $i < $childCount; $i++) {
       $child = $this->getChild();
@@ -294,22 +294,22 @@ class Menu extends DaActiveRecord implements ISearchable {
     }
     return null;
   }
-  
+
   public function getVisibleChildCount() {
     $c = 0;
     $childCount = $this->getChildCount();
-    
+
     for($i = 0; $i < $childCount; $i++) {
       $child = $this->getChild();
       if ($child[$i]->isVisible) {
         $c++;
       }
     }
-    
+
     return $c;
   }
 
-  
+
   // МОДУЛИ САЙТА
   /**
    * Получить все модули раздела
@@ -317,7 +317,7 @@ class Menu extends DaActiveRecord implements ISearchable {
    */
   public function getModules($idTemplate=null) {
     if ($this->_modules !== null) return $this->_modules;
-    
+
     $this->_modules = array();
     $idTemplate = ($idTemplate != null ? $idTemplate : $this->id_module_template);
 
@@ -333,12 +333,12 @@ class Menu extends DaActiveRecord implements ISearchable {
         if ($idTemplate == null) return $this->_modules;
       }
     }
-    
+
     $this->_modules = SiteModule::model()->with(array(
       'place' => array('condition' => 'place.id_module_template=:id_template', 'params' => array('id_template' => $idTemplate)),
       'phpScriptInstance.phpScript',
     ))->findAll();
-    
+
     return $this->_modules;
   }
   /**
@@ -354,7 +354,7 @@ class Menu extends DaActiveRecord implements ISearchable {
     }
     return $result;
   }
-  
+
   /**
    * Получить кол-во модулей
    * @param int $place Дополнительный параметр, позволяющий уточнить место модулей
@@ -384,6 +384,18 @@ class Menu extends DaActiveRecord implements ISearchable {
     return parent::beforeSave();
   }
 
+	protected function beforeValidate (){
+		// генерим другой алиас если текущий дублируется
+		$existAlias = $this->find ('alias = :ALIAS',array(
+			':ALIAS' => $this->alias,
+		));
+		if($existAlias) {
+			$this->alias .= '_' . HText::getRandomString (1);
+		}
+
+		return true;
+	}
+
   protected function beforeDelete() {
     if (!$this->isRemovable()) {
       throw new ErrorException('Раздел нельзя удалить, так как он не отмечен как удаляемый');
@@ -405,5 +417,5 @@ class Menu extends DaActiveRecord implements ISearchable {
       'class' => 'menu.backend.MenuEventHandler',
     );
   }
-  
+
 }
