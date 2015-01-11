@@ -21,7 +21,7 @@ abstract class DaWebModuleAbstract extends CWebModule {
     Yii::app()->setModels($models);
   }
   
-  public function setModules($modules) {
+  public function setModules($modules, $merge=true) {
     $newModules = array();
     foreach ($modules as $id => $module) {
       if (is_int($id)) {
@@ -38,6 +38,6 @@ abstract class DaWebModuleAbstract extends CWebModule {
       $newModules[$id] = $module;
     }
     //print_r($newModules);exit;
-    parent::setModules($newModules);
+    parent::setModules($newModules, true);
   }
 }
