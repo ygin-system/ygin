@@ -198,7 +198,7 @@ class CommentYii extends DaActiveRecord {
   }
 
   public function beforeValidate() {
-    if ($this->id_user === null && Yii::app()->user->isGuest === false) {
+    if ($this->id_user === null && Yii::app()->user->isGuest === false && Yii::app()->isFrontend) {
       $this->id_user = Yii::app()->user->id;
     }
     return parent::beforeValidate();
@@ -259,6 +259,7 @@ class CommentYii extends DaActiveRecord {
     if ($this->_ownerModel === false) {
       if ($this->id_object != null && $this->id_instance != null) {
         $commentsModule = Yii::app()->getModule('comments');
+        if (!isset($commentsModule->modelClassMap[$this->id_object])) return $this->_ownerModel;
         $this->_ownerModel = BaseActiveRecord::model($commentsModule->modelClassMap[$this->id_object])->findByPk($this->id_instance);
       } else
         $this->_ownerModel = null;

@@ -20,8 +20,8 @@ abstract class BaseApplication extends CWebApplication {
   
   private $_params = null;
 
-  public $version = '0.94';
-  public $versionDate = '17.06.2014';
+  public $version = '0.95';
+  public $versionDate = '10.01.2015';
 
   public function __construct($config = null) {
     parent::__construct($config);
@@ -115,6 +115,8 @@ abstract class BaseApplication extends CWebApplication {
     mb_internal_encoding('UTF-8');
     mb_regex_encoding('UTF-8');
 
+    Yii::import('ygin.components.DaWebModuleAbstract', true);
+
     // если ещё не был создан конфиг файл плагинов, то создаем его и перезагружаем страницу
     if ($this->isFrontend && !$this->pluginsCompile) {
       // сюда должны попадать в крайнем случае
@@ -161,7 +163,7 @@ abstract class BaseApplication extends CWebApplication {
     $this->isInit = true;
   }
 
-  public function setModules($modules) {
+  public function setModules($modules, $merge=true) {
     $newModules = array();
     foreach ($modules as $id => $module) {
       if (is_int($id)) {
@@ -182,7 +184,7 @@ abstract class BaseApplication extends CWebApplication {
     }
     //HU::dump($this->getUrlManager());exit;
     //HU::dump($newModules);exit;
-    parent::setModules($newModules);
+    parent::setModules($newModules, $merge);
   }
   public function addModule($moduleName) {
     $this->setModules(array($moduleName));
