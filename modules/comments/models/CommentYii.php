@@ -198,7 +198,7 @@ class CommentYii extends DaActiveRecord {
   }
 
   public function beforeValidate() {
-    if ($this->id_user === null && Yii::app()->user->isGuest === false) {
+    if ($this->id_user === null && Yii::app()->user->isGuest === false && Yii::app()->isFrontend) {
       $this->id_user = Yii::app()->user->id;
     }
     return parent::beforeValidate();
