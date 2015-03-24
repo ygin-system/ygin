@@ -4,7 +4,7 @@ $this->pageTitle = 'Переопределение представлений';
 
 
 <style>
-.overrideList {list-style: none;}
+.overrideList {list-style: none; padding-left:25px}
 .overrideList .parent {font-weight:bold;}
 </style>
 

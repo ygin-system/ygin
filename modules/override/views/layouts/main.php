@@ -23,7 +23,7 @@
   Yii::app()->clientScript->registerScriptFile('/themes/business/js/js.js', CClientScript::POS_HEAD);
 
   $this->registerCssFile('bootstrap.min.css', 'application.assets.bootstrap.css');
-  $this->registerCssFile('bootstrap-responsive.min.css', 'application.assets.bootstrap.css');
+  //$this->registerCssFile('bootstrap-responsive.min.css', 'application.assets.bootstrap.css');
   $ass = Yii::getPathOfAlias('application.assets.bootstrap.img').DIRECTORY_SEPARATOR;
   Yii::app()->clientScript->addDependResource('bootstrap.min.css', array(
     $ass.'glyphicons-halflings.png' => '../img/',
