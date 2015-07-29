@@ -104,6 +104,7 @@ class Notifier extends CApplicationComponent {
     if ($eventsCount == 0) return;
     
     $mailer = Yii::app()->mailer;
+    $mailer->init();
     
     for ($i = 0; $i < $eventsCount; $i++) {
       $curEvent = $events[$i];

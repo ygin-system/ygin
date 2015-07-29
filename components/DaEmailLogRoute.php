@@ -100,6 +100,7 @@ class DaEmailLogRoute extends CEmailLogRoute {
       ),
       'logging' => false,
     ));
+    $mailer->init();
     $mailerTransport = $mailer->getTransport();
 
     if ($this->getAuthUser() !== null) { //нужна авторизация на сервере
