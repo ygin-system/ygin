@@ -134,6 +134,7 @@ function checkPrefix(n) {
 
 	if( n.value.indexOf ( 'http' ) == - 1 && n.value.indexOf ( '/' ) == - 1 )
 		n.value = '/' + n.value;
+
 }
 
 function setFormValue(name, value) {
