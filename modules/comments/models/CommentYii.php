@@ -353,4 +353,17 @@ class CommentYii extends DaActiveRecord {
     $module = Yii::app()->getModule('comments');
     $module->onDeleteComment($this);
   }
+
+  public function isProcessDeleteChild () {
+    return true;
+  }
+
+  protected function beforeDelete () {
+    self::model ()->updateAll (array(
+      'id_parent' => null,
+    ),'id_parent = :ID_PARENT',array(
+      ':ID_PARENT' => $this->primaryKey,
+    ));
+    return parent::beforeDelete ();
+  }
 }
