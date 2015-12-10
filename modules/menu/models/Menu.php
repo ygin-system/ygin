@@ -386,12 +386,14 @@ class Menu extends DaActiveRecord implements ISearchable {
 
 	protected function beforeValidate() {
 		// генерим другой алиас если текущий дублируется
-		$existAlias = $this->find ('alias = :ALIAS',array(
-			':ALIAS' => $this->alias,
-		));
-		if($existAlias) {
-			$this->alias .= '_'.HText::getRandomString(1);
-		}
+	        if ($this->isNewRecord){
+	            $existAlias = $this->find('alias = :ALIAS', array(
+	                ':ALIAS' => $this->alias,
+	            ));
+	            if ($existAlias) {
+	                $this->alias .= '_' . HText::getRandomString(1);
+	            }
+	        }
 		return true;
 	}
 
