@@ -83,6 +83,7 @@ class YginController extends DaBackendController {
             }
             throw new Exception($msg);
           }
+          echo CJSON::encode(array('message' => 'Обработано', 'idInstance' => $idInstance));
         }
       }
     } catch(Exception $e) {
