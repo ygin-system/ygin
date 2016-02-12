@@ -509,8 +509,8 @@ class ImageUtils {
     // огород арбузов
     case 6 :
       $radius = 10;
-      for ($i = $margin; $i < $h; $i += $interval) {
-        for ($j = $margin; $j < $w; $j += $interval) {
+      for ($i = $radius; $i < $h; $i += $interval) {
+        for ($j = $radius; $j < $w; $j += $interval) {
           imageellipse($this->im,   $j, $i,      $radius, $radius,    $color1);
         }        
       }
@@ -612,14 +612,16 @@ class ImageUtils {
   // инфо
   function info($file, $info = false) {
     $a = array();
-    $b = getimagesize($file, $info);
-    $a['width'] = $b[0];
-    $a['height'] = $b[1];
-    $b[2] == '1' ? $a['type'] = 'gif' : false ;
-    $b[2] == '2' ? $a['type'] = 'jpg' : false ;
-    $b[2] == '3' ? $a['type'] = 'png' : false ;
-    $b[2] == '4' ? $a['type'] = 'swf' : false ;
-    $a['attr'] = $b[3];
+    if ( filesize($file) > 0 ){
+      $b = getimagesize($file, $info);
+      $a['width'] = $b[0];
+      $a['height'] = $b[1];
+      $b[2] == '1' ? $a['type'] = 'gif' : false ;
+      $b[2] == '2' ? $a['type'] = 'jpg' : false ;
+      $b[2] == '3' ? $a['type'] = 'png' : false ;
+      $b[2] == '4' ? $a['type'] = 'swf' : false ;
+      $a['attr'] = $b[3];
+    }
     return $a;
   }
   // преобразует русский текст в ASCII символы

@@ -283,7 +283,7 @@ class File extends DaActiveRecord {
             }
           }
         }
-        $needResize = ($rw != null && $prevInfo['width'] != $rw) || ($rh != null && $prevInfo['height'] != $rh);
+        $needResize = ($prevInfo != null) && (($rw != null && $prevInfo['width'] != $rw) || ($rh != null && $prevInfo['height'] != $rh));
       }
     }
     // Создание превью
