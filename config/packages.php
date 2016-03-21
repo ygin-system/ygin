@@ -7,6 +7,11 @@ $packages['jquery'] = array(
   'basePath' => 'ygin.assets.js',
   'js' => array('jquery.js'),
 );
+$packages['jquery.project'] = array(
+    //'basePath' => 'backend.assets.js',
+    'basePath' => 'application.assets',
+    'js' => array('jquery.min.js'),
+);
 
 // jQuery.Coockie
 $packages['cookie'] = array(
