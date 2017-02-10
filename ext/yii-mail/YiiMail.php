@@ -200,6 +200,7 @@ class YiiMail extends CApplicationComponent
 	* @return mixed {@link Swift_MailTransport} or {@link Swift_SmtpTransport}
 	*/
 	public function getTransport() {
+        $this->registerScripts();
 		if ($this->transport===null) {
 			switch ($this->transportType) {
 				case 'php':

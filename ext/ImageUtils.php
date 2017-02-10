@@ -72,7 +72,7 @@ class ImageUtils
     function open($file)
     {
         $a = $this->info($file);
-        if (!$a) return false;
+        if (!$a || !is_array($a) || !array_key_exists('type', $a)) return false;
 
         $this->type = $a['type'];
         if ($this->type == 'jpg') {

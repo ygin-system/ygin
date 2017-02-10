@@ -129,6 +129,8 @@ class Notifier extends CApplicationComponent {
         $mailMessage = new YiiMailMessage();
         $mailMessage->setTo($curEventProcess->email);
         $mailMessage->setSubject($curEvent->subject);
+        if ($curEvent->bcc) $mailMessage->setBcc($curEvent->bcc);
+
         $messageContent = '';
         if ($curEvent->event_message === null) {
           $ncEvent = new NotifierComponentEvent($this, $curEvent, $curEventProcess, $mailMessage);
@@ -203,7 +205,7 @@ class Notifier extends CApplicationComponent {
    * @param int $idInstance
    * @return Notifier
    */
-  public function addNewEvent($idEventType, $message, $idEventSubscriber = null, $emails = null, $idInstance = null, $subject = null) {
+  public function addNewEvent($idEventType, $message, $idEventSubscriber = null, $emails = null, $idInstance = null, $subject = null, $bcc = null) {
     $notifierEventType = NotifierEventType::model()->findByPk($idEventType);
 
     $notifierEvent = new NotifierEvent();
@@ -213,6 +215,7 @@ class Notifier extends CApplicationComponent {
     $notifierEvent->setEmails($emails === null ? array() : $emails);
     $notifierEvent->id_instance = $idInstance;
     $notifierEvent->subject = ($subject ? $subject : $notifierEventType->name);
+    $notifierEvent->bcc = $bcc;
     $notifierEvent->save();
     
     $this->setLastAddedEvent($notifierEvent);

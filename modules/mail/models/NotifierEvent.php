@@ -121,7 +121,7 @@ class NotifierEvent extends DaActiveRecord
     return array(
       array('id_instance, id_event, id_event_type, event_create', 'numerical', 'integerOnly'=>true),
       array('event_message', 'safe'),
-      array('subject', 'length', 'max' => 255)
+      array('subject, bcc', 'length', 'max' => 255)
     );
   }
 
