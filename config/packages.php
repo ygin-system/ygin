@@ -90,4 +90,5 @@ $packages['ygin.css'] = array(
   'basePath' => 'backend.assets.css',
   'css'=>array('ygin.css'),
 );
+
 return $packages;
