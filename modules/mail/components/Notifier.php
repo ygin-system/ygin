@@ -233,5 +233,4 @@ class Notifier extends CApplicationComponent {
     $this->raiseEvent('onBeforeSend', $event);
     return $event->isValid;
   }
-  
 }

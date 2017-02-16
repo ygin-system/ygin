@@ -22,7 +22,7 @@ class LoginAction extends CAction {
 		      $cookie->value += 1;
 		    } else {
 		      $cookie = new CHttpCookie('login_attempt', 1);
-		      $cookie->expire = time()*60;
+              $cookie->expire = (integer)time()*60;
 		    }
 	      Yii::app ()->request->cookies[ 'login_attempt' ] = $cookie;
       }

@@ -33,6 +33,12 @@ $packages['jquery.ui.css'] = array(
   'css'=>array('jquery-ui.custom.min.css'),
 );
 
+/*Mdi*/
+$packages['mdi'] = array(
+    'basePath' => 'ygin.assets.mdi.css',
+    'css'=>array('materialdesignicons.min.css'),
+);
+
 // Bootstrap ygin
 $packages['bootstrap_ygin'] = array(
   'basePath' => 'ygin.assets.bootstrap.js',
@@ -84,4 +90,5 @@ $packages['ygin.css'] = array(
   'basePath' => 'backend.assets.css',
   'css'=>array('ygin.css'),
 );
+
 return $packages;
