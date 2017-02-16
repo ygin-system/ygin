@@ -7,11 +7,6 @@ $packages['jquery'] = array(
   'basePath' => 'ygin.assets.js',
   'js' => array('jquery.js'),
 );
-$packages['jquery.project'] = array(
-    //'basePath' => 'backend.assets.js',
-    'basePath' => 'application.assets',
-    'js' => array('jquery.min.js'),
-);
 
 // jQuery.Coockie
 $packages['cookie'] = array(
@@ -36,6 +31,12 @@ $packages['jquery.ui'] = array(
 $packages['jquery.ui.css'] = array(
   'basePath' => 'ygin.modules.backend.assets.css.jquery-ui',
   'css'=>array('jquery-ui.custom.min.css'),
+);
+
+/*Mdi*/
+$packages['mdi'] = array(
+    'basePath' => 'ygin.assets.mdi.css',
+    'css'=>array('materialdesignicons.min.css'),
 );
 
 // Bootstrap ygin
@@ -89,4 +90,5 @@ $packages['ygin.css'] = array(
   'basePath' => 'backend.assets.css',
   'css'=>array('ygin.css'),
 );
+
 return $packages;
